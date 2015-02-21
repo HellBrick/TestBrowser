@@ -16,7 +16,7 @@ namespace HellBrick.TestBrowser.Models
 
 		public TestBrowserModel( TestServiceContext serviceContext )
 		{
-			TestList = new ObservableCollection<ITest>();
+			TestList = new ObservableCollection<TestModel>();
 
 			_serviceContext = serviceContext;
 			_serviceContext.RequestFactory.StateChanged += OnStateChanged;
@@ -58,14 +58,14 @@ namespace HellBrick.TestBrowser.Models
 		{
 			_serviceContext.Dispatcher.Invoke( () => TestList.Clear() );
 			foreach ( var test in tests )
-				_serviceContext.Dispatcher.Invoke( () => TestList.Add( test ) );
+				_serviceContext.Dispatcher.Invoke( () => TestList.Add( new TestModel( test ) ) );
 		}
 
 		#endregion
 
 		#region Properties
 
-		public ObservableCollection<ITest> TestList { get; private set; }
+		public ObservableCollection<TestModel> TestList { get; private set; }
 
 		#endregion
 

@@ -148,6 +148,7 @@
     <Compile Include="CompositionContainerExtensions.cs" />
     <Compile Include="Core\TestServiceContext.cs" />
     <Compile Include="Models\TestBrowserModel.cs" />
+    <Compile Include="Models\TestModel.cs" />
     <Compile Include="TestBrowserControl.xaml.cs">
       <DependentUpon>TestBrowserControl.xaml</DependentUpon>
     </Compile>
@@ -162,6 +163,9 @@
     <Compile Include="TestBrowserPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\PkgCmdID.cs" />
+    <Compile Include="Views\TestView.xaml.cs">
+      <DependentUpon>TestView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx">
@@ -196,6 +200,14 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="TestBrowserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TestView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewMap.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
