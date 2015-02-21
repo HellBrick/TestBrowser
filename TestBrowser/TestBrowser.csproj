@@ -147,7 +147,7 @@
   <ItemGroup>
     <Compile Include="CompositionContainerExtensions.cs" />
     <Compile Include="Core\TestServiceContext.cs" />
-    <Compile Include="Models\SafeObservableCollection.cs" />
+    <Compile Include="Common\SafeObservableCollection.cs" />
     <Compile Include="Models\TestBrowserModel.cs" />
     <Compile Include="Models\TestModel.cs" />
     <Compile Include="TestBrowserControl.xaml.cs">

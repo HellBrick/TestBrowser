@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestWindow.Controller;
 
-namespace HellBrick.TestBrowser.Models
+namespace HellBrick.TestBrowser.Common
 {
 	public class SafeObservableCollection<T>: ObservableCollection<T>
 	{

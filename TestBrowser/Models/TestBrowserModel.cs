@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
+using HellBrick.TestBrowser.Common;
 using HellBrick.TestBrowser.Core;
 using Microsoft.VisualStudio.TestWindow.Controller;
 using Microsoft.VisualStudio.TestWindow.Extensibility;
