@@ -8,6 +8,9 @@ using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.ComponentModelHost;
+using HellBrick.TestBrowser.Core;
+using System.ComponentModel.Composition.Hosting;
 
 namespace HellBrick.TestBrowser
 {
@@ -24,6 +27,8 @@ namespace HellBrick.TestBrowser
 	[Guid( GuidList.guidTestBrowserPkgString )]
 	public sealed class TestBrowserPackage: Package
 	{
+		private TestServiceContext _serviceContext;
+
 		public TestBrowserPackage()
 		{
 		}
@@ -32,9 +37,26 @@ namespace HellBrick.TestBrowser
 
 		protected override void Initialize()
 		{
-			Debug.WriteLine( string.Format( CultureInfo.CurrentCulture, "Entering Initialize() of: {0}", this.ToString() ) );
 			base.Initialize();
+			InitializeServiceContext();
+			InitializeCommands();
+		}
 
+		private void InitializeServiceContext()
+		{
+			var container = InitalizeContainer();
+			_serviceContext = container.GetExportedValue<TestServiceContext>();
+		}
+
+		private CompositionContainer InitalizeContainer()
+		{
+			var container = this.GetCompositionContainer();
+			container.AppendCatalog( new TypeCatalog( typeof( TestServiceContext ) ) );
+			return container;
+		}
+
+		private void InitializeCommands()
+		{
 			// Add our command handlers for menu (commands must exist in the .vsct file)
 			OleMenuCommandService mcs = GetService( typeof( IMenuCommandService ) ) as OleMenuCommandService;
 			if ( null != mcs )
