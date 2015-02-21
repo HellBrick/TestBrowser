@@ -4,13 +4,14 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Caliburn.Micro;
 using HellBrick.TestBrowser.Core;
 using Microsoft.VisualStudio.TestWindow.Controller;
 using Microsoft.VisualStudio.TestWindow.Extensibility;
 
 namespace HellBrick.TestBrowser.Models
 {
-	public class TestBrowserModel: IDisposable
+	public class TestBrowserModel: PropertyChangedBase, IDisposable
 	{
 		private TestServiceContext _serviceContext;
 
@@ -20,6 +21,8 @@ namespace HellBrick.TestBrowser.Models
 
 			_serviceContext = serviceContext;
 			_serviceContext.RequestFactory.StateChanged += OnStateChanged;
+
+			State = TestOperationStates.None;
 		}
 
 		#region Global event handlers
@@ -29,6 +32,7 @@ namespace HellBrick.TestBrowser.Models
 			try
 			{
 				_serviceContext.Logger.Log( MessageLevel.Informational, e.ToString() );
+				State = e.State;
 
 				switch ( e.State )
 				{
@@ -66,6 +70,13 @@ namespace HellBrick.TestBrowser.Models
 		#region Properties
 
 		public SafeObservableCollection<TestModel> TestList { get; private set; }
+
+		private TestOperationStates _state;
+		public TestOperationStates State
+		{
+			get { return _state; }
+			set { _state = value; base.NotifyOfPropertyChange( () => State ); }
+		}
 
 		#endregion
 

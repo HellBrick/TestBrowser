@@ -17,5 +17,8 @@
 		</ResourceDictionary>
 	</UserControl.Resources>
 	
-	<ListBox ItemsSource="{Binding TestList}"></ListBox>
+	<StackPanel>
+		<TextBlock Text="{Binding State}"></TextBlock>
+		<ListBox ItemsSource="{Binding TestList}"></ListBox>
+	</StackPanel>
 </UserControl>
