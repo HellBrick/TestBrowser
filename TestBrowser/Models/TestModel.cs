@@ -23,10 +23,12 @@ namespace HellBrick.TestBrowser.Models
 		public string Name { get { return _test.DisplayName; } }
 		public TestState State { get { return _test.State; } }
 		public Guid ID { get { return _test.Id; } }
+		public bool IsStale { get { return _test.Stale; } }
 
 		public void RaiseStateChanged()
 		{
 			base.NotifyOfPropertyChange( () => State );
+			base.NotifyOfPropertyChange( () => IsStale );
 		}
 
 		public override string ToString()

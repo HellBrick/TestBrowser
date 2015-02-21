@@ -10,6 +10,17 @@
 	d:DataContext="{d:DesignInstance Type={x:Type m:TestModel}}">
 
 	<TextBlock>
+
+		<TextBlock.Style>
+			<Style TargetType="{x:Type TextBlock}">
+				<Style.Triggers>
+					<DataTrigger Binding="{Binding IsStale}" Value="True">
+						<Setter Property="Foreground" Value="Gray"></Setter>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
+		</TextBlock.Style>
+		
 		<Run Text="["/><Run Text="{Binding State, Mode=OneWay}"/><Run Text="]"/>
 		
 		<Run Text="{Binding Namespace, Mode=OneTime}"></Run>
