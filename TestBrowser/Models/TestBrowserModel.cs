@@ -15,6 +15,7 @@ namespace HellBrick.TestBrowser.Models
 	public class TestBrowserModel: PropertyChangedBase, IDisposable
 	{
 		private TestServiceContext _serviceContext;
+		private TestRun _currentTestRun;
 
 		public TestBrowserModel( TestServiceContext serviceContext )
 		{
@@ -44,6 +45,10 @@ namespace HellBrick.TestBrowser.Models
 					case TestOperationStates.TestExecutionFinished:
 						OnRunFinished( e );
 						break;
+
+					case TestOperationStates.TestExecutionStarted:
+						OnExecutionStarted( e );
+						break;
 				}
 			}
 			catch ( Exception ex )
@@ -65,6 +70,12 @@ namespace HellBrick.TestBrowser.Models
 
 		private void OnRunFinished( OperationStateChangedEventArgs e )
 		{
+			if ( _currentTestRun != null )
+			{
+				_currentTestRun.TestRunUpdated -= OnTestsFinished;
+				_currentTestRun.Dispose();
+			}
+
 			using ( var reader = _serviceContext.Storage.ActiveUnitTestReader )
 			{
 				using ( var query = reader.GetAllTests() )
@@ -74,6 +85,32 @@ namespace HellBrick.TestBrowser.Models
 						TestList[ test.Id ].RaiseStateChanged();
 				}
 			}
+		}
+
+		private void OnExecutionStarted( OperationStateChangedEventArgs e )
+		{
+			TestRunRequest runRequest = e.Operation as TestRunRequest;
+			if ( runRequest == null )
+			{
+				_serviceContext.Logger.Log(
+					MessageLevel.Error,
+					String.Format( "ExecutionStarted event with {0} operation ({1} expected)", e.Operation.GetType().Name, typeof( TestRunRequest ).Name ) );
+
+				return;
+			}
+			
+			_currentTestRun = new TestRun( runRequest, _serviceContext );
+			_currentTestRun.TestRunUpdated += OnTestsFinished;
+
+			//	The tests are stale now, it's a good reason to notify the UI about it.
+			foreach ( var test in TestList )
+				test.RaiseStateChanged();
+		}
+
+		private void OnTestsFinished( object sender, TestsRunUpdatedEventArgs e )
+		{
+			foreach ( var testID in Enumerable.Concat( e.FinishedTests, e.CurrentlyRunningTests ) )
+				TestList[ testID ].RaiseStateChanged();
 		}
 
 		private void UpdateTestList( IEnumerable<ITest> tests )

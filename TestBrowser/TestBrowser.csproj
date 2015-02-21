@@ -58,6 +58,10 @@
     <Reference Include="Microsoft.VisualStudio.Shell.Interop.12.0">
       <EmbedInteropTypes>true</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.TestPlatform.ObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Microsoft.VisualStudio.TestPlatform.ObjectModel.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.TestWindow">
       <HintPath>C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Microsoft.VisualStudio.TestWindow.dll</HintPath>
     </Reference>
@@ -147,6 +151,9 @@
   <ItemGroup>
     <Compile Include="Common\SafeObservableDictionary.cs" />
     <Compile Include="CompositionContainerExtensions.cs" />
+    <Compile Include="Core\TestsRunUpdatedEventArgs.cs" />
+    <Compile Include="Core\TestRun.cs" />
+    <Compile Include="Core\TestRunRequestExtensions.cs" />
     <Compile Include="Core\TestServiceContext.cs" />
     <Compile Include="Common\SafeObservableCollection.cs" />
     <Compile Include="Models\TestBrowserModel.cs" />

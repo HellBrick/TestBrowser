@@ -24,11 +24,13 @@ namespace HellBrick.TestBrowser.Models
 		public TestState State { get { return _test.State; } }
 		public Guid ID { get { return _test.Id; } }
 		public bool IsStale { get { return _test.Stale; } }
+		public bool IsCurrentlyRunning { get { return _test.IsCurrentlyRunning; } }
 
 		public void RaiseStateChanged()
 		{
 			base.NotifyOfPropertyChange( () => State );
 			base.NotifyOfPropertyChange( () => IsStale );
+			base.NotifyOfPropertyChange( () => IsCurrentlyRunning );
 		}
 
 		public override string ToString()
