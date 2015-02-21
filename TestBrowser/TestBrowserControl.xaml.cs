@@ -11,16 +11,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using HellBrick.TestBrowser.Models;
 
 namespace HellBrick.TestBrowser
 {
 	/// <summary>
 	/// Interaction logic for MyControl.xaml
 	/// </summary>
-	public partial class MyControl: UserControl
+	public partial class TestBrowserControl: UserControl
 	{
-		public MyControl()
+		public TestBrowserControl( TestBrowserModel dataContext )
 		{
+			DataContext = dataContext;
 			InitializeComponent();
 		}
 

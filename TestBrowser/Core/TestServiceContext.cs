@@ -14,15 +14,17 @@ namespace HellBrick.TestBrowser.Core
 	public class TestServiceContext
 	{
 		[ImportingConstructor]
-		public TestServiceContext( IRequestFactory requestFactory, IUnitTestStorage storage, ILogger logger )
+		public TestServiceContext( IRequestFactory requestFactory, IUnitTestStorage storage, SafeDispatcher safeDispatcher, ILogger logger )
 		{
 			RequestFactory = requestFactory;
 			Storage = storage;
+			this.Dispatcher = safeDispatcher;
 			Logger = logger;
 		}
 
 		public IRequestFactory RequestFactory { get; private set; }
 		public IUnitTestStorage Storage { get; private set; }
+		public SafeDispatcher Dispatcher { get; set; }
 		public ILogger Logger { get; private set; }
 	}
 }

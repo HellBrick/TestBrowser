@@ -138,10 +138,11 @@
   <ItemGroup>
     <Compile Include="CompositionContainerExtensions.cs" />
     <Compile Include="Core\TestServiceContext.cs" />
-    <Compile Include="MyControl.xaml.cs">
-      <DependentUpon>MyControl.xaml</DependentUpon>
+    <Compile Include="Models\TestBrowserModel.cs" />
+    <Compile Include="TestBrowserControl.xaml.cs">
+      <DependentUpon>TestBrowserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MyToolWindow.cs" />
+    <Compile Include="TestBrowserToolWindow.cs" />
     <Compile Include="Properties\Guids.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -184,7 +185,7 @@
     <Content Include="Resources\Package.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="MyControl.xaml">
+    <Page Include="TestBrowserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

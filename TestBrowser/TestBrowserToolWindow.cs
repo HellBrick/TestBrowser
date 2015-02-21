@@ -5,15 +5,16 @@ using System.Drawing;
 using System.Data;
 using System.Windows;
 using System.Runtime.InteropServices;
+using Microsoft.VisualStudio.ComponentModelHost;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Shell;
 
 namespace HellBrick.TestBrowser
 {
 	[Guid( "a771a04c-f8c6-4f54-8bf1-2e64e7cdd770" )]
-	public class MyToolWindow: ToolWindowPane
+	public class TestBrowserToolWindow: ToolWindowPane
 	{
-		public MyToolWindow() :
+		public TestBrowserToolWindow() :
 			base( null )
 		{
 			this.Caption = Resources.ToolWindowTitle;
@@ -27,7 +28,7 @@ namespace HellBrick.TestBrowser
 			// This is the user control hosted by the tool window; Note that, even if this class implements IDisposable,
 			// we are not calling Dispose on this object. This is because ToolWindowPane calls Dispose on 
 			// the object returned by the Content property.
-			base.Content = new MyControl();
+			base.Content = new TestBrowserControl( TestBrowserPackage.RootModel );
 		}
 	}
 }
