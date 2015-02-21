@@ -40,6 +40,10 @@ namespace HellBrick.TestBrowser.Models
 					case TestOperationStates.DiscoveryFinished:
 						OnDiscoveryFinished( e );
 						break;
+
+					case TestOperationStates.TestExecutionFinished:
+						OnRunFinished( e );
+						break;
 				}
 			}
 			catch ( Exception ex )
@@ -55,6 +59,19 @@ namespace HellBrick.TestBrowser.Models
 				using ( var query = reader.GetAllTests() )
 				{
 					UpdateTestList( query );
+				}
+			}
+		}
+
+		private void OnRunFinished( OperationStateChangedEventArgs e )
+		{
+			using ( var reader = _serviceContext.Storage.ActiveUnitTestReader )
+			{
+				using ( var query = reader.GetAllTests() )
+				{
+					var testsInLastRun = reader.GetTestsInLastRun( query );
+					foreach ( var test in testsInLastRun )
+						TestList[ test.Id ].RaiseStateChanged();
 				}
 			}
 		}
