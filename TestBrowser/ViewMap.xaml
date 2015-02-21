@@ -3,7 +3,11 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:m="clr-namespace:HellBrick.TestBrowser.Models"
 	xmlns:v="clr-namespace:HellBrick.TestBrowser.Views">
-	
+
+	<DataTemplate DataType="{x:Type m:TestBrowserModel}">
+		<v:TestBrowserView></v:TestBrowserView>
+	</DataTemplate>
+
 	<DataTemplate DataType="{x:Type m:TestModel}">
 		<v:TestView></v:TestView>
 	</DataTemplate>
