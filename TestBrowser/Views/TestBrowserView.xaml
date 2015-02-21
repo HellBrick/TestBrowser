@@ -10,6 +10,12 @@
 	d:DataContext="{d:DesignInstance Type={x:Type m:TestBrowserModel}}">
 
 	<StackPanel>
+		<StackPanel Orientation="Horizontal">
+			<TextBlock>
+				<Hyperlink Command="{Binding RunAllCommand}">Run all</Hyperlink>
+			</TextBlock>
+		</StackPanel>
+		
 		<TextBlock Text="{Binding State}"></TextBlock>
 		<ListBox ItemsSource="{Binding TestList}"></ListBox>
 	</StackPanel>

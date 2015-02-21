@@ -19,12 +19,11 @@ namespace HellBrick.TestBrowser.Models
 
 		public TestBrowserModel( TestServiceContext serviceContext )
 		{
-			TestList = new SafeObservableDictionary<Guid, TestModel>( serviceContext.Dispatcher, test => test.ID );
-
 			_serviceContext = serviceContext;
 			_serviceContext.RequestFactory.StateChanged += OnStateChanged;
 
-			State = TestOperationStates.None;
+			TestList = new SafeObservableDictionary<Guid, TestModel>( serviceContext.Dispatcher, test => test.ID );
+			InitializeCommands();
 		}
 
 		#region Global event handlers
@@ -132,11 +131,32 @@ namespace HellBrick.TestBrowser.Models
 
 		public SafeObservableDictionary<Guid, TestModel> TestList { get; private set; }
 
-		private TestOperationStates _state;
+		private TestOperationStates _state = TestOperationStates.None;
 		public TestOperationStates State
 		{
 			get { return _state; }
-			set { _state = value; base.NotifyOfPropertyChange( () => State ); }
+			set { _state = value; base.NotifyOfPropertyChange( () => State ); RunAllCommand.RaiseCanExecuteChanged(); }
+		}
+
+		#endregion
+
+		#region Commands
+
+		private void InitializeCommands()
+		{
+			RunAllCommand = new SafeCommand( _serviceContext.Dispatcher, () => RunAll(), () => RunAllCanBeExecuted() );
+		}
+
+		public SafeCommand RunAllCommand { get; private set; }
+
+		private bool RunAllCanBeExecuted()
+		{
+			return _serviceContext.RequestFactory.OperationSetFinished;
+		}
+
+		private void RunAll()
+		{
+			_serviceContext.RequestFactory.ExecuteTestsAsync();
 		}
 
 		#endregion
