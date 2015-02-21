@@ -22,6 +22,7 @@ namespace HellBrick.TestBrowser.Models
 		public string Namespace { get; private set; }
 		public string Name { get { return _test.DisplayName; } }
 		public TestState State { get { return _test.State; } }
+		public Guid ID { get { return _test.Id; } }
 
 		public void RaiseStateChanged()
 		{

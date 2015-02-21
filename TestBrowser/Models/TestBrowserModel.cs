@@ -18,7 +18,7 @@ namespace HellBrick.TestBrowser.Models
 
 		public TestBrowserModel( TestServiceContext serviceContext )
 		{
-			TestList = new SafeObservableCollection<TestModel>( serviceContext.Dispatcher );
+			TestList = new SafeObservableDictionary<Guid, TestModel>( serviceContext.Dispatcher, test => test.ID );
 
 			_serviceContext = serviceContext;
 			_serviceContext.RequestFactory.StateChanged += OnStateChanged;
@@ -54,23 +54,29 @@ namespace HellBrick.TestBrowser.Models
 			{
 				using ( var query = reader.GetAllTests() )
 				{
-					UpdateTestList( query.ToArray() );
+					UpdateTestList( query );
 				}
 			}
 		}
 
-		private void UpdateTestList( ITest[] tests )
+		private void UpdateTestList( IEnumerable<ITest> tests )
 		{
-			TestList.Clear();
-			foreach ( var test in tests )
-				TestList.Add( new TestModel( test ) );
+			var newTestLookup = tests.ToDictionary( t => t.Id );
+
+			var removedTests = TestList.Where( t => !newTestLookup.ContainsKey( t.ID ) ).ToArray();
+			foreach ( var test in removedTests )
+				TestList.Remove( test );
+
+			var newTests = newTestLookup.Where( kvp => !TestList.ContainsKey( kvp.Key ) );
+			foreach ( var kvp in newTests )
+				TestList.Add( new TestModel( kvp.Value ) );
 		}
 
 		#endregion
 
 		#region Properties
 
-		public SafeObservableCollection<TestModel> TestList { get; private set; }
+		public SafeObservableDictionary<Guid, TestModel> TestList { get; private set; }
 
 		private TestOperationStates _state;
 		public TestOperationStates State

@@ -145,6 +145,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\SafeObservableDictionary.cs" />
     <Compile Include="CompositionContainerExtensions.cs" />
     <Compile Include="Core\TestServiceContext.cs" />
     <Compile Include="Common\SafeObservableCollection.cs" />
