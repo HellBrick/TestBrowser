@@ -126,6 +126,10 @@ namespace HellBrick.TestBrowser.Models
 				else
 					break;
 			}
+
+			var survivingLocation = parent as LocationNode;
+			if ( survivingLocation != null )
+				OptimizeTreeBranchAfterRemove( survivingLocation );
 		}
 
 		/// <param name="locationNode">The parent of the node that has just been inserted into the tree.</param>
@@ -207,6 +211,48 @@ namespace HellBrick.TestBrowser.Models
 				return null;
 
 			return new MergeableInterval( firstNodeToMerge, lastNodeToMerge, intervalLength );
+		}
+
+		private void OptimizeTreeBranchAfterRemove( LocationNode removeLocation )
+		{
+			if ( !removeLocation.ShouldBeMerged )
+				return;
+
+			MergeableInterval intervalToMerge = FindIntervalToMergeAfterRemove( removeLocation );
+			if ( intervalToMerge.FirstNode.IsMerged )
+				BreakMerge( intervalToMerge.FirstNode.MergedNode );
+
+			if ( intervalToMerge.LastNode.IsMerged )
+				BreakMerge( intervalToMerge.LastNode.MergedNode );
+
+			MergeNodes( intervalToMerge );
+		}
+
+		private MergeableInterval FindIntervalToMergeAfterRemove( LocationNode removeLocation )
+		{
+			//	If the node should be merged, it's guaranteed to have exatcly 1 LocationNode child.
+			LocationNode child = removeLocation.Children.OfType<LocationNode>().FirstOrDefault();
+
+			int intervalLength = 0;
+			LocationNode firstNode = removeLocation;
+			if ( !firstNode.IsMerged )
+				intervalLength++;
+			else
+			{
+				intervalLength += firstNode.MergedNode.Nodes.Count;
+				firstNode = firstNode.MergedNode.Nodes[ 0 ];
+			}
+
+			LocationNode lastNode = child;
+			if ( !child.IsMerged )
+				intervalLength++;
+			else
+			{
+				intervalLength += lastNode.MergedNode.Nodes.Count;
+				lastNode = lastNode.MergedNode.Nodes.Last();
+			}
+
+			return new MergeableInterval( firstNode, lastNode, intervalLength );
 		}
 
 		private void MergeNodes( MergeableInterval intervalToMerge )
