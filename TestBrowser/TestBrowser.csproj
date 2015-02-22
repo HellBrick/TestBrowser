@@ -162,6 +162,7 @@
     <Compile Include="Common\SafeObservableCollection.cs" />
     <Compile Include="Models\INode.cs" />
     <Compile Include="Models\LocationNode.cs" />
+    <Compile Include="Models\MergedNode.cs" />
     <Compile Include="Models\NodeCollection.cs" />
     <Compile Include="Models\NodeType.cs" />
     <Compile Include="Models\TestBrowserModel.cs" />
@@ -183,6 +184,9 @@
     <Compile Include="Properties\PkgCmdID.cs" />
     <Compile Include="Views\LocationNodeView.xaml.cs">
       <DependentUpon>LocationNodeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MergedNodeView.xaml.cs">
+      <DependentUpon>MergedNodeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TestBrowserView.xaml.cs">
       <DependentUpon>TestBrowserView.xaml</DependentUpon>
@@ -231,6 +235,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\LocationNodeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MergedNodeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

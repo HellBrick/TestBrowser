@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Caliburn.Micro;
 using HellBrick.TestBrowser.Common;
 using Microsoft.VisualStudio.TestWindow.Controller;
 
 namespace HellBrick.TestBrowser.Models
 {
-	public class LocationNode: INode
+	public class LocationNode: PropertyChangedBase, INode
 	{
 		private SafeDispatcher _dispatcher;
 
@@ -21,6 +22,43 @@ namespace HellBrick.TestBrowser.Models
 		}
 
 		public string Location { get; set; }
+
+		private MergedNode _mergedNode;
+		public MergedNode MergedNode
+		{
+			get { return _mergedNode; }
+			set { _mergedNode = value; NotifyOfPropertyChange( () => IsVisible ); }
+		}
+
+		public bool IsMerged
+		{
+			get { return _mergedNode != null; }
+		}
+
+		public bool ShouldBeMerged
+		{
+			get { return Children.Count == 1 && Children[ 0 ].Type != NodeType.Test; }
+		}
+
+		public bool RequiresMerge
+		{
+			get { return !IsMerged && ShouldBeMerged; }
+		}
+
+		public bool IsLastMergedNode
+		{
+			get { return IsMerged && this == MergedNode.Nodes.Last(); }
+		}
+
+		public bool RequiresBreakUp
+		{
+			get { return IsMerged && !ShouldBeMerged && !IsLastMergedNode; }
+		}
+
+		public override string ToString()
+		{
+			return Location;
+		}
 
 		#region INode Members
 
@@ -36,6 +74,11 @@ namespace HellBrick.TestBrowser.Models
 		ICollection<INode> INode.Children
 		{
 			get { return this.Children; }
+		}
+
+		public bool IsVisible
+		{
+			get { return !IsMerged || IsLastMergedNode; }
 		}
 
 		#endregion

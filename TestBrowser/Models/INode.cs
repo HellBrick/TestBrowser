@@ -13,6 +13,7 @@ namespace HellBrick.TestBrowser.Models
 		string Name { get; }
 		INode Parent { get; set; }
 		ICollection<INode> Children { get; }
+		bool IsVisible { get; }
 	}
 
 	public static class NodeExtensions
@@ -21,6 +22,22 @@ namespace HellBrick.TestBrowser.Models
 		{
 			parent.Children.Add( child );
 			child.Parent = parent;
+		}
+
+		public static IEnumerable<INode> EnumerateAncestors( this INode node )
+		{
+			while ( node.Parent != null )
+			{
+				yield return node.Parent;
+				node = node.Parent;
+			}
+		}
+
+		public static IEnumerable<INode> EnumerateAncestorsAndSelf( this INode node )
+		{
+			yield return node;
+			foreach ( var ancestor in node.EnumerateAncestors() )
+				yield return ancestor;
 		}
 	}
 }
