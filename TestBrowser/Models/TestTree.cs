@@ -16,10 +16,20 @@ namespace HellBrick.TestBrowser.Models
 		public TestTree( SafeDispatcher dispatcher )
 		{
 			_dispatcher = dispatcher;
-			Children = new SafeObservableCollection<INode>( _dispatcher );
+			Children = new NodeCollection( _dispatcher );
 		}
 
 		#region INode Members
+
+		public NodeType Type
+		{
+			get { return NodeType.Location; }
+		}
+
+		public string Name
+		{
+			get { return "[Root]"; }
+		}
 
 		public INode Parent
 		{
@@ -32,7 +42,7 @@ namespace HellBrick.TestBrowser.Models
 			get { return this.Children; }
 		}
 
-		public SafeObservableCollection<INode> Children { get; private set; }
+		public NodeCollection Children { get; private set; }
 
 		#endregion
 

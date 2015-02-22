@@ -9,6 +9,8 @@ namespace HellBrick.TestBrowser.Models
 {
 	public interface INode
 	{
+		NodeType Type { get; }
+		string Name { get; }
 		INode Parent { get; set; }
 		ICollection<INode> Children { get; }
 	}

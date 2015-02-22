@@ -17,16 +17,21 @@ namespace HellBrick.TestBrowser.Models
 			_dispatcher = dispatcher;
 			Location = location;
 			Name = name;
-			Children = new SafeObservableCollection<INode>( _dispatcher );
+			Children = new NodeCollection( _dispatcher );
 		}
 
 		public string Location { get; set; }
-		public string Name { get; private set; }
 
 		#region INode Members
 
+		public NodeType Type
+		{
+			get { return NodeType.Location; }
+		}
+
+		public string Name { get; private set; }
 		public INode Parent { get; set; }
-		public SafeObservableCollection<INode> Children { get; private set; }
+		public NodeCollection Children { get; private set; }
 
 		ICollection<INode> INode.Children
 		{
