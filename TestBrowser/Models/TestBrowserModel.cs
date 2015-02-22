@@ -143,8 +143,7 @@ namespace HellBrick.TestBrowser.Models
 			{
 				_state = value;
 				base.NotifyOfPropertyChange( () => State );
-				RunAllCommand.RaiseCanExecuteChanged();
-				DebugAllCommand.RaiseCanExecuteChanged();
+				RefreshCommands();
 				NotifyOfPropertyChange( () => IsDoingSomething );
 				NotifyOfPropertyChange( () => IsDoingIndefiniteOperation );
 			}
@@ -188,10 +187,28 @@ namespace HellBrick.TestBrowser.Models
 
 		#region Commands
 
+		private List<SafeCommand> _commands;
+
 		private void InitializeCommands()
 		{
 			RunAllCommand = new SafeCommand( _serviceContext.Dispatcher, () => RunAll(), () => CanRunTests() );
 			DebugAllCommand = new SafeCommand( _serviceContext.Dispatcher, () => DebugAll(), () => CanRunTests() );
+			RunSelectedCommand = new SafeCommand( _serviceContext.Dispatcher, () => RunSelected(), () => CanRunTests() );
+			DebugSelectedCommand = new SafeCommand( _serviceContext.Dispatcher, () => DebugSelected(), () => CanRunTests() );
+
+			_commands = new List<SafeCommand>()
+			{
+				RunAllCommand,
+				DebugAllCommand,
+				RunSelectedCommand,
+				DebugSelectedCommand
+			};
+		}
+
+		private void RefreshCommands()
+		{
+			foreach ( var command in _commands )
+				command.RaiseCanExecuteChanged();
 		}
 
 		private bool CanRunTests()
@@ -211,6 +228,41 @@ namespace HellBrick.TestBrowser.Models
 		private void DebugAll()
 		{
 			_serviceContext.RequestFactory.DebugTestsAsync();
+		}
+
+		public SafeCommand RunSelectedCommand { get; private set; }
+
+		private void RunSelected()
+		{
+			_serviceContext.RequestFactory.ExecuteTestsAsync( EnumerateSelectedTestIDs(), configProvider => { } );
+		}
+
+		public SafeCommand DebugSelectedCommand { get; private set; }
+
+		private void DebugSelected()
+		{
+			_serviceContext.RequestFactory.DebugTestsAsync( EnumerateSelectedTestIDs() );
+		}
+
+		private IEnumerable<Guid> EnumerateSelectedTestIDs()
+		{
+			return EnumerateSelectedTestIDs( TestTree );
+		}
+
+		private IEnumerable<Guid> EnumerateSelectedTestIDs( INode node )
+		{
+			if ( node.IsSelected )
+			{
+				//	If the node is selected, all its descendants are considered selected automatically.
+				return node.EnumerateDescendantsAndSelf()
+					.OfType<TestModel>()
+					.Select( t => t.ID );
+			}
+			else
+			{
+				//	Otherwise, we have to recursively examine all its descendants personally.
+				return node.Children.SelectMany( c => EnumerateSelectedTestIDs( c ) );
+			}
 		}
 
 		#endregion

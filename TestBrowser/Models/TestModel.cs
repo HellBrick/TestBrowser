@@ -46,14 +46,23 @@ namespace HellBrick.TestBrowser.Models
 
 		public string Name { get { return _test.DisplayName; } }
 		public INode Parent { get; set; }
+
+		private List<INode> _emptyList = new List<INode>();
 		public ICollection<INode> Children
 		{
-			get { return null; }
+			get { return _emptyList; }
 		}
 
 		public bool IsVisible
 		{
 			get { return true; }
+		}
+
+		private bool _isSelected;
+		public bool IsSelected
+		{
+			get { return _isSelected; }
+			set { _isSelected = value; NotifyOfPropertyChange( () => IsSelected ); }
 		}
 
 		#endregion
