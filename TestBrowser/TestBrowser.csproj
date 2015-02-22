@@ -149,6 +149,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\HSL.cs" />
     <Compile Include="Common\SafeCommand.cs" />
     <Compile Include="Common\SafeObservableDictionary.cs" />
     <Compile Include="CompositionContainerExtensions.cs" />
