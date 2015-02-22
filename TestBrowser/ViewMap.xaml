@@ -16,6 +16,10 @@
 		<v:LocationNodeView></v:LocationNodeView>
 	</DataTemplate>
 
+	<DataTemplate DataType="{x:Type m:MergedNode}">
+		<v:MergedNodeView></v:MergedNodeView>
+	</DataTemplate>
+
 	<DataTemplate DataType="{x:Type m:TestTree}">
 		<v:TestTreeView></v:TestTreeView>
 	</DataTemplate>
