@@ -159,8 +159,11 @@
     <Compile Include="Core\TestRunRequestExtensions.cs" />
     <Compile Include="Core\TestServiceContext.cs" />
     <Compile Include="Common\SafeObservableCollection.cs" />
+    <Compile Include="Models\INode.cs" />
+    <Compile Include="Models\LocationNode.cs" />
     <Compile Include="Models\TestBrowserModel.cs" />
     <Compile Include="Models\TestModel.cs" />
+    <Compile Include="Models\TestTree.cs" />
     <Compile Include="TestBrowserControl.xaml.cs">
       <DependentUpon>TestBrowserControl.xaml</DependentUpon>
     </Compile>
@@ -175,8 +178,14 @@
     <Compile Include="TestBrowserPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\PkgCmdID.cs" />
+    <Compile Include="Views\LocationNodeView.xaml.cs">
+      <DependentUpon>LocationNodeView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TestBrowserView.xaml.cs">
       <DependentUpon>TestBrowserView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TestTreeView.xaml.cs">
+      <DependentUpon>TestTreeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TestView.xaml.cs">
       <DependentUpon>TestView.xaml</DependentUpon>
@@ -218,7 +227,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\LocationNodeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\TestBrowserView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TestTreeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

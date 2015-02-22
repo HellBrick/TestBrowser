@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestWindow.Extensibility;
 
 namespace HellBrick.TestBrowser.Models
 {
-	public class TestModel: PropertyChangedBase
+	public class TestModel: PropertyChangedBase, INode
 	{
 		private ITest _test;
 
@@ -37,5 +37,15 @@ namespace HellBrick.TestBrowser.Models
 		{
 			return String.Format( "[{0}] {1}/{2}", State, Location, Name );
 		}
+
+		#region INode Members
+
+		public INode Parent { get; set; }
+		public ICollection<INode> Children
+		{
+			get { return null; }
+		}
+
+		#endregion
 	}
 }

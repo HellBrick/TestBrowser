@@ -22,7 +22,7 @@ namespace HellBrick.TestBrowser.Models
 			_serviceContext = serviceContext;
 			_serviceContext.RequestFactory.StateChanged += OnStateChanged;
 
-			TestList = new SafeObservableDictionary<Guid, TestModel>( serviceContext.Dispatcher, test => test.ID );
+			TestTree = new Models.TestTree( _serviceContext.Dispatcher );
 			InitializeCommands();
 		}
 
@@ -81,7 +81,7 @@ namespace HellBrick.TestBrowser.Models
 				{
 					var testsInLastRun = reader.GetTestsInLastRun( query );
 					foreach ( var test in testsInLastRun )
-						TestList[ test.Id ].RaiseStateChanged();
+						TestTree.Tests[ test.Id ].RaiseStateChanged();
 				}
 			}
 		}
@@ -104,14 +104,14 @@ namespace HellBrick.TestBrowser.Models
 			CurrentProgress = 0;
 
 			//	The tests are stale now, it's a good reason to notify the UI about it.
-			foreach ( var test in TestList )
+			foreach ( var test in TestTree.Tests.Values )
 				test.RaiseStateChanged();
 		}
 
 		private void OnTestsFinished( object sender, TestsRunUpdatedEventArgs e )
 		{
 			foreach ( var testID in Enumerable.Concat( e.FinishedTests, e.CurrentlyRunningTests ) )
-				TestList[ testID ].RaiseStateChanged();
+				TestTree.Tests[ testID ].RaiseStateChanged();
 
 			CurrentProgress += e.FinishedTests.Count;
 		}
@@ -120,20 +120,20 @@ namespace HellBrick.TestBrowser.Models
 		{
 			var newTestLookup = tests.ToDictionary( t => t.Id );
 
-			var removedTests = TestList.Where( t => !newTestLookup.ContainsKey( t.ID ) ).ToArray();
-			foreach ( var test in removedTests )
-				TestList.Remove( test );
+			var removedTests = TestTree.Tests.Where( t => !newTestLookup.ContainsKey( t.Key ) ).ToArray();
+			foreach ( var testRecord in removedTests )
+				TestTree.RemoveTest( testRecord.Value );
 
-			var newTests = newTestLookup.Where( kvp => !TestList.ContainsKey( kvp.Key ) );
+			var newTests = newTestLookup.Where( kvp => !TestTree.Tests.ContainsKey( kvp.Key ) );
 			foreach ( var kvp in newTests )
-				TestList.Add( new TestModel( kvp.Value ) );
+				TestTree.InsertTest( new TestModel( kvp.Value ) );
 		}
 
 		#endregion
 
 		#region Properties
 
-		public SafeObservableDictionary<Guid, TestModel> TestList { get; private set; }
+		public TestTree TestTree { get; private set; }
 
 		private TestOperationStates _state = TestOperationStates.None;
 		public TestOperationStates State

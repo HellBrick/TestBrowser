@@ -29,6 +29,6 @@
 			Maximum="{Binding MaxProgress}"
 			Value="{Binding CurrentProgress}">
 		</ProgressBar>
-		<ListBox ItemsSource="{Binding TestList}"></ListBox>
+		<ContentPresenter Content="{Binding TestTree}"></ContentPresenter>
 	</StackPanel>
 </UserControl>
