@@ -14,21 +14,22 @@
 		<c:BoolToVisibilityConverter x:Key="BoolToVisibility"></c:BoolToVisibilityConverter>
 	</UserControl.Resources>
 
-	<StackPanel>
-		<StackPanel Orientation="Horizontal">
+	<DockPanel LastChildFill="True">
+		<StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
 			<TextBlock>
 				<Hyperlink Command="{Binding RunAllCommand}">Run all</Hyperlink>
 				<Hyperlink Command="{Binding DebugAllCommand}">Debug all</Hyperlink>
 			</TextBlock>
 		</StackPanel>
 
-		<TextBlock Text="{Binding State}"></TextBlock>
+		<TextBlock Text="{Binding State}" DockPanel.Dock="Top"></TextBlock>
 		<ProgressBar
 			Visibility="{Binding IsDoingSomething, Converter={StaticResource BoolToVisibility}}"
 			IsIndeterminate="{Binding IsDoingIndefiniteOperation}"
 			Maximum="{Binding MaxProgress}"
-			Value="{Binding CurrentProgress}">
+			Value="{Binding CurrentProgress}"
+			DockPanel.Dock="Top">
 		</ProgressBar>
 		<ContentPresenter Content="{Binding TestTree}"></ContentPresenter>
-	</StackPanel>
+	</DockPanel>
 </UserControl>
