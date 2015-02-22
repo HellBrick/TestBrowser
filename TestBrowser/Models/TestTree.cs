@@ -53,13 +53,34 @@ namespace HellBrick.TestBrowser.Models
 			locationNode.InsertChild( newTest );
 		}
 
+		private const char _separator = '.';
+
 		private LocationNode CreateLocationNode( string location )
 		{
-			LocationNode locationNode = new LocationNode( _dispatcher, location, location );
-			this.InsertChild( locationNode );
-			_locationLookup[ location ] = locationNode;
+			string[] locationFragments = location.Split( _separator );
+			StringBuilder currentLocationBuilder = new StringBuilder( location.Length );
+			INode currentParent = this;
 
-			return locationNode;
+			for ( int i = 0; i < locationFragments.Length; i++ )
+			{
+				if ( currentLocationBuilder.Length > 0 )
+					currentLocationBuilder.Append( _separator );
+
+				currentLocationBuilder.Append( locationFragments[ i ] );
+				string currentLocation = currentLocationBuilder.ToString();
+
+				LocationNode currentLocationNode;
+				if ( !_locationLookup.TryGetValue( currentLocation, out currentLocationNode ) )
+				{
+					currentLocationNode = new LocationNode( _dispatcher, currentLocation, locationFragments[ i ] );
+					_locationLookup[ currentLocation ] = currentLocationNode;
+					currentParent.InsertChild( currentLocationNode );
+				}
+
+				currentParent = currentLocationNode;
+			}
+
+			return currentParent as LocationNode;
 		}
 
 		public void RemoveTest( TestModel test )
