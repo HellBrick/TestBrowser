@@ -66,6 +66,7 @@ namespace HellBrick.TestBrowser.Models
 		{
 			LocationNode locationNode = _locationLookup[ test.Location ];
 			RemoveChildRecursive( locationNode, test );
+			_testLookup.Remove( test.ID );
 		}
 
 		private void RemoveChildRecursive( INode parent, INode child )
