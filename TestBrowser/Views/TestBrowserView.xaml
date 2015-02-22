@@ -5,9 +5,14 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 	xmlns:m="clr-namespace:HellBrick.TestBrowser.Models"
+	xmlns:c="clr-namespace:HellBrick.TestBrowser.Common"
 	mc:Ignorable="d" 
 	d:DesignHeight="300" d:DesignWidth="300"
 	d:DataContext="{d:DesignInstance Type={x:Type m:TestBrowserModel}}">
+
+	<UserControl.Resources>
+		<c:BoolToVisibilityConverter x:Key="BoolToVisibility"></c:BoolToVisibilityConverter>
+	</UserControl.Resources>
 
 	<StackPanel>
 		<StackPanel Orientation="Horizontal">
@@ -15,8 +20,14 @@
 				<Hyperlink Command="{Binding RunAllCommand}">Run all</Hyperlink>
 			</TextBlock>
 		</StackPanel>
-		
+
 		<TextBlock Text="{Binding State}"></TextBlock>
+		<ProgressBar
+			Visibility="{Binding IsDoingSomething, Converter={StaticResource BoolToVisibility}}"
+			IsIndeterminate="{Binding IsDoingIndefiniteOperation}"
+			Maximum="{Binding MaxProgress}"
+			Value="{Binding CurrentProgress}">
+		</ProgressBar>
 		<ListBox ItemsSource="{Binding TestList}"></ListBox>
 	</StackPanel>
 </UserControl>

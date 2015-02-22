@@ -100,6 +100,8 @@ namespace HellBrick.TestBrowser.Models
 			
 			_currentTestRun = new TestRun( runRequest, _serviceContext );
 			_currentTestRun.TestRunUpdated += OnTestsFinished;
+			MaxProgress = _currentTestRun.TestCount;
+			CurrentProgress = 0;
 
 			//	The tests are stale now, it's a good reason to notify the UI about it.
 			foreach ( var test in TestList )
@@ -110,6 +112,8 @@ namespace HellBrick.TestBrowser.Models
 		{
 			foreach ( var testID in Enumerable.Concat( e.FinishedTests, e.CurrentlyRunningTests ) )
 				TestList[ testID ].RaiseStateChanged();
+
+			CurrentProgress += e.FinishedTests.Count;
 		}
 
 		private void UpdateTestList( IEnumerable<ITest> tests )
@@ -135,7 +139,48 @@ namespace HellBrick.TestBrowser.Models
 		public TestOperationStates State
 		{
 			get { return _state; }
-			set { _state = value; base.NotifyOfPropertyChange( () => State ); RunAllCommand.RaiseCanExecuteChanged(); }
+			set
+			{
+				_state = value;
+				base.NotifyOfPropertyChange( () => State );
+				RunAllCommand.RaiseCanExecuteChanged();
+				NotifyOfPropertyChange( () => IsDoingSomething );
+				NotifyOfPropertyChange( () => IsDoingIndefiniteOperation );
+			}
+		}
+
+		public bool IsDoingSomething
+		{
+			get { return !_serviceContext.RequestFactory.OperationSetFinished; }
+		}
+
+		public bool IsDoingIndefiniteOperation
+		{
+			get
+			{
+				switch ( State )
+				{
+					case TestOperationStates.TestExecutionStarted:
+						return false;
+
+					default:
+						return true;
+				}
+			}
+		}
+
+		private int _maxProgress;
+		public int MaxProgress
+		{
+			get { return _maxProgress; }
+			set { _maxProgress = value; base.NotifyOfPropertyChange( () => MaxProgress ); }
+		}
+
+		private int _currentProgress;
+		public int CurrentProgress
+		{
+			get { return _currentProgress; }
+			set { _currentProgress = value; base.NotifyOfPropertyChange( () => CurrentProgress ); }
 		}
 
 		#endregion

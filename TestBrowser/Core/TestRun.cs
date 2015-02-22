@@ -24,6 +24,7 @@ namespace HellBrick.TestBrowser.Core
 
 			IEnumerable<TestData> testsToRun = EnumerateTestsTorun( runRequest ).Cast<TestData>();
 			_testsToMonitor = testsToRun.ToDictionary( t => t.FastId );
+			TestCount = _testsToMonitor.Count;
 			_runRequest.Internals().TestRunStatsChanged += OnTestRunStatsChanged;
 		}
 
@@ -94,5 +95,6 @@ namespace HellBrick.TestBrowser.Core
 		#endregion
 
 		public event EventHandler<TestsRunUpdatedEventArgs> TestRunUpdated;
+		public int TestCount { get; private set; }
 	}
 }
