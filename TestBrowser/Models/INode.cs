@@ -39,5 +39,22 @@ namespace HellBrick.TestBrowser.Models
 			foreach ( var ancestor in node.EnumerateAncestors() )
 				yield return ancestor;
 		}
+
+		public static IEnumerable<INode> EnumerateDescendants( this INode node )
+		{
+			foreach ( var child in node.Children )
+			{
+				yield return child;
+				foreach ( var childDescendant in child.EnumerateDescendants() )
+					yield return childDescendant;
+			}
+		}
+
+		public static IEnumerable<INode> EnumerateDescendantsAndSelf( this INode node )
+		{
+			yield return node;
+			foreach ( var ancestor in node.EnumerateDescendants() )
+				yield return ancestor;
+		}
 	}
 }
