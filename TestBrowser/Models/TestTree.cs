@@ -72,7 +72,7 @@ namespace HellBrick.TestBrowser.Models
 		public void RemoveTest( TestModel test )
 		{
 			LocationNode locationNode = _locationLookup[ test.Location ];
-			RemoveChildRecursive( locationNode, test );
+			RemoveChild( locationNode, test );
 			_testLookup.Remove( test.ID );
 		}
 
@@ -106,17 +106,26 @@ namespace HellBrick.TestBrowser.Models
 			return currentParent as LocationNode;
 		}
 
-		private void RemoveChildRecursive( INode parent, INode child )
+		private void RemoveChild( INode parent, INode child )
 		{
-			child.Parent = null;
-			parent.Children.Remove( child );
+			while ( parent != null )
+			{
+				child.Parent = null;
+				parent.Children.Remove( child );
 
-			LocationNode locationNode = child as LocationNode;
-			if ( locationNode != null )
-				_locationLookup.Remove( locationNode.Location );
+				LocationNode locationNode = child as LocationNode;
+				if ( locationNode != null )
+					_locationLookup.Remove( locationNode.Location );
 
-			if ( parent.Children.Count == 0 && parent.Parent != null )
-				RemoveChildRecursive( parent.Parent, parent );
+				//	If the parent doesn't have any more children, we should remove it as well.
+				if ( parent.Children.Count == 0 )
+				{
+					child = parent;
+					parent = parent.Parent;
+				}
+				else
+					break;
+			}
 		}
 
 		/// <param name="locationNode">The parent of the node that has just been inserted into the tree.</param>
@@ -144,7 +153,7 @@ namespace HellBrick.TestBrowser.Models
 
 		private void BreakMerge( MergedNode mergedNode )
 		{
-			RemoveChildRecursive( mergedNode.Parent, mergedNode );
+			RemoveChild( mergedNode.Parent, mergedNode );
 			foreach ( var node in mergedNode.Nodes )
 				node.MergedNode = null;
 		}
