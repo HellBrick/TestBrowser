@@ -44,6 +44,11 @@ namespace HellBrick.TestBrowser.Models
 
 		public NodeCollection Children { get; private set; }
 
+		public bool IsVisible
+		{
+			get { return true; }
+		}
+
 		#endregion
 
 		private Dictionary<Guid, TestModel> _testLookup = new Dictionary<Guid, TestModel>();

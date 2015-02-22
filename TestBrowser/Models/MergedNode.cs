@@ -36,6 +36,11 @@ namespace HellBrick.TestBrowser.Models
 			get { return Nodes[ Nodes.Count - 1 ].Children; }
 		}
 
+		public bool IsVisible
+		{
+			get { return true; }
+		}
+
 		#endregion
 	}
 }

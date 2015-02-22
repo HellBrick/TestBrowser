@@ -27,7 +27,7 @@ namespace HellBrick.TestBrowser.Models
 		public MergedNode MergedNode
 		{
 			get { return _mergedNode; }
-			set { _mergedNode = value; NotifyOfPropertyChange( () => IsMerged ); }
+			set { _mergedNode = value; NotifyOfPropertyChange( () => IsVisible ); }
 		}
 
 		public bool IsMerged
@@ -45,9 +45,14 @@ namespace HellBrick.TestBrowser.Models
 			get { return !IsMerged && ShouldBeMerged; }
 		}
 
+		public bool IsLastMergedNode
+		{
+			get { return IsMerged && this == MergedNode.Nodes.Last(); }
+		}
+
 		public bool RequiresBreakUp
 		{
-			get { return IsMerged && !ShouldBeMerged && this != MergedNode.Nodes.Last(); }
+			get { return IsMerged && !ShouldBeMerged && !IsLastMergedNode; }
 		}
 
 		public override string ToString()
@@ -69,6 +74,11 @@ namespace HellBrick.TestBrowser.Models
 		ICollection<INode> INode.Children
 		{
 			get { return this.Children; }
+		}
+
+		public bool IsVisible
+		{
+			get { return !IsMerged || IsLastMergedNode; }
 		}
 
 		#endregion

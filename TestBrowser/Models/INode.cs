@@ -13,6 +13,7 @@ namespace HellBrick.TestBrowser.Models
 		string Name { get; }
 		INode Parent { get; set; }
 		ICollection<INode> Children { get; }
+		bool IsVisible { get; }
 	}
 
 	public static class NodeExtensions
