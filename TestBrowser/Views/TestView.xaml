@@ -70,7 +70,7 @@
 			</Style>
 		</TextBlock.Style>
 		
-		<Run Text="{Binding Namespace, Mode=OneTime}"></Run>
+		<Run Text="{Binding Location, Mode=OneTime}"></Run>
 		<Run>/</Run>
 		<Run Text="{Binding Name, Mode=OneTime}"></Run>
 	</TextBlock>
