@@ -11,5 +11,13 @@
 	<DataTemplate DataType="{x:Type m:TestModel}">
 		<v:TestView></v:TestView>
 	</DataTemplate>
+
+	<DataTemplate DataType="{x:Type m:LocationNode}">
+		<v:LocationNodeView></v:LocationNodeView>
+	</DataTemplate>
+
+	<DataTemplate DataType="{x:Type m:TestTree}">
+		<v:TestTreeView></v:TestTreeView>
+	</DataTemplate>
 	
 </ResourceDictionary>

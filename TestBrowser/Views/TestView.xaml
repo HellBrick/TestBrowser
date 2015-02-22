@@ -23,7 +23,7 @@
 		<s:Double x:Key="HueCurrentlyRunning">50</s:Double>
 	</UserControl.Resources>
 
-	<TextBlock>
+	<TextBlock Text="{Binding Name, Mode=OneTime}">
 		<TextBlock.Style>
 			<Style TargetType="{x:Type TextBlock}">
 				<Style.Triggers>
@@ -69,9 +69,5 @@
 				</Style.Triggers>
 			</Style>
 		</TextBlock.Style>
-		
-		<Run Text="{Binding Namespace, Mode=OneTime}"></Run>
-		<Run>/</Run>
-		<Run Text="{Binding Name, Mode=OneTime}"></Run>
 	</TextBlock>
 </UserControl>
