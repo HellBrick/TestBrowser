@@ -19,6 +19,8 @@
 			<TextBlock>
 				<Hyperlink Command="{Binding RunAllCommand}">Run all</Hyperlink>
 				<Hyperlink Command="{Binding DebugAllCommand}">Debug all</Hyperlink>
+				<Hyperlink Command="{Binding RunSelectedCommand}">Run selected</Hyperlink>
+				<Hyperlink Command="{Binding DebugSelectedCommand}">Debug selected</Hyperlink>
 			</TextBlock>
 		</StackPanel>
 
