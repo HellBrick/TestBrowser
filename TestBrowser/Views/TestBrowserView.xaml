@@ -18,6 +18,7 @@
 		<StackPanel Orientation="Horizontal">
 			<TextBlock>
 				<Hyperlink Command="{Binding RunAllCommand}">Run all</Hyperlink>
+				<Hyperlink Command="{Binding DebugAllCommand}">Debug all</Hyperlink>
 			</TextBlock>
 		</StackPanel>
 

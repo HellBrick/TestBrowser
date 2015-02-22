@@ -144,6 +144,7 @@ namespace HellBrick.TestBrowser.Models
 				_state = value;
 				base.NotifyOfPropertyChange( () => State );
 				RunAllCommand.RaiseCanExecuteChanged();
+				DebugAllCommand.RaiseCanExecuteChanged();
 				NotifyOfPropertyChange( () => IsDoingSomething );
 				NotifyOfPropertyChange( () => IsDoingIndefiniteOperation );
 			}
@@ -189,19 +190,27 @@ namespace HellBrick.TestBrowser.Models
 
 		private void InitializeCommands()
 		{
-			RunAllCommand = new SafeCommand( _serviceContext.Dispatcher, () => RunAll(), () => RunAllCanBeExecuted() );
+			RunAllCommand = new SafeCommand( _serviceContext.Dispatcher, () => RunAll(), () => CanRunTests() );
+			DebugAllCommand = new SafeCommand( _serviceContext.Dispatcher, () => DebugAll(), () => CanRunTests() );
 		}
 
-		public SafeCommand RunAllCommand { get; private set; }
-
-		private bool RunAllCanBeExecuted()
+		private bool CanRunTests()
 		{
 			return _serviceContext.RequestFactory.OperationSetFinished;
 		}
 
+		public SafeCommand RunAllCommand { get; private set; }
+
 		private void RunAll()
 		{
 			_serviceContext.RequestFactory.ExecuteTestsAsync();
+		}
+
+		public SafeCommand DebugAllCommand { get; private set; }
+
+		private void DebugAll()
+		{
+			_serviceContext.RequestFactory.DebugTestsAsync();
 		}
 
 		#endregion
