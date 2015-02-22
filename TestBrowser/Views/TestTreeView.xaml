@@ -24,6 +24,7 @@
 			<Style TargetType="{x:Type TreeViewItem}">
 				<Setter Property="IsExpanded" Value="True"></Setter>
 				<Setter Property="Visibility" Value="{Binding IsVisible, Converter={StaticResource BoolToVisibility}}"></Setter>
+				<Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"></Setter>
 			</Style>
 		</TreeView.ItemContainerStyle>
 	</TreeView>

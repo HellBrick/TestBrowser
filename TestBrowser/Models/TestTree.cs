@@ -49,6 +49,8 @@ namespace HellBrick.TestBrowser.Models
 			get { return true; }
 		}
 
+		public bool IsSelected { get; set; }
+
 		#endregion
 
 		private Dictionary<Guid, TestModel> _testLookup = new Dictionary<Guid, TestModel>();

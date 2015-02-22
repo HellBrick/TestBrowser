@@ -81,6 +81,13 @@ namespace HellBrick.TestBrowser.Models
 			get { return !IsMerged || IsLastMergedNode; }
 		}
 
+		private bool _isSelected;
+		public bool IsSelected
+		{
+			get { return _isSelected; }
+			set { _isSelected = value; NotifyOfPropertyChange( () => IsSelected ); }
+		}
+
 		#endregion
 	}
 }
