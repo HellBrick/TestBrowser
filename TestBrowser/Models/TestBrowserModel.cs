@@ -102,6 +102,7 @@ namespace HellBrick.TestBrowser.Models
 			_currentTestRun.TestRunUpdated += OnTestsFinished;
 			MaxProgress = _currentTestRun.TestCount;
 			CurrentProgress = 0;
+			LastRunSummary = new RunSummary( _currentTestRun );
 
 			//	The tests are stale now, it's a good reason to notify the UI about it.
 			foreach ( var test in TestTree.Tests.Values )
@@ -114,6 +115,7 @@ namespace HellBrick.TestBrowser.Models
 				TestTree.Tests[ testID ].RaiseStateChanged();
 
 			CurrentProgress += e.FinishedTests.Count;
+			LastRunSummary.RaisePropertiesChanged();
 		}
 
 		private void UpdateTestList( IEnumerable<ITest> tests )
@@ -134,6 +136,13 @@ namespace HellBrick.TestBrowser.Models
 		#region Properties
 
 		public TestTree TestTree { get; private set; }
+
+		private RunSummary _lastRunSummary;
+		public RunSummary LastRunSummary
+		{
+			get { return _lastRunSummary; }
+			private set { _lastRunSummary = value; NotifyOfPropertyChange( () => LastRunSummary ); }
+		}
 
 		private TestOperationStates _state = TestOperationStates.None;
 		public TestOperationStates State

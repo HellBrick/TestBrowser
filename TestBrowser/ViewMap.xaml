@@ -23,5 +23,9 @@
 	<DataTemplate DataType="{x:Type m:TestTree}">
 		<v:TestTreeView></v:TestTreeView>
 	</DataTemplate>
+
+	<DataTemplate DataType="{x:Type m:RunSummary}">
+		<v:RunSummaryView></v:RunSummaryView>
+	</DataTemplate>
 	
 </ResourceDictionary>
