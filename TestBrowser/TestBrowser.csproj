@@ -151,6 +151,7 @@
   <ItemGroup>
     <Compile Include="Common\BoolToVisibilityConverter.cs" />
     <Compile Include="Common\HSL.cs" />
+    <Compile Include="Common\NullToVisibilityConverter.cs" />
     <Compile Include="Common\OrderedSafeObservableCollection.cs" />
     <Compile Include="Common\SafeCommand.cs" />
     <Compile Include="Common\SafeObservableDictionary.cs" />
@@ -165,6 +166,7 @@
     <Compile Include="Models\MergedNode.cs" />
     <Compile Include="Models\NodeCollection.cs" />
     <Compile Include="Models\NodeType.cs" />
+    <Compile Include="Models\RunSummary.cs" />
     <Compile Include="Models\TestBrowserModel.cs" />
     <Compile Include="Models\TestModel.cs" />
     <Compile Include="Models\TestTree.cs" />
@@ -187,6 +189,9 @@
     </Compile>
     <Compile Include="Views\MergedNodeView.xaml.cs">
       <DependentUpon>MergedNodeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RunSummaryView.xaml.cs">
+      <DependentUpon>RunSummaryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TestBrowserView.xaml.cs">
       <DependentUpon>TestBrowserView.xaml</DependentUpon>
@@ -239,6 +244,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MergedNodeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RunSummaryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

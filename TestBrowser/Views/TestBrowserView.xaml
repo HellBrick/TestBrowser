@@ -24,7 +24,7 @@
 			</TextBlock>
 		</StackPanel>
 
-		<TextBlock Text="{Binding State}" DockPanel.Dock="Top"></TextBlock>
+		<ContentPresenter Content="{Binding LastRunSummary}" DockPanel.Dock="Top"></ContentPresenter>
 		<ProgressBar
 			Visibility="{Binding IsDoingSomething, Converter={StaticResource BoolToVisibility}}"
 			IsIndeterminate="{Binding IsDoingIndefiniteOperation}"

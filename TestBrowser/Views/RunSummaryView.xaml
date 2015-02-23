@@ -1,0 +1,32 @@
+﻿<UserControl
+	x:Class="HellBrick.TestBrowser.Views.RunSummaryView"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:m="clr-namespace:HellBrick.TestBrowser.Models"
+	xmlns:c="clr-namespace:HellBrick.TestBrowser.Common"
+	mc:Ignorable="d" 
+	d:DesignHeight="300" d:DesignWidth="300"
+	d:DataContext="{d:DesignInstance Type={x:Type m:RunSummary}}">
+
+	<UserControl.Resources>
+		<c:BoolToVisibilityConverter x:Key="CollapseIfFalse"></c:BoolToVisibilityConverter>
+	</UserControl.Resources>
+	
+	<StackPanel Orientation="Horizontal">
+		<TextBlock Visibility="{Binding IsRunning, Converter={StaticResource CollapseIfFalse}}">
+			<Run Text="Running"></Run>
+			<Run Text="{Binding TestCount, Mode=OneWay}"></Run>
+			<Run Text="tests: "></Run>
+		</TextBlock>
+		<TextBlock>
+			<Run Text="{Binding TestsPassed, Mode=OneWay}"></Run>
+			<Run Text="passed, "></Run>
+		</TextBlock>
+		<TextBlock>
+			<Run Text="{Binding TestsFailed, Mode=OneWay}"></Run>
+			<Run Text="failed"></Run>
+		</TextBlock>		
+	</StackPanel>
+</UserControl>
