@@ -192,31 +192,26 @@ namespace HellBrick.TestBrowser.Models
 			set { _currentProgress = value; base.NotifyOfPropertyChange( () => CurrentProgress ); }
 		}
 
+		public List<SafeCommand> Commands { get; private set; }
+
 		#endregion
 
 		#region Commands
 
-		private List<SafeCommand> _commands;
-
 		private void InitializeCommands()
 		{
-			RunAllCommand = new SafeCommand( _serviceContext.Dispatcher, () => RunAll(), () => CanRunTests() );
-			DebugAllCommand = new SafeCommand( _serviceContext.Dispatcher, () => DebugAll(), () => CanRunTests() );
-			RunSelectedCommand = new SafeCommand( _serviceContext.Dispatcher, () => RunSelected(), () => CanRunTests() );
-			DebugSelectedCommand = new SafeCommand( _serviceContext.Dispatcher, () => DebugSelected(), () => CanRunTests() );
-
-			_commands = new List<SafeCommand>()
+			Commands = new List<SafeCommand>()
 			{
-				RunAllCommand,
-				DebugAllCommand,
-				RunSelectedCommand,
-				DebugSelectedCommand
+				new SafeCommand( _serviceContext.Dispatcher, () => RunAll(), () => CanRunTests(), "Run all" ),
+				new SafeCommand( _serviceContext.Dispatcher, () => DebugAll(), () => CanRunTests(), "Debug all" ),
+				new SafeCommand( _serviceContext.Dispatcher, () => RunSelected(), () => CanRunTests(), "Run selected" ),
+				new SafeCommand( _serviceContext.Dispatcher, () => DebugSelected(), () => CanRunTests(), "Debug selected" )
 			};
 		}
 
 		private void RefreshCommands()
 		{
-			foreach ( var command in _commands )
+			foreach ( var command in Commands )
 				command.RaiseCanExecuteChanged();
 		}
 
@@ -225,28 +220,20 @@ namespace HellBrick.TestBrowser.Models
 			return _serviceContext.RequestFactory.OperationSetFinished;
 		}
 
-		public SafeCommand RunAllCommand { get; private set; }
-
 		private void RunAll()
 		{
 			_serviceContext.RequestFactory.ExecuteTestsAsync();
 		}
-
-		public SafeCommand DebugAllCommand { get; private set; }
 
 		private void DebugAll()
 		{
 			_serviceContext.RequestFactory.DebugTestsAsync();
 		}
 
-		public SafeCommand RunSelectedCommand { get; private set; }
-
 		private void RunSelected()
 		{
 			_serviceContext.RequestFactory.ExecuteTestsAsync( EnumerateSelectedTestIDs(), configProvider => { } );
 		}
-
-		public SafeCommand DebugSelectedCommand { get; private set; }
 
 		private void DebugSelected()
 		{

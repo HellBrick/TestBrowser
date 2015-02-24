@@ -15,14 +15,22 @@
 	</UserControl.Resources>
 
 	<DockPanel LastChildFill="True">
-		<StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-			<TextBlock>
-				<Hyperlink Command="{Binding RunAllCommand}">Run all</Hyperlink>
-				<Hyperlink Command="{Binding DebugAllCommand}">Debug all</Hyperlink>
-				<Hyperlink Command="{Binding RunSelectedCommand}">Run selected</Hyperlink>
-				<Hyperlink Command="{Binding DebugSelectedCommand}">Debug selected</Hyperlink>
-			</TextBlock>
-		</StackPanel>
+		<ItemsControl DockPanel.Dock="Top" ItemsSource="{Binding Commands}">
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<StackPanel Orientation="Horizontal"></StackPanel>
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+			<ItemsControl.ItemTemplate>
+				<DataTemplate DataType="{x:Type c:SafeCommand}">
+					<TextBlock Margin="0,0,9,0">
+						<Hyperlink Command="{Binding .}">
+							<Run Text="{Binding Text, Mode=OneTime}"></Run>
+						</Hyperlink>
+					</TextBlock>
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+		</ItemsControl>
 
 		<ContentPresenter Content="{Binding LastRunSummary}" DockPanel.Dock="Top"></ContentPresenter>
 		<ProgressBar
