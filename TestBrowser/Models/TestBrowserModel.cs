@@ -205,7 +205,8 @@ namespace HellBrick.TestBrowser.Models
 				new SafeCommand( _serviceContext.Dispatcher, () => RunAll(), () => CanRunTests(), "Run all" ),
 				new SafeCommand( _serviceContext.Dispatcher, () => DebugAll(), () => CanRunTests(), "Debug all" ),
 				new SafeCommand( _serviceContext.Dispatcher, () => RunSelected(), () => CanRunTests(), "Run selected" ),
-				new SafeCommand( _serviceContext.Dispatcher, () => DebugSelected(), () => CanRunTests(), "Debug selected" )
+				new SafeCommand( _serviceContext.Dispatcher, () => DebugSelected(), () => CanRunTests(), "Debug selected" ),
+				new SafeCommand( _serviceContext.Dispatcher, () => Cancel(), () => CanCancel(), "Cancel" )
 			};
 		}
 
@@ -259,6 +260,16 @@ namespace HellBrick.TestBrowser.Models
 				//	Otherwise, we have to recursively examine all its descendants personally.
 				return node.Children.SelectMany( c => EnumerateSelectedTestIDs( c ) );
 			}
+		}
+
+		private void Cancel()
+		{
+			_serviceContext.RequestFactory.Cancel();
+		}
+
+		private bool CanCancel()
+		{
+			return _serviceContext.RequestFactory.CanCancel;
 		}
 
 		#endregion
