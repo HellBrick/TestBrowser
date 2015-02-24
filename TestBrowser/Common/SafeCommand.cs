@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestWindow.Controller;
 
 namespace HellBrick.TestBrowser.Common
 {
-	public class SafeCommand: ICommand
+	public class SafeCommand: Caliburn.Micro.PropertyChangedBase, ICommand
 	{
 		private SafeDispatcher _dispatcher;
 		private Action _execute;
@@ -28,6 +28,10 @@ namespace HellBrick.TestBrowser.Common
 		}
 
 		public string Text { get; private set; }
+		public bool IsEnabled
+		{
+			get { return CanExecute( null ); }
+		}
 
 		#region ICommand Members
 
@@ -47,6 +51,8 @@ namespace HellBrick.TestBrowser.Common
 
 		public void RaiseCanExecuteChanged()
 		{
+			base.NotifyOfPropertyChange( () => IsEnabled );
+
 			var handler = CanExecuteChanged;
 			if ( handler != null )
 				_dispatcher.Invoke( () => handler( this, EventArgs.Empty ) );
