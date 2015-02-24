@@ -8,22 +8,29 @@ using Microsoft.VisualStudio.TestWindow.Controller;
 
 namespace HellBrick.TestBrowser.Common
 {
-	public class SafeCommand: ICommand
+	public class SafeCommand: Caliburn.Micro.PropertyChangedBase, ICommand
 	{
 		private SafeDispatcher _dispatcher;
 		private Action _execute;
 		private Func<bool> _canExecute;
 
-		public SafeCommand( SafeDispatcher dispatcher, Action execute )
-			: this( dispatcher, execute, () => true )
+		public SafeCommand( SafeDispatcher dispatcher, Action execute, string text )
+			: this( dispatcher, execute, () => true, text )
 		{
 		}
 
-		public SafeCommand( SafeDispatcher dispatcher, Action execute, Func<bool> canExecute )
+		public SafeCommand( SafeDispatcher dispatcher, Action execute, Func<bool> canExecute, string text )
 		{
 			_dispatcher = dispatcher;
 			_execute = execute;
 			_canExecute = canExecute;
+			Text = text;
+		}
+
+		public string Text { get; private set; }
+		public bool IsEnabled
+		{
+			get { return CanExecute( null ); }
 		}
 
 		#region ICommand Members
@@ -44,6 +51,8 @@ namespace HellBrick.TestBrowser.Common
 
 		public void RaiseCanExecuteChanged()
 		{
+			base.NotifyOfPropertyChange( () => IsEnabled );
+
 			var handler = CanExecuteChanged;
 			if ( handler != null )
 				_dispatcher.Invoke( () => handler( this, EventArgs.Empty ) );
