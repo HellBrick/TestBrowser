@@ -124,11 +124,28 @@ namespace HellBrick.TestBrowser.Models
 
 			var removedTests = TestTree.Tests.Where( t => !newTestLookup.ContainsKey( t.Key ) ).ToArray();
 			foreach ( var testRecord in removedTests )
-				TestTree.RemoveTest( testRecord.Value );
+			{
+				TestModel test = testRecord.Value;
+				test.SelectionChanged -= OnTestSelectionChanged;
+				TestTree.RemoveTest( test );
+			}
 
 			var newTests = newTestLookup.Where( kvp => !TestTree.Tests.ContainsKey( kvp.Key ) );
 			foreach ( var kvp in newTests )
-				TestTree.InsertTest( new TestModel( kvp.Value ) );
+			{
+				TestModel test = new TestModel( kvp.Value );
+				test.SelectionChanged += OnTestSelectionChanged;
+				TestTree.InsertTest( test );
+			}
+		}
+
+		private void OnTestSelectionChanged( TestModel sender, EventArgs e )
+		{
+			if ( !sender.IsSelected && SelectedTest == sender )
+				SelectedTest = null;
+
+			if ( sender.IsSelected && SelectedTest != sender )
+				SelectedTest = sender;
 		}
 
 		#endregion
@@ -190,6 +207,13 @@ namespace HellBrick.TestBrowser.Models
 		{
 			get { return _currentProgress; }
 			set { _currentProgress = value; base.NotifyOfPropertyChange( () => CurrentProgress ); }
+		}
+
+		private TestModel _selectedTest;
+		public TestModel SelectedTest
+		{
+			get { return _selectedTest; }
+			set { _selectedTest = value; base.NotifyOfPropertyChange( () => SelectedTest ); }
 		}
 
 		public List<SafeCommand> Commands { get; private set; }
