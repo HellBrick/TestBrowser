@@ -10,6 +10,7 @@ using HellBrick.TestBrowser.Core;
 using Microsoft.VisualStudio.TestWindow.Controller;
 using Microsoft.VisualStudio.TestWindow.Data;
 using Microsoft.VisualStudio.TestWindow.Extensibility;
+using Microsoft.VisualStudio.TestWindow.Model;
 
 namespace HellBrick.TestBrowser.Models
 {
@@ -32,7 +33,17 @@ namespace HellBrick.TestBrowser.Models
 		public Guid ID { get { return _test.Id; } }
 		public bool IsStale { get { return _test.Stale; } }
 		public bool IsCurrentlyRunning { get { return _test.IsCurrentlyRunning; } }
-		public TestResultData Result { get { return _test.Results.FirstOrDefault() as TestResultData; } }
+		public Result Result
+		{
+			get
+			{
+				var testResultData = _test.Results.FirstOrDefault() as TestResultData;
+				if (testResultData == null)
+					return null;
+
+				return _serviceContext.TestObjectFactory.CreateResult( testResultData );
+			}
+		}
 
 		public event EventHandler<TestModel, EventArgs> SelectionChanged;
 		private void RaiseSelectionChanged()

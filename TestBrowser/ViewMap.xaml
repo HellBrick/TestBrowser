@@ -3,7 +3,10 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:m="clr-namespace:HellBrick.TestBrowser.Models"
 	xmlns:v="clr-namespace:HellBrick.TestBrowser.Views"
-	xmlns:t="clr-namespace:Microsoft.VisualStudio.TestWindow.Data;assembly=Microsoft.VisualStudio.TestWindow.Core">
+	xmlns:t="clr-namespace:Microsoft.VisualStudio.TestWindow.Data;assembly=Microsoft.VisualStudio.TestWindow.Core"
+	xmlns:tm="clr-namespace:Microsoft.VisualStudio.TestWindow.Model;assembly=Microsoft.VisualStudio.TestWindow.Core"
+	xmlns:tv="clr-namespace:Microsoft.VisualStudio.TestWindow.UI;assembly=Microsoft.VisualStudio.TestWindow.Core"
+	xmlns:ext="clr-namespace:Microsoft.VisualStudio.TestWindow.Extensibility;assembly=Microsoft.VisualStudio.TestWindow.Interfaces">
 
 	<DataTemplate DataType="{x:Type m:TestBrowserModel}">
 		<v:TestBrowserView></v:TestBrowserView>
@@ -29,8 +32,12 @@
 		<v:RunSummaryView></v:RunSummaryView>
 	</DataTemplate>
 	
-	<DataTemplate DataType="{x:Type t:TestResultData}">
+	<DataTemplate DataType="{x:Type tm:Result}">
 		<v:TestResultView></v:TestResultView>
+	</DataTemplate>
+	
+	<DataTemplate DataType="{x:Type ext:StackTrace}">
+		<tv:StackTraceControl></tv:StackTraceControl>
 	</DataTemplate>
 	
 </ResourceDictionary>
