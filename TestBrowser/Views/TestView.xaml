@@ -23,12 +23,6 @@
 		<s:Double x:Key="HueCurrentlyRunning">50</s:Double>
 	</UserControl.Resources>
 
-	<UserControl.ContextMenu>
-		<ContextMenu>
-			<MenuItem DataContext="{Binding GoToTestCommand}" Header="{Binding Text}" Command="{Binding .}"></MenuItem>
-		</ContextMenu>
-	</UserControl.ContextMenu>
-
 	<TextBlock Text="{Binding Name, Mode=OneTime}">
 		<TextBlock.Style>
 			<Style TargetType="{x:Type TextBlock}">
