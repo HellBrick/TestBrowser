@@ -247,7 +247,7 @@ namespace HellBrick.TestBrowser.Models
 
 		private void RunAll()
 		{
-			_serviceContext.RequestFactory.ExecuteTestsAsync();
+			_serviceContext.ExecuteOperationAsync( new RunAllOperation( _serviceContext.OperationData ) { ShowTestWindowAfterRun = false } );
 		}
 
 		private void DebugAll()
