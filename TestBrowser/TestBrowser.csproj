@@ -197,6 +197,12 @@
     <Compile Include="Views\TestBrowserView.xaml.cs">
       <DependentUpon>TestBrowserView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TestDetailsView.xaml.cs">
+      <DependentUpon>TestDetailsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TestResultView.xaml.cs">
+      <DependentUpon>TestResultView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TestTreeView.xaml.cs">
       <DependentUpon>TestTreeView.xaml</DependentUpon>
     </Compile>
@@ -253,6 +259,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TestBrowserView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TestDetailsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TestResultView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -6,6 +6,7 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 	xmlns:m="clr-namespace:HellBrick.TestBrowser.Models"
 	xmlns:c="clr-namespace:HellBrick.TestBrowser.Common"
+	xmlns:v="clr-namespace:HellBrick.TestBrowser.Views"
 	mc:Ignorable="d" 
 	d:DesignHeight="300" d:DesignWidth="300"
 	d:DataContext="{d:DesignInstance Type={x:Type m:TestBrowserModel}}">
@@ -40,6 +41,9 @@
 			Value="{Binding CurrentProgress}"
 			DockPanel.Dock="Top">
 		</ProgressBar>
+
+		<v:TestDetailsView DataContext="{Binding SelectedTest}" DockPanel.Dock="Bottom"></v:TestDetailsView>
+
 		<ContentPresenter Content="{Binding TestTree}"></ContentPresenter>
 	</DockPanel>
 </UserControl>
