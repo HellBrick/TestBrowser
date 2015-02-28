@@ -3,7 +3,8 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:m="clr-namespace:HellBrick.TestBrowser.Models"
 	xmlns:v="clr-namespace:HellBrick.TestBrowser.Views"
-	xmlns:t="clr-namespace:Microsoft.VisualStudio.TestWindow.Data;assembly=Microsoft.VisualStudio.TestWindow.Core">
+	xmlns:t="clr-namespace:Microsoft.VisualStudio.TestWindow.Data;assembly=Microsoft.VisualStudio.TestWindow.Core"
+	xmlns:tm="clr-namespace:Microsoft.VisualStudio.TestWindow.Model;assembly=Microsoft.VisualStudio.TestWindow.Core">
 
 	<DataTemplate DataType="{x:Type m:TestBrowserModel}">
 		<v:TestBrowserView></v:TestBrowserView>
@@ -29,7 +30,7 @@
 		<v:RunSummaryView></v:RunSummaryView>
 	</DataTemplate>
 	
-	<DataTemplate DataType="{x:Type t:TestResultData}">
+	<DataTemplate DataType="{x:Type tm:Result}">
 		<v:TestResultView></v:TestResultView>
 	</DataTemplate>
 	
