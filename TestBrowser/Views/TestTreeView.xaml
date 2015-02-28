@@ -15,6 +15,7 @@
 
 		<InputBindingCollection x:Shared="False" x:Key="ItemCommandBindings">
 			<MouseBinding Command="{Binding GoToTestCommand}" MouseAction="LeftDoubleClick"></MouseBinding>
+			<KeyBinding Command="{Binding GoToTestCommand}" Key="F12"></KeyBinding>
 		</InputBindingCollection>
 	</UserControl.Resources>
 
