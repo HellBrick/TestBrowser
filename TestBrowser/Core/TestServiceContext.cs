@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestWindow.Controller;
 using Microsoft.VisualStudio.TestWindow.Data;
 using Microsoft.VisualStudio.TestWindow.Extensibility;
+using Microsoft.VisualStudio.TestWindow.Host;
 
 namespace HellBrick.TestBrowser.Core
 {
@@ -14,13 +15,14 @@ namespace HellBrick.TestBrowser.Core
 	public class TestServiceContext
 	{
 		[ImportingConstructor]
-		public TestServiceContext( IRequestFactory requestFactory, IUnitTestStorage storage, SafeDispatcher safeDispatcher, ILogger logger, OperationData operationData )
+		public TestServiceContext( IRequestFactory requestFactory, IUnitTestStorage storage, SafeDispatcher safeDispatcher, ILogger logger, OperationData operationData, IHost host )
 		{
 			RequestFactory = requestFactory;
 			Storage = storage;
 			Dispatcher = safeDispatcher;
 			Logger = logger;
 			OperationData = operationData;
+			Host = host;
 		}
 
 		public IRequestFactory RequestFactory { get; private set; }
@@ -28,6 +30,7 @@ namespace HellBrick.TestBrowser.Core
 		public SafeDispatcher Dispatcher { get; set; }
 		public ILogger Logger { get; private set; }
 		public OperationData OperationData { get; private set; }
+		public IHost Host { get; set; }
 
 		/// <summary>
 		/// This is the way OperationBroker.EnqueueOperation implemented.
