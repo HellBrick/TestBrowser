@@ -13,7 +13,7 @@
 		<TextBlock Text="{Binding State}"></TextBlock>
 		<TextBlock Text="{Binding Duration}"></TextBlock>
 		<TextBlock Text="{Binding ErrorMessage}"></TextBlock>
-		<TextBlock Text="{Binding ErrorStackTrace}"></TextBlock>
-	</StackPanel>
 
+		<ContentPresenter Content="{Binding StackTrace}"></ContentPresenter>
+	</StackPanel>
 </UserControl>
