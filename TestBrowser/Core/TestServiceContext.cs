@@ -14,17 +14,28 @@ namespace HellBrick.TestBrowser.Core
 	public class TestServiceContext
 	{
 		[ImportingConstructor]
-		public TestServiceContext( IRequestFactory requestFactory, IUnitTestStorage storage, SafeDispatcher safeDispatcher, ILogger logger )
+		public TestServiceContext( IRequestFactory requestFactory, IUnitTestStorage storage, SafeDispatcher safeDispatcher, ILogger logger, OperationData operationData )
 		{
 			RequestFactory = requestFactory;
 			Storage = storage;
-			this.Dispatcher = safeDispatcher;
+			Dispatcher = safeDispatcher;
 			Logger = logger;
+			OperationData = operationData;
 		}
 
 		public IRequestFactory RequestFactory { get; private set; }
 		public IUnitTestStorage Storage { get; private set; }
 		public SafeDispatcher Dispatcher { get; set; }
 		public ILogger Logger { get; private set; }
+		public OperationData OperationData { get; private set; }
+
+		/// <summary>
+		/// This is the way OperationBroker.EnqueueOperation implemented.
+		/// </summary>
+		public Task<bool> ExecuteOperationAsync( Operation operation )
+		{
+			RequestFactory.Initialize();
+			return OperationData.EnqueueOperation( operation );
+		}
 	}
 }
