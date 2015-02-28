@@ -12,6 +12,11 @@
 
 	<UserControl.Resources>
 		<c:BoolToVisibilityConverter x:Key="BoolToVisibility"></c:BoolToVisibilityConverter>
+
+		<InputBindingCollection x:Shared="False" x:Key="ItemCommandBindings">
+			<MouseBinding Command="{Binding GoToTestCommand}" MouseAction="LeftDoubleClick"></MouseBinding>
+			<KeyBinding Command="{Binding GoToTestCommand}" Key="F12"></KeyBinding>
+		</InputBindingCollection>
 	</UserControl.Resources>
 
 	<TreeView ItemsSource="{Binding Children}">
@@ -25,6 +30,14 @@
 				<Setter Property="IsExpanded" Value="True"></Setter>
 				<Setter Property="Visibility" Value="{Binding IsVisible, Converter={StaticResource BoolToVisibility}}"></Setter>
 				<Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"></Setter>
+				<Setter Property="c:Input.InputBindings" Value="{StaticResource ItemCommandBindings}"></Setter>
+				<Setter Property="ContextMenu">
+					<Setter.Value>
+						<ContextMenu>
+							<MenuItem DataContext="{Binding GoToTestCommand}" Header="{Binding Text}" Command="{Binding .}"></MenuItem>
+						</ContextMenu>
+					</Setter.Value>
+				</Setter>
 			</Style>
 		</TreeView.ItemContainerStyle>
 	</TreeView>

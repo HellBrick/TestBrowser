@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
 using HellBrick.TestBrowser.Common;
+using HellBrick.TestBrowser.Core;
+using Microsoft.VisualStudio.TestWindow.Controller;
 using Microsoft.VisualStudio.TestWindow.Data;
 using Microsoft.VisualStudio.TestWindow.Extensibility;
 
@@ -12,13 +15,16 @@ namespace HellBrick.TestBrowser.Models
 {
 	public class TestModel: PropertyChangedBase, INode
 	{
+		private TestServiceContext _serviceContext;
 		private ITest _test;
 
-		public TestModel( ITest test )
+		public TestModel( ITest test, TestServiceContext serviceContext )
 		{
+			_serviceContext = serviceContext;
 			_test = test;
 
 			Location = _test.FullyQualifiedName.Substring( 0, _test.FullyQualifiedName.Length - _test.DisplayName.Length - 1 );
+			InitializeCommands();
 		}
 
 		public string Location { get; private set; }
@@ -78,5 +84,61 @@ namespace HellBrick.TestBrowser.Models
 		}
 
 		#endregion
+
+		#region Commands
+
+		private void InitializeCommands()
+		{
+			GoToTestCommand = new SafeCommand( _serviceContext.Dispatcher, () => GoToTest(), "Go to test" );
+		}
+
+		public SafeCommand GoToTestCommand { get; private set; }
+
+		private void GoToTest()
+		{
+			_serviceContext.Host.Open( new TestOpenTarget( _test as TestData ) );
+		}
+
+		#endregion
+
+		private struct TestOpenTarget: IOpenTarget
+		{
+			private TestData _testData;
+
+			public TestOpenTarget( TestData testData )
+			{
+				_testData = testData;
+			}
+
+			#region IOpenTarget Members
+
+			public bool Enabled
+			{
+				get { return !String.IsNullOrEmpty( FilePath ); }
+			}
+
+			public string FileName
+			{
+				get { return Path.GetFileName( FilePath ); }
+			}
+
+			public string FilePath
+			{
+				get { return _testData.FilePath; }
+			}
+
+			public int LineNumber
+			{
+				get { return _testData.LineNumber; }
+			}
+
+			public string Name
+			{
+				get { return _testData.FullyQualifiedName; }
+			}
+
+			#endregion
+		}
+
 	}
 }
