@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
+using HellBrick.TestBrowser.Common;
 using Microsoft.VisualStudio.TestWindow.Extensibility;
 
 namespace HellBrick.TestBrowser.Models
@@ -24,6 +25,14 @@ namespace HellBrick.TestBrowser.Models
 		public Guid ID { get { return _test.Id; } }
 		public bool IsStale { get { return _test.Stale; } }
 		public bool IsCurrentlyRunning { get { return _test.IsCurrentlyRunning; } }
+
+		public event EventHandler<TestModel, EventArgs> SelectionChanged;
+		private void RaiseSelectionChanged()
+		{
+			var handler = SelectionChanged;
+			if ( handler != null )
+				handler( this, EventArgs.Empty );
+		}
 
 		public void RaiseStateChanged()
 		{
@@ -62,7 +71,7 @@ namespace HellBrick.TestBrowser.Models
 		public bool IsSelected
 		{
 			get { return _isSelected; }
-			set { _isSelected = value; NotifyOfPropertyChange( () => IsSelected ); }
+			set { _isSelected = value; NotifyOfPropertyChange( () => IsSelected ); RaiseSelectionChanged(); }
 		}
 
 		#endregion
