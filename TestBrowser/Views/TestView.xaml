@@ -23,10 +23,6 @@
 		<s:Double x:Key="HueCurrentlyRunning">50</s:Double>
 	</UserControl.Resources>
 
-	<UserControl.InputBindings>
-		<MouseBinding Command="{Binding GoToTestCommand}" MouseAction="LeftDoubleClick"></MouseBinding>
-	</UserControl.InputBindings>
-
 	<UserControl.ContextMenu>
 		<ContextMenu>
 			<MenuItem DataContext="{Binding GoToTestCommand}" Header="{Binding Text}" Command="{Binding .}"></MenuItem>
