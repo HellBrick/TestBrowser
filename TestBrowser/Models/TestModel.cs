@@ -25,9 +25,33 @@ namespace HellBrick.TestBrowser.Models
 			_test = test;
 
 			Location = _test.Namespace + "." + _test.ClassName;
+			ParseMethodNameAndTestCase();
 			InitializeCommands();
 		}
 
+		private void ParseMethodNameAndTestCase()
+		{
+			int openBracketIndex = _test.FullyQualifiedName.IndexOf( '(' );
+			if ( openBracketIndex > 0 )
+			{
+				int closeBracketIndex = _test.FullyQualifiedName.LastIndexOf( ')' );
+				if ( closeBracketIndex > 0 )
+				{
+					//	Fully qualified name contains Location + extra '.' in the beginning, which has to be skipped
+					int charsToSkip = Location.Length + 1;
+
+					MethodName = _test.FullyQualifiedName.Substring( charsToSkip, openBracketIndex - charsToSkip );
+					TestCaseName = _test.FullyQualifiedName.Substring( openBracketIndex + 1, closeBracketIndex - openBracketIndex - 1 );
+					return;
+				}
+			}
+
+			MethodName = _test.DisplayName;
+			TestCaseName = null;
+		}
+
+		public string MethodName { get; private set; }
+		public string TestCaseName { get; private set; }
 		public string Location { get; private set; }
 		public TestState State { get { return _test.State; } }
 		public Guid ID { get { return _test.Id; } }
