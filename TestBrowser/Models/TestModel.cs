@@ -24,7 +24,7 @@ namespace HellBrick.TestBrowser.Models
 			_serviceContext = serviceContext;
 			_test = test;
 
-			Location = _test.FullyQualifiedName.Substring( 0, _test.FullyQualifiedName.Length - _test.DisplayName.Length - 1 );
+			Location = _test.Namespace + "." + _test.ClassName;
 			InitializeCommands();
 		}
 
@@ -107,7 +107,7 @@ namespace HellBrick.TestBrowser.Models
 
 		private void GoToTest()
 		{
-			_serviceContext.Host.Open( new TestOpenTarget( _test as TestData ) );
+			_serviceContext.Host.Open( new TestOpenTarget( _test ) );
 		}
 
 		#endregion
