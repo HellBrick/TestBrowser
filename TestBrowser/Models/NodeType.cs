@@ -9,6 +9,7 @@ namespace HellBrick.TestBrowser.Models
 	public enum NodeType
 	{
 		Location,
+		Method,
 		Test
 	}
 }

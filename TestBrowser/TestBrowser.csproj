@@ -170,6 +170,7 @@
     <Compile Include="Models\NodeType.cs" />
     <Compile Include="Models\RunSummary.cs" />
     <Compile Include="Models\TestBrowserModel.cs" />
+    <Compile Include="Models\TestMethodNode.cs" />
     <Compile Include="Models\TestModel.cs" />
     <Compile Include="Models\TestTree.cs" />
     <Compile Include="TestBrowserControl.xaml.cs">
@@ -200,6 +201,9 @@
     </Compile>
     <Compile Include="Views\TestDetailsView.xaml.cs">
       <DependentUpon>TestDetailsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TestMethodView.xaml.cs">
+      <DependentUpon>TestMethodView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TestResultView.xaml.cs">
       <DependentUpon>TestResultView.xaml</DependentUpon>
@@ -264,6 +268,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TestDetailsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TestMethodView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

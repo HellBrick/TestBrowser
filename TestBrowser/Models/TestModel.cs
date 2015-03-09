@@ -17,17 +17,41 @@ namespace HellBrick.TestBrowser.Models
 	public class TestModel: PropertyChangedBase, INode
 	{
 		private TestServiceContext _serviceContext;
-		private ITest _test;
+		private TestData _test;
 
-		public TestModel( ITest test, TestServiceContext serviceContext )
+		public TestModel( TestData test, TestServiceContext serviceContext )
 		{
 			_serviceContext = serviceContext;
 			_test = test;
 
-			Location = _test.FullyQualifiedName.Substring( 0, _test.FullyQualifiedName.Length - _test.DisplayName.Length - 1 );
+			Location = _test.Namespace + "." + _test.ClassName;
+			ParseMethodNameAndTestCase();
 			InitializeCommands();
 		}
 
+		private void ParseMethodNameAndTestCase()
+		{
+			int openBracketIndex = _test.FullyQualifiedName.IndexOf( '(' );
+			if ( openBracketIndex > 0 )
+			{
+				int closeBracketIndex = _test.FullyQualifiedName.LastIndexOf( ')' );
+				if ( closeBracketIndex > 0 )
+				{
+					//	Fully qualified name contains Location + extra '.' in the beginning, which has to be skipped
+					int charsToSkip = Location.Length + 1;
+
+					MethodName = _test.FullyQualifiedName.Substring( charsToSkip, openBracketIndex - charsToSkip );
+					TestCaseName = _test.FullyQualifiedName.Substring( openBracketIndex + 1, closeBracketIndex - openBracketIndex - 1 );
+					return;
+				}
+			}
+
+			MethodName = _test.DisplayName;
+			TestCaseName = null;
+		}
+
+		public string MethodName { get; private set; }
+		public string TestCaseName { get; private set; }
 		public string Location { get; private set; }
 		public TestState State { get { return _test.State; } }
 		public Guid ID { get { return _test.Id; } }
@@ -73,7 +97,7 @@ namespace HellBrick.TestBrowser.Models
 			get { return NodeType.Test; }
 		}
 
-		public string Name { get { return _test.DisplayName; } }
+		public string Name { get { return TestCaseName ?? MethodName; } }
 		public INode Parent { get; set; }
 
 		private List<INode> _emptyList = new List<INode>();
@@ -107,7 +131,7 @@ namespace HellBrick.TestBrowser.Models
 
 		private void GoToTest()
 		{
-			_serviceContext.Host.Open( new TestOpenTarget( _test as TestData ) );
+			_serviceContext.Host.Open( new TestOpenTarget( _test ) );
 		}
 
 		#endregion
