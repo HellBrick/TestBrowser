@@ -85,8 +85,8 @@ namespace HellBrick.TestBrowser.Models
 
 		public void RemoveTest( TestModel test )
 		{
-			LocationNode locationNode = _locationLookup[ test.Location ];
-			RemoveChild( locationNode, test );
+			INode parent = test.Parent;
+			RemoveChild( parent, test );
 			_testLookup.Remove( test.ID );
 		}
 
@@ -137,9 +137,7 @@ namespace HellBrick.TestBrowser.Models
 		{
 			while ( parent != null )
 			{
-				child.Parent = null;
-				parent.Children.Remove( child );
-
+				//	Dictionaries must be cleaned up BEFORE severing connection between the parent and the child
 				LocationNode locationNode = child as LocationNode;
 				if ( locationNode != null )
 					_locationLookup.Remove( locationNode.Location );
@@ -147,6 +145,9 @@ namespace HellBrick.TestBrowser.Models
 				TestMethodNode methodNode = child as TestMethodNode;
 				if ( methodNode != null )
 					_methodLookup.Remove( MethodNodeKey( ( methodNode.Parent as LocationNode ), methodNode.Name ) );
+
+				child.Parent = null;
+				parent.Children.Remove( child );
 
 				//	If the parent doesn't have any more children, we should remove it as well.
 				if ( parent.Children.Count == 0 )
