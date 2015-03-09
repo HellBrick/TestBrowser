@@ -37,7 +37,7 @@ namespace HellBrick.TestBrowser.Models
 
 		public bool ShouldBeMerged
 		{
-			get { return Children.Count == 1 && Children[ 0 ].Type != NodeType.Test; }
+			get { return Children.Count == 1 && Children[ 0 ].Type == NodeType.Location; }
 		}
 
 		public bool RequiresMerge

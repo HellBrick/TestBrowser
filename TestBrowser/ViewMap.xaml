@@ -24,6 +24,10 @@
 		<v:MergedNodeView></v:MergedNodeView>
 	</DataTemplate>
 
+	<DataTemplate DataType="{x:Type m:TestMethodNode}">
+		<v:TestMethodView></v:TestMethodView>
+	</DataTemplate>
+
 	<DataTemplate DataType="{x:Type m:TestTree}">
 		<v:TestTreeView></v:TestTreeView>
 	</DataTemplate>

@@ -11,6 +11,7 @@ namespace HellBrick.TestBrowser.Models
 	public class TestTree: INode
 	{
 		private Dictionary<string, LocationNode> _locationLookup = new Dictionary<string, LocationNode>();
+		private Dictionary<string, TestMethodNode> _methodLookup = new Dictionary<string, TestMethodNode>();
 		private SafeDispatcher _dispatcher;
 
 		public TestTree( SafeDispatcher dispatcher )
@@ -67,7 +68,18 @@ namespace HellBrick.TestBrowser.Models
 			if ( !_locationLookup.TryGetValue( newTest.Location, out locationNode ) )
 				locationNode = CreateLocationNode( newTest.Location );
 
-			locationNode.InsertChild( newTest );
+			INode insertionNode = locationNode;
+			if ( newTest.TestCaseName != null )
+			{
+				string key = MethodNodeKey( locationNode, newTest.MethodName );
+				TestMethodNode methodNode;
+				if ( !_methodLookup.TryGetValue( key, out methodNode ) )
+					methodNode = CreateMethodNode( locationNode, key, newTest.MethodName );
+
+				insertionNode = methodNode;
+			}
+
+			insertionNode.InsertChild( newTest );
 			OptimizeTreeBranchAfterInsert( locationNode );
 		}
 
@@ -108,6 +120,19 @@ namespace HellBrick.TestBrowser.Models
 			return currentParent as LocationNode;
 		}
 
+		private string MethodNodeKey( LocationNode location, string methodName )
+		{
+			return location.Location + methodName;
+		}
+
+		private TestMethodNode CreateMethodNode( LocationNode locationNode, string key, string methodName )
+		{
+			TestMethodNode methodNode = new TestMethodNode( _dispatcher, methodName );
+			locationNode.InsertChild( methodNode );
+			_methodLookup.Add( key, methodNode );
+			return methodNode;
+		}
+
 		private void RemoveChild( INode parent, INode child )
 		{
 			while ( parent != null )
@@ -118,6 +143,10 @@ namespace HellBrick.TestBrowser.Models
 				LocationNode locationNode = child as LocationNode;
 				if ( locationNode != null )
 					_locationLookup.Remove( locationNode.Location );
+
+				TestMethodNode methodNode = child as TestMethodNode;
+				if ( methodNode != null )
+					_methodLookup.Remove( MethodNodeKey( ( methodNode.Parent as LocationNode ), methodNode.Name ) );
 
 				//	If the parent doesn't have any more children, we should remove it as well.
 				if ( parent.Children.Count == 0 )
