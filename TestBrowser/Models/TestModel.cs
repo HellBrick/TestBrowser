@@ -97,7 +97,7 @@ namespace HellBrick.TestBrowser.Models
 			get { return NodeType.Test; }
 		}
 
-		public string Name { get { return _test.DisplayName; } }
+		public string Name { get { return TestCaseName ?? MethodName; } }
 		public INode Parent { get; set; }
 
 		private List<INode> _emptyList = new List<INode>();
