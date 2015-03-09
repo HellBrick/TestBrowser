@@ -17,9 +17,9 @@ namespace HellBrick.TestBrowser.Models
 	public class TestModel: PropertyChangedBase, INode
 	{
 		private TestServiceContext _serviceContext;
-		private ITest _test;
+		private TestData _test;
 
-		public TestModel( ITest test, TestServiceContext serviceContext )
+		public TestModel( TestData test, TestServiceContext serviceContext )
 		{
 			_serviceContext = serviceContext;
 			_test = test;

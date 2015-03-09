@@ -8,6 +8,7 @@ using Caliburn.Micro;
 using HellBrick.TestBrowser.Common;
 using HellBrick.TestBrowser.Core;
 using Microsoft.VisualStudio.TestWindow.Controller;
+using Microsoft.VisualStudio.TestWindow.Data;
 using Microsoft.VisualStudio.TestWindow.Extensibility;
 
 namespace HellBrick.TestBrowser.Models
@@ -133,7 +134,7 @@ namespace HellBrick.TestBrowser.Models
 			var newTests = newTestLookup.Where( kvp => !TestTree.Tests.ContainsKey( kvp.Key ) );
 			foreach ( var kvp in newTests )
 			{
-				TestModel test = new TestModel( kvp.Value, _serviceContext );
+				TestModel test = new TestModel( kvp.Value as TestData, _serviceContext );
 				test.SelectionChanged += OnTestSelectionChanged;
 				TestTree.InsertTest( test );
 			}
