@@ -21,8 +21,6 @@
 	</UserControl.Resources>
 
 	<DockPanel LastChildFill="True">
-		<ItemsControl DockPanel.Dock="Top" ItemsSource="{Binding Commands}" Style="{StaticResource MenuItemsControlStyle}"></ItemsControl>
-		<ContentPresenter Content="{Binding LastRunSummary}" DockPanel.Dock="Top"></ContentPresenter>
 		<ProgressBar
 			Visibility="{Binding IsDoingSomething, Converter={StaticResource BoolToVisibility}}"
 			IsIndeterminate="{Binding IsDoingIndefiniteOperation}"
@@ -30,6 +28,8 @@
 			Value="{Binding CurrentProgress}"
 			DockPanel.Dock="Top">
 		</ProgressBar>
+		<ItemsControl DockPanel.Dock="Top" ItemsSource="{Binding Commands}" Style="{StaticResource MenuItemsControlStyle}"></ItemsControl>
+		<ContentPresenter Content="{Binding LastRunSummary}" DockPanel.Dock="Top"></ContentPresenter>
 
 		<v:TestDetailsView DataContext="{Binding SelectedTest}" DockPanel.Dock="Bottom"></v:TestDetailsView>
 
