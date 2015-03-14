@@ -29,10 +29,7 @@
 			DockPanel.Dock="Top">
 		</ProgressBar>
 		<ItemsControl DockPanel.Dock="Top" ItemsSource="{Binding Commands}" Style="{StaticResource MenuItemsControlStyle}"></ItemsControl>
-		<ContentPresenter Content="{Binding LastRunSummary}" DockPanel.Dock="Top"></ContentPresenter>
-
 		<v:TestDetailsView DataContext="{Binding SelectedTest}" DockPanel.Dock="Bottom"></v:TestDetailsView>
-
 		<ContentPresenter Content="{Binding TestTree}"></ContentPresenter>
 	</DockPanel>
 </UserControl>
