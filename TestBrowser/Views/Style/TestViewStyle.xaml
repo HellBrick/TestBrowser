@@ -30,7 +30,7 @@
 		</Style.Setters>
 		<Style.Triggers>
 			<DataTrigger Binding="{Binding IsCurrentlyRunning}" Value="True">
-				<Setter Property="FontWeight" Value="SemiBold"></Setter>
+				<Setter Property="FontStyle" Value="Italic"></Setter>
 			</DataTrigger>
 
 			<DataTrigger Binding="{Binding IsStale}" Value="True">
