@@ -16,13 +16,13 @@
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="Style/MenuStyle.xaml"></ResourceDictionary>
 			</ResourceDictionary.MergedDictionaries>
-			<c:BoolToVisibilityConverter x:Key="BoolToVisibility"></c:BoolToVisibilityConverter>
+			<c:BoolToVisibilityConverter x:Key="HideIfFalse" IfFalse="Hidden"></c:BoolToVisibilityConverter>
 		</ResourceDictionary>
 	</UserControl.Resources>
 
 	<DockPanel LastChildFill="True">
 		<ProgressBar
-			Visibility="{Binding IsDoingSomething, Converter={StaticResource BoolToVisibility}}"
+			Visibility="{Binding IsDoingSomething, Converter={StaticResource HideIfFalse}}"
 			IsIndeterminate="{Binding IsDoingIndefiniteOperation}"
 			Maximum="{Binding MaxProgress}"
 			Value="{Binding CurrentProgress}"
