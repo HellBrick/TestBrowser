@@ -10,10 +10,11 @@
 	<c:BoolToVisibilityConverter x:Key="BoolToVisibility"></c:BoolToVisibilityConverter>
 	
 	<Style x:Key="MenuTextBlockStyle" TargetType="{x:Type TextBlock}">
-		<Setter Property="Margin" Value="0,0,9,0"></Setter>
+		<Setter Property="Margin" Value="0,4,9,4"></Setter>
 	</Style>
 
 	<Style x:Key="MenuItemsControlStyle" TargetType="{x:Type ItemsControl}">
+		<Setter Property="Margin" Value="7,0,7,0"></Setter>
 		<Setter Property="ItemsPanel">
 			<Setter.Value>
 				<ItemsPanelTemplate>
