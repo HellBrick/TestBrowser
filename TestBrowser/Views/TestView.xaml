@@ -5,7 +5,6 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:m="clr-namespace:HellBrick.TestBrowser.Models"
-	xmlns:c="clr-namespace:HellBrick.TestBrowser.Common"
 	xmlns:s="clr-namespace:System;assembly=mscorlib"
 	mc:Ignorable="d" 
 	d:DesignHeight="300" d:DesignWidth="300"
@@ -20,7 +19,7 @@
 	</UserControl.Resources>
 
 	<DockPanel LastChildFill="True">
-		<Image Style="{StaticResource TestIconStyle}" Source="{x:Null}"></Image>
+		<Image Style="{StaticResource TestIconStyle}"></Image>
 		<TextBlock Text="{Binding Name, Mode=OneTime}" Style="{StaticResource TestTextStyle}"></TextBlock>
 	</DockPanel>
 </UserControl>

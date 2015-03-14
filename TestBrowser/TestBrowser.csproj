@@ -157,6 +157,7 @@
     <Compile Include="Common\OrderedSafeObservableCollection.cs" />
     <Compile Include="Common\SafeCommand.cs" />
     <Compile Include="Common\SafeObservableDictionary.cs" />
+    <Compile Include="Common\TestStateToImageSourceConverter.cs" />
     <Compile Include="CompositionContainerExtensions.cs" />
     <Compile Include="Core\TestsRunUpdatedEventArgs.cs" />
     <Compile Include="Core\TestRun.cs" />
