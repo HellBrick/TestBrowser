@@ -3,6 +3,8 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:c="clr-namespace:HellBrick.TestBrowser.Common"
 	xmlns:s="clr-namespace:System;assembly=mscorlib">
+	
+	<s:Double x:Key="StaleOpacity">0.33</s:Double>
 
 	<c:TestStateToImageSourceConverter
 		x:Key="StateToImage"
@@ -21,6 +23,10 @@
 			<DataTrigger Binding="{Binding IsCurrentlyRunning}" Value="True">
 				<Setter Property="Source" Value="pack://application:,,,/Microsoft.VisualStudio.TestWindow.Core;component/ui/resources/testinprogress.png"></Setter>
 			</DataTrigger>
+
+			<DataTrigger Binding="{Binding IsStale}" Value="True">
+				<Setter Property="Opacity" Value="{StaticResource StaleOpacity}"></Setter>
+			</DataTrigger>
 		</Style.Triggers>
 	</Style>
 
@@ -34,7 +40,7 @@
 			</DataTrigger>
 
 			<DataTrigger Binding="{Binding IsStale}" Value="True">
-				<Setter Property="Opacity" Value="0.33"></Setter>
+				<Setter Property="Opacity" Value="{StaticResource StaleOpacity}"></Setter>
 			</DataTrigger>
 		</Style.Triggers>
 	</Style>
