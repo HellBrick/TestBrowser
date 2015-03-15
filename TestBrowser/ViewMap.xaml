@@ -36,12 +36,4 @@
 		<v:RunSummaryView></v:RunSummaryView>
 	</DataTemplate>
 	
-	<DataTemplate DataType="{x:Type tm:Result}">
-		<v:TestResultView></v:TestResultView>
-	</DataTemplate>
-	
-	<DataTemplate DataType="{x:Type ext:StackTrace}">
-		<tv:StackTraceControl></tv:StackTraceControl>
-	</DataTemplate>
-	
 </ResourceDictionary>

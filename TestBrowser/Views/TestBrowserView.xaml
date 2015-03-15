@@ -12,38 +12,25 @@
 	d:DataContext="{d:DesignInstance Type={x:Type m:TestBrowserModel}}">
 
 	<UserControl.Resources>
-		<c:BoolToVisibilityConverter x:Key="BoolToVisibility"></c:BoolToVisibilityConverter>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="Style/MenuStyle.xaml"></ResourceDictionary>
+			</ResourceDictionary.MergedDictionaries>
+			<c:BoolToVisibilityConverter x:Key="HideIfFalse" IfFalse="Hidden"></c:BoolToVisibilityConverter>
+			<c:BoolToVisibilityConverter x:Key="CollapseIfFalse"></c:BoolToVisibilityConverter>
+		</ResourceDictionary>
 	</UserControl.Resources>
 
 	<DockPanel LastChildFill="True">
-		<ItemsControl DockPanel.Dock="Top" ItemsSource="{Binding Commands}">
-			<ItemsControl.ItemsPanel>
-				<ItemsPanelTemplate>
-					<StackPanel Orientation="Horizontal"></StackPanel>
-				</ItemsPanelTemplate>
-			</ItemsControl.ItemsPanel>
-			<ItemsControl.ItemTemplate>
-				<DataTemplate DataType="{x:Type c:SafeCommand}">
-					<TextBlock Margin="0,0,9,0" Visibility="{Binding IsEnabled, Converter={StaticResource BoolToVisibility}}">
-						<Hyperlink Command="{Binding .}">
-							<Run Text="{Binding Text, Mode=OneTime}"></Run>
-						</Hyperlink>
-					</TextBlock>
-				</DataTemplate>
-			</ItemsControl.ItemTemplate>
-		</ItemsControl>
-
-		<ContentPresenter Content="{Binding LastRunSummary}" DockPanel.Dock="Top"></ContentPresenter>
 		<ProgressBar
-			Visibility="{Binding IsDoingSomething, Converter={StaticResource BoolToVisibility}}"
+			Visibility="{Binding IsDoingSomething, Converter={StaticResource HideIfFalse}}"
 			IsIndeterminate="{Binding IsDoingIndefiniteOperation}"
 			Maximum="{Binding MaxProgress}"
 			Value="{Binding CurrentProgress}"
 			DockPanel.Dock="Top">
 		</ProgressBar>
-
-		<v:TestDetailsView DataContext="{Binding SelectedTest}" DockPanel.Dock="Bottom"></v:TestDetailsView>
-
+		<ItemsControl DockPanel.Dock="Top" ItemsSource="{Binding Commands}" Style="{StaticResource MenuItemsControlStyle}"></ItemsControl>
+		<v:TestDetailsView DataContext="{Binding SelectedTest}" Visibility="{Binding HasResults, Converter={StaticResource CollapseIfFalse}}" DockPanel.Dock="Bottom"></v:TestDetailsView>
 		<ContentPresenter Content="{Binding TestTree}"></ContentPresenter>
 	</DockPanel>
 </UserControl>

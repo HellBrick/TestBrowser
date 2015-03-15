@@ -1,0 +1,47 @@
+﻿<ResourceDictionary
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:c="clr-namespace:HellBrick.TestBrowser.Common"
+	xmlns:s="clr-namespace:System;assembly=mscorlib">
+	
+	<s:Double x:Key="StaleOpacity">0.33</s:Double>
+
+	<c:TestStateToImageSourceConverter
+		x:Key="StateToImage"
+		IfPassed="pack://application:,,,/Microsoft.VisualStudio.TestWindow.Core;component/ui/resources/testpassed.png"
+		IfFailed="pack://application:,,,/Microsoft.VisualStudio.TestWindow.Core;component/ui/resources/testfailed.png"
+		IfNotRun="pack://application:,,,/Microsoft.VisualStudio.TestWindow.Core;component/ui/resources/testnotrun.png"
+		IfSkipped="pack://application:,,,/Microsoft.VisualStudio.TestWindow.Core;component/ui/resources/testskipped.png">
+	</c:TestStateToImageSourceConverter>
+
+	<Style x:Key="TestIconStyle" TargetType="{x:Type Image}">
+		<Setter Property="Height" Value="15"></Setter>
+		<Setter Property="Width" Value="15"></Setter>
+		<Setter Property="Margin" Value="1,1,4,1"></Setter>
+		<Setter Property="Source" Value="{Binding State, Converter={StaticResource StateToImage}}"></Setter>
+		<Style.Triggers>
+			<DataTrigger Binding="{Binding IsCurrentlyRunning}" Value="True">
+				<Setter Property="Source" Value="pack://application:,,,/Microsoft.VisualStudio.TestWindow.Core;component/ui/resources/testinprogress.png"></Setter>
+			</DataTrigger>
+
+			<DataTrigger Binding="{Binding IsStale}" Value="True">
+				<Setter Property="Opacity" Value="{StaticResource StaleOpacity}"></Setter>
+			</DataTrigger>
+		</Style.Triggers>
+	</Style>
+
+	<Style x:Key="TestTextStyle" TargetType="{x:Type TextBlock}">
+		<Style.Setters>
+			<Setter Property="VerticalAlignment" Value="Center"></Setter>
+		</Style.Setters>
+		<Style.Triggers>
+			<DataTrigger Binding="{Binding IsCurrentlyRunning}" Value="True">
+				<Setter Property="FontStyle" Value="Italic"></Setter>
+			</DataTrigger>
+
+			<DataTrigger Binding="{Binding IsStale}" Value="True">
+				<Setter Property="Opacity" Value="{StaticResource StaleOpacity}"></Setter>
+			</DataTrigger>
+		</Style.Triggers>
+	</Style>
+</ResourceDictionary>

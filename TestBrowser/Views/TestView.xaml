@@ -5,69 +5,21 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:m="clr-namespace:HellBrick.TestBrowser.Models"
-	xmlns:c="clr-namespace:HellBrick.TestBrowser.Common"
 	xmlns:s="clr-namespace:System;assembly=mscorlib"
 	mc:Ignorable="d" 
 	d:DesignHeight="300" d:DesignWidth="300"
 	d:DataContext="{d:DesignInstance Type={x:Type m:TestModel}}">
 
 	<UserControl.Resources>
-		<s:Double x:Key="SatNormal">0.95</s:Double>
-		<s:Double x:Key="LightNormal">0.95</s:Double>
-
-		<s:Double x:Key="SatStale">0.50</s:Double>
-		<s:Double x:Key="LightStale">0.75</s:Double>
-
-		<s:Double x:Key="HuePassed">100</s:Double>
-		<s:Double x:Key="HueFailed">0</s:Double>
-		<s:Double x:Key="HueCurrentlyRunning">50</s:Double>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="Style/TestViewStyle.xaml"></ResourceDictionary>
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
 	</UserControl.Resources>
 
-	<TextBlock Text="{Binding Name, Mode=OneTime}">
-		<TextBlock.Style>
-			<Style TargetType="{x:Type TextBlock}">
-				<Style.Triggers>
-					<DataTrigger Binding="{Binding State}" Value="Passed">
-						<Setter Property="Background">
-							<Setter.Value>
-								<SolidColorBrush>
-									<SolidColorBrush.Color>
-										<c:HSL Hue="{StaticResource HuePassed}" Saturation="{StaticResource SatNormal}" Lightness="{StaticResource LightNormal}"></c:HSL>
-									</SolidColorBrush.Color>
-								</SolidColorBrush>
-							</Setter.Value>
-						</Setter>
-					</DataTrigger>
-					<DataTrigger Binding="{Binding State}" Value="Failed">
-						<Setter Property="Background">
-							<Setter.Value>
-								<SolidColorBrush>
-									<SolidColorBrush.Color>
-										<c:HSL Hue="{StaticResource HueFailed}" Saturation="{StaticResource SatNormal}" Lightness="{StaticResource LightNormal}"></c:HSL>
-									</SolidColorBrush.Color>
-								</SolidColorBrush>
-							</Setter.Value>
-						</Setter>
-					</DataTrigger>
-
-					<DataTrigger Binding="{Binding IsCurrentlyRunning}" Value="True">
-						<Setter Property="Background">
-							<Setter.Value>
-								<SolidColorBrush>
-									<SolidColorBrush.Color>
-										<c:HSL Hue="{StaticResource HueCurrentlyRunning}" Saturation="{StaticResource SatNormal}" Lightness="{StaticResource LightNormal}"></c:HSL>
-									</SolidColorBrush.Color>
-								</SolidColorBrush>
-							</Setter.Value>
-						</Setter>
-						<Setter Property="FontWeight" Value="SemiBold"></Setter>
-					</DataTrigger>
-
-					<DataTrigger Binding="{Binding IsStale}" Value="True">
-						<Setter Property="Opacity" Value="0.33"></Setter>
-					</DataTrigger>
-				</Style.Triggers>
-			</Style>
-		</TextBlock.Style>
-	</TextBlock>
+	<DockPanel LastChildFill="True">
+		<Image Style="{StaticResource TestIconStyle}"></Image>
+		<TextBlock Text="{Binding Name, Mode=OneTime}" Style="{StaticResource TestTextStyle}"></TextBlock>
+	</DockPanel>
 </UserControl>

@@ -1,0 +1,23 @@
+﻿<ResourceDictionary
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:tv="clr-namespace:Microsoft.VisualStudio.TestWindow.UI;assembly=Microsoft.VisualStudio.TestWindow.Core">
+
+	<Style x:Key="PanelStyle" TargetType="{x:Type FrameworkElement}">
+		<Setter Property="Margin" Value="11,7,11,7"></Setter>
+	</Style>
+
+	<Style x:Key="MethodNameStyle" TargetType="{x:Type TextBlock}">
+		<Setter Property="FontSize" Value="14"></Setter>
+		<Setter Property="FontWeight" Value="SemiBold"></Setter>
+	</Style>
+
+	<Style x:Key="TestCaseStyle" TargetType="{x:Type TextBlock}">
+	</Style>
+
+	<Style x:Key="ResultListStyle" TargetType="{x:Type tv:ResultsSummaryList}">
+		<Setter Property="Background" Value="Transparent"></Setter>
+		<Setter Property="Margin" Value="0,7,0,0"></Setter>
+	</Style>
+
+</ResourceDictionary>

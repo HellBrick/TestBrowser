@@ -157,6 +157,7 @@
     <Compile Include="Common\OrderedSafeObservableCollection.cs" />
     <Compile Include="Common\SafeCommand.cs" />
     <Compile Include="Common\SafeObservableDictionary.cs" />
+    <Compile Include="Common\TestStateToImageSourceConverter.cs" />
     <Compile Include="CompositionContainerExtensions.cs" />
     <Compile Include="Core\TestsRunUpdatedEventArgs.cs" />
     <Compile Include="Core\TestRun.cs" />
@@ -205,9 +206,6 @@
     <Compile Include="Views\TestMethodView.xaml.cs">
       <DependentUpon>TestMethodView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TestResultView.xaml.cs">
-      <DependentUpon>TestResultView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\TestTreeView.xaml.cs">
       <DependentUpon>TestTreeView.xaml</DependentUpon>
     </Compile>
@@ -247,6 +245,22 @@
     <Content Include="Resources\Package.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\Style\HyperLinkStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Style\MenuStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Style\TestDetailsViewStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Style\TestTreeViewStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="TestBrowserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -263,6 +277,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Style\TestViewStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\TestBrowserView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -272,10 +290,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TestMethodView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\TestResultView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -292,6 +306,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <UseCodebase>true</UseCodebase>
   </PropertyGroup>
