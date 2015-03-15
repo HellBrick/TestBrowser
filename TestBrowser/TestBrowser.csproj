@@ -206,9 +206,6 @@
     <Compile Include="Views\TestMethodView.xaml.cs">
       <DependentUpon>TestMethodView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TestResultView.xaml.cs">
-      <DependentUpon>TestResultView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\TestTreeView.xaml.cs">
       <DependentUpon>TestTreeView.xaml</DependentUpon>
     </Compile>
@@ -256,6 +253,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Style\TestDetailsViewStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Style\TestTreeViewStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -289,10 +290,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TestMethodView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\TestResultView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

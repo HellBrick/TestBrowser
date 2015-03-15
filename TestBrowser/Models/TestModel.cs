@@ -57,16 +57,15 @@ namespace HellBrick.TestBrowser.Models
 		public Guid ID { get { return _test.Id; } }
 		public bool IsStale { get { return _test.Stale; } }
 		public bool IsCurrentlyRunning { get { return _test.IsCurrentlyRunning; } }
-		public Result Result
-		{
-			get
-			{
-				var testResultData = _test.Results.FirstOrDefault() as TestResultData;
-				if (testResultData == null)
-					return null;
 
-				return _serviceContext.TestObjectFactory.CreateResult( testResultData );
-			}
+		public Result[] Results
+		{
+			get { return _test.Results.Select( r => _serviceContext.TestObjectFactory.CreateResult( r ) ).ToArray(); }
+		}
+
+		public bool HasResults
+		{
+			get { return _test.Results.Count > 0; }
 		}
 
 		public event EventHandler<TestModel, EventArgs> SelectionChanged;
@@ -82,7 +81,8 @@ namespace HellBrick.TestBrowser.Models
 			base.NotifyOfPropertyChange( () => State );
 			base.NotifyOfPropertyChange( () => IsStale );
 			base.NotifyOfPropertyChange( () => IsCurrentlyRunning );
-			base.NotifyOfPropertyChange( () => Result );
+			base.NotifyOfPropertyChange( () => Results );
+			base.NotifyOfPropertyChange( () => HasResults );
 		}
 
 		public override string ToString()

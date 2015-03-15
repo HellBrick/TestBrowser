@@ -17,6 +17,7 @@
 				<ResourceDictionary Source="Style/MenuStyle.xaml"></ResourceDictionary>
 			</ResourceDictionary.MergedDictionaries>
 			<c:BoolToVisibilityConverter x:Key="HideIfFalse" IfFalse="Hidden"></c:BoolToVisibilityConverter>
+			<c:BoolToVisibilityConverter x:Key="CollapseIfFalse"></c:BoolToVisibilityConverter>
 		</ResourceDictionary>
 	</UserControl.Resources>
 
@@ -29,7 +30,7 @@
 			DockPanel.Dock="Top">
 		</ProgressBar>
 		<ItemsControl DockPanel.Dock="Top" ItemsSource="{Binding Commands}" Style="{StaticResource MenuItemsControlStyle}"></ItemsControl>
-		<v:TestDetailsView DataContext="{Binding SelectedTest}" DockPanel.Dock="Bottom"></v:TestDetailsView>
+		<v:TestDetailsView DataContext="{Binding SelectedTest}" Visibility="{Binding HasResults, Converter={StaticResource CollapseIfFalse}}" DockPanel.Dock="Bottom"></v:TestDetailsView>
 		<ContentPresenter Content="{Binding TestTree}"></ContentPresenter>
 	</DockPanel>
 </UserControl>

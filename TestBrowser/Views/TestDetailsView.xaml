@@ -5,13 +5,31 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 	xmlns:m="clr-namespace:HellBrick.TestBrowser.Models"
+	xmlns:c="clr-namespace:HellBrick.TestBrowser.Common"
+	xmlns:tv="clr-namespace:Microsoft.VisualStudio.TestWindow.UI;assembly=Microsoft.VisualStudio.TestWindow.Core"
 	mc:Ignorable="d" 
 	d:DesignHeight="300" d:DesignWidth="300"
 	d:DataContext="{d:DesignInstance Type={x:Type m:TestModel}}">
 
-	<StackPanel>
-		<ContentPresenter Content="{Binding .}"></ContentPresenter>
-		<ContentPresenter Content="{Binding Result}"></ContentPresenter>
+	<UserControl.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="Style/TestDetailsViewStyle.xaml"></ResourceDictionary>
+			</ResourceDictionary.MergedDictionaries>
+
+			<c:NullToVisibilityConverter x:Key="CollapseIfNull"></c:NullToVisibilityConverter>
+		</ResourceDictionary>
+	</UserControl.Resources>
+
+	<StackPanel Style="{StaticResource PanelStyle}">
+		<TextBlock Text="{Binding MethodName, Mode=OneTime}" Style="{StaticResource MethodNameStyle}"></TextBlock>
+		<TextBlock
+			DataContext="{Binding TestCaseName, Mode=OneTime}"
+			Text="{Binding ., Mode=OneTime}"
+			Visibility="{Binding ., Mode=OneTime, Converter={StaticResource CollapseIfNull}}"
+			Style="{StaticResource TestCaseStyle}">
+		</TextBlock>
+		<tv:ResultsSummaryList DataContext="{Binding .}" Style="{StaticResource ResultListStyle}"></tv:ResultsSummaryList>
 	</StackPanel>
-	
+
 </UserControl>
