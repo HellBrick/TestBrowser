@@ -49,6 +49,13 @@ namespace HellBrick.TestBrowser.Models
 			set { _isSelected = value; NotifyOfPropertyChange( () => IsSelected ); }
 		}
 
+		private bool _isExpanded;
+		public bool IsExpanded
+		{
+			get { return _isExpanded; }
+			set { _isExpanded = value; NotifyOfPropertyChange( () => IsExpanded ); }
+		}
+
 		#endregion
 	}
 }

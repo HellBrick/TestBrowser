@@ -33,7 +33,7 @@
 		</TreeView.ItemTemplate>
 		<TreeView.ItemContainerStyle>
 			<Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource TreeViewItemStyle}">
-				<Setter Property="IsExpanded" Value="True"></Setter>
+				<Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"></Setter>
 				<Setter Property="Visibility" Value="{Binding IsVisible, Converter={StaticResource BoolToVisibility}}"></Setter>
 				<Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"></Setter>
 				<Setter Property="c:Input.InputBindings" Value="{StaticResource ItemCommandBindings}"></Setter>

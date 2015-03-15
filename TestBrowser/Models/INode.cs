@@ -15,6 +15,7 @@ namespace HellBrick.TestBrowser.Models
 		ICollection<INode> Children { get; }
 		bool IsVisible { get; }
 		bool IsSelected { get; }
+		bool IsExpanded { get; set; }
 	}
 
 	public static class NodeExtensions
