@@ -128,7 +128,7 @@ namespace HellBrick.TestBrowser
 
 		private void InitializeViewModels()
 		{
-			RootModel = new TestBrowserModel( _serviceContext );
+			RootModel = new TestBrowserModel( _serviceContext, _options );
 		}
 
 		private void InitializeCommands()
