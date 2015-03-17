@@ -13,7 +13,7 @@ using Microsoft.VisualStudio.TestWindow.Extensibility;
 
 namespace HellBrick.TestBrowser.Models
 {
-	public class TestBrowserModel: PropertyChangedBase, IDisposable
+	public sealed class TestBrowserModel: PropertyChangedBase, IDisposable
 	{
 		private TestServiceContext _serviceContext;
 		private TestRun _currentTestRun;
@@ -304,6 +304,7 @@ namespace HellBrick.TestBrowser.Models
 		public void Dispose()
 		{
 			_serviceContext.RequestFactory.StateChanged -= OnStateChanged;
+			_currentTestRun.Dispose();
 		}
 
 		#endregion
