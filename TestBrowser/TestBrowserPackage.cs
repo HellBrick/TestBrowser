@@ -94,11 +94,18 @@ namespace HellBrick.TestBrowser
 		protected override void Initialize()
 		{
 			base.Initialize();
-			LoadOptions();
-			InitializeEvents();
 			InitializeServiceContext();
-			InitializeViewModels();
-			InitializeCommands();
+			try
+			{
+				LoadOptions();
+				InitializeEvents();
+				InitializeViewModels();
+				InitializeCommands();
+			}
+			catch ( Exception ex )
+			{
+				_serviceContext.Logger.Log( Microsoft.VisualStudio.TestWindow.Extensibility.MessageLevel.Error, ex.ToString() );
+			}
 		}
 
 		private void InitializeEvents()
