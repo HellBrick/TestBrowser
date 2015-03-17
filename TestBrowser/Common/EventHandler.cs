@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace HellBrick.TestBrowser.Common
 {
-	public delegate void EventHandler<in TSender, in TArgs>( TSender sender, TArgs args );
+	public delegate void EventHandler<in TSender, in TArgs>( TSender sender, TArgs e );
 }

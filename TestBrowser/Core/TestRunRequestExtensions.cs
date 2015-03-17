@@ -17,27 +17,25 @@ namespace HellBrick.TestBrowser.Core
 			return new TestRunRequestInternals( request );
 		}
 
-		internal struct TestRunRequestInternals
+		private static class CodeGen
 		{
-			#region Code generation
+			public static Func<TestRunRequest, TestRunConfiguration> TestRunConfigAccessor;
+			public static Func<EventHandler<TestRunRequestStats>, Delegate> InternalHandlerFactory;
+			public static Dictionary<EventHandler<TestRunRequestStats>, Delegate> DelegateMap;
+			public static EventInfo Event;
 
-			private static Func<TestRunRequest, TestRunConfiguration> _testRunConfigAccessor;
-
-			private static Func<EventHandler<TestRunRequestStats>, Delegate> _internalHandlerFactory;
-			private static EventInfo _event;
 			private static Type _eventArgsType;
 			private static Type _eventHandlerType;
-			private static Dictionary<EventHandler<TestRunRequestStats>, Delegate> _delegateMap;
 
-			static TestRunRequestInternals()
+			static CodeGen()
 			{
-				_testRunConfigAccessor = BuildTestRunConfigAccessor();
+				TestRunConfigAccessor = BuildTestRunConfigAccessor();
 
-				_delegateMap = new Dictionary<EventHandler<TestRunRequestStats>, Delegate>();
-				_event = typeof( TestRunRequest ).GetEvent( "TestRunStatsChanged", BindingFlags.NonPublic | BindingFlags.Instance );
-				_eventHandlerType = _event.EventHandlerType;
+				DelegateMap = new Dictionary<EventHandler<TestRunRequestStats>, Delegate>();
+				Event = typeof( TestRunRequest ).GetEvent( "TestRunStatsChanged", BindingFlags.NonPublic | BindingFlags.Instance );
+				_eventHandlerType = Event.EventHandlerType;
 				_eventArgsType = _eventHandlerType.GetGenericArguments()[ 0 ];
-				_internalHandlerFactory = BuildInternalHandlerFactory();
+				InternalHandlerFactory = BuildInternalHandlerFactory();
 			}
 
 			/// <summary>
@@ -90,9 +88,10 @@ namespace HellBrick.TestBrowser.Core
 				LambdaExpression factoryMethodLambda = Expression.Lambda( factoryMethodType, body, handler );
 				return (Func<EventHandler<TestRunRequestStats>, Delegate>) factoryMethodLambda.Compile();
 			}
+		}
 
-			#endregion
-
+		internal struct TestRunRequestInternals
+		{
 			private readonly TestRunRequest _instance;
 
 			public TestRunRequestInternals( TestRunRequest instance )
@@ -102,21 +101,21 @@ namespace HellBrick.TestBrowser.Core
 
 			public TestRunConfiguration TestRunConfig
 			{
-				get { return _testRunConfigAccessor( _instance ); }
+				get { return CodeGen.TestRunConfigAccessor( _instance ); }
 			}
 
 			public event EventHandler<TestRunRequestStats> TestRunStatsChanged
 			{
 				add
 				{
-					Delegate internalHandler = _internalHandlerFactory( value );
-					_delegateMap[ value ] = internalHandler;
-					_event.GetAddMethod( nonPublic : true ).Invoke( _instance, new object[] { internalHandler } );
+					Delegate internalHandler = CodeGen.InternalHandlerFactory( value );
+					CodeGen.DelegateMap[ value ] = internalHandler;
+					CodeGen.Event.GetAddMethod( nonPublic : true ).Invoke( _instance, new object[] { internalHandler } );
 				}
 				remove
 				{
-					Delegate internalHandler = _delegateMap[ value ];
-					_event.GetRemoveMethod( nonPublic : true ).Invoke( _instance, new object[] { internalHandler } );
+					Delegate internalHandler = CodeGen.DelegateMap[ value ];
+					CodeGen.Event.GetRemoveMethod( nonPublic : true ).Invoke( _instance, new object[] { internalHandler } );
 				}
 			}
 		}

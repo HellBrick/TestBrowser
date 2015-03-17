@@ -9,3 +9,4 @@
 // file manually.
 
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1017:MarkAssembliesWithComVisible" )]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly", Scope = "member", Target = "HellBrick.TestBrowser.Models.TestModel.#SelectionChanged" )]

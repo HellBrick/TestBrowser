@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.TestWindow.Extensibility;
 
 namespace HellBrick.TestBrowser.Core
 {
-	public class TestRun: IDisposable
+	public sealed class TestRun: IDisposable
 	{
 		private TestRunRequest _runRequest;
 		private TestServiceContext _serviceContext;
