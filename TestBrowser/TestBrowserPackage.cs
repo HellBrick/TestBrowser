@@ -84,7 +84,7 @@ namespace HellBrick.TestBrowser
 			if ( key != TestBrowserOptions.OptionStreamKey )
 				return;
 
-			_options = TestBrowserOptions.FromStream( stream ) ?? new TestBrowserOptions();
+			_options = TestBrowserOptions.FromStream( stream );
 		}
 
 		#endregion

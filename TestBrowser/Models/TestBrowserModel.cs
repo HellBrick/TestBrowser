@@ -23,7 +23,7 @@ namespace HellBrick.TestBrowser.Models
 		public TestBrowserModel( TestServiceContext serviceContext, TestBrowserOptions options )
 		{
 			_serviceContext = serviceContext;
-			_options = options;
+			_options = options ?? new TestBrowserOptions();
 			_serviceContext.RequestFactory.StateChanged += OnStateChanged;
 
 			TestTree = new Models.TestTree( _serviceContext.Dispatcher, _options.ExpandedNodes );
