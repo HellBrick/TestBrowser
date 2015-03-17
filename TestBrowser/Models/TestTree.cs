@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HellBrick.TestBrowser.Common;
+using HellBrick.TestBrowser.Options;
 using Microsoft.VisualStudio.TestWindow.Controller;
 
 namespace HellBrick.TestBrowser.Models
@@ -12,11 +13,13 @@ namespace HellBrick.TestBrowser.Models
 	{
 		private Dictionary<string, LocationNode> _locationLookup = new Dictionary<string, LocationNode>();
 		private Dictionary<string, TestMethodNode> _methodLookup = new Dictionary<string, TestMethodNode>();
+		private HashSet<NodeKey> _autoExpandedNodes;
 		private SafeDispatcher _dispatcher;
 
-		public TestTree( SafeDispatcher dispatcher )
+		public TestTree( SafeDispatcher dispatcher, IEnumerable<NodeKey> autoExpandedNodes )
 		{
 			_dispatcher = dispatcher;
+			_autoExpandedNodes = new HashSet<NodeKey>( autoExpandedNodes );
 			Children = new NodeCollection( _dispatcher );
 		}
 
@@ -51,6 +54,7 @@ namespace HellBrick.TestBrowser.Models
 		}
 
 		public bool IsSelected { get; set; }
+		public bool IsExpanded { get; set; }
 
 		#endregion
 
@@ -92,6 +96,13 @@ namespace HellBrick.TestBrowser.Models
 
 		private const char _separator = '.';
 
+		private void InsertChildAndTryAutoExpand( INode parent, INode child )
+		{
+			parent.InsertChild( child );
+			if ( _autoExpandedNodes.Remove( new NodeKey( child.Type, child.Name ) ) )
+				child.IsExpanded = true;
+		}
+
 		private LocationNode CreateLocationNode( string location )
 		{
 			string[] locationFragments = location.Split( _separator );
@@ -111,7 +122,7 @@ namespace HellBrick.TestBrowser.Models
 				{
 					currentLocationNode = new LocationNode( _dispatcher, currentLocation, locationFragments[ i ] );
 					_locationLookup[ currentLocation ] = currentLocationNode;
-					currentParent.InsertChild( currentLocationNode );
+					InsertChildAndTryAutoExpand( currentParent, currentLocationNode );
 				}
 
 				currentParent = currentLocationNode;
@@ -128,7 +139,7 @@ namespace HellBrick.TestBrowser.Models
 		private TestMethodNode CreateMethodNode( LocationNode locationNode, string key, string methodName )
 		{
 			TestMethodNode methodNode = new TestMethodNode( _dispatcher, methodName );
-			locationNode.InsertChild( methodNode );
+			InsertChildAndTryAutoExpand( locationNode, methodNode );
 			_methodLookup.Add( key, methodNode );
 			return methodNode;
 		}
@@ -298,7 +309,7 @@ namespace HellBrick.TestBrowser.Models
 			foreach ( var node in nodes )
 				node.MergedNode = mergedNode;
 
-			nodes[ 0 ].Parent.InsertChild( mergedNode );
+			InsertChildAndTryAutoExpand( nodes[ 0 ].Parent, mergedNode );
 		}
 
 		private struct MergeableInterval

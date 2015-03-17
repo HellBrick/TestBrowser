@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.ComponentModel.Design;
 using Microsoft.Win32;
@@ -12,6 +13,10 @@ using Microsoft.VisualStudio.ComponentModelHost;
 using HellBrick.TestBrowser.Core;
 using System.ComponentModel.Composition.Hosting;
 using HellBrick.TestBrowser.Models;
+using System.IO;
+using HellBrick.TestBrowser.Options;
+using EnvDTE80;
+using EnvDTE;
 
 namespace HellBrick.TestBrowser
 {
@@ -29,6 +34,9 @@ namespace HellBrick.TestBrowser
 	public sealed class TestBrowserPackage: Package
 	{
 		private TestServiceContext _serviceContext;
+		private TestBrowserOptions _options;
+		private DTE _dte;
+		private DTE2 _dte2;
 
 		public TestBrowserPackage()
 		{
@@ -36,14 +44,80 @@ namespace HellBrick.TestBrowser
 
 		public static TestBrowserModel RootModel { get; private set; }
 
+		#region Options
+
+		private void SaveOptions()
+		{
+			var service = this.GetService<IVsSolutionPersistence>();
+			service.SavePackageUserOpts( this, TestBrowserOptions.OptionStreamKey );
+		}
+
+		private void LoadOptions()
+		{
+			var service = this.GetService<IVsSolutionPersistence>();
+			service.LoadPackageUserOpts( this, TestBrowserOptions.OptionStreamKey );
+		}
+
+		protected override void OnSaveOptions( string key, Stream stream )
+		{
+			base.OnSaveOptions( key, stream );
+
+			if ( key != TestBrowserOptions.OptionStreamKey )
+				return;
+
+			TestBrowserOptions options = new TestBrowserOptions()
+			{
+				ExpandedNodes = TestBrowserPackage.RootModel.TestTree
+					.EnumerateDescendantsAndSelf()
+					.Where( n => n.IsVisible && n.IsExpanded )
+					.Select( n => new NodeKey( n.Type, n.Name ) )
+					.ToList()
+			};
+
+			options.WriteToStream( stream );
+		}
+
+		protected override void OnLoadOptions( string key, Stream stream )
+		{
+			base.OnLoadOptions( key, stream );
+
+			if ( key != TestBrowserOptions.OptionStreamKey )
+				return;
+
+			_options = TestBrowserOptions.FromStream( stream );
+		}
+
+		#endregion
+
 		#region Package Members
 
 		protected override void Initialize()
 		{
 			base.Initialize();
 			InitializeServiceContext();
-			InitializeViewModels();
-			InitializeCommands();
+			try
+			{
+				LoadOptions();
+				InitializeEvents();
+				InitializeViewModels();
+				InitializeCommands();
+			}
+			catch ( Exception ex )
+			{
+				_serviceContext.Logger.Log( Microsoft.VisualStudio.TestWindow.Extensibility.MessageLevel.Error, ex.ToString() );
+			}
+		}
+
+		private void InitializeEvents()
+		{
+			_dte = this.GetService<DTE>();
+			_dte2 = _dte as DTE2;
+			_dte.Events.SolutionEvents.BeforeClosing += BeforeSolutionClosing;
+		}
+
+		private void BeforeSolutionClosing()
+		{
+			SaveOptions();
 		}
 
 		private void InitializeServiceContext()
@@ -61,7 +135,7 @@ namespace HellBrick.TestBrowser
 
 		private void InitializeViewModels()
 		{
-			RootModel = new TestBrowserModel( _serviceContext );
+			RootModel = new TestBrowserModel( _serviceContext, _options );
 		}
 
 		private void InitializeCommands()
@@ -89,6 +163,14 @@ namespace HellBrick.TestBrowser
 			}
 			IVsWindowFrame windowFrame = (IVsWindowFrame) window.Frame;
 			Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure( windowFrame.Show() );
+		}
+
+		protected override int QueryClose( out bool canClose )
+		{
+			SaveOptions();
+			_dte.Events.SolutionEvents.BeforeClosing -= BeforeSolutionClosing;
+
+			return base.QueryClose( out canClose );
 		}
 
 		#endregion

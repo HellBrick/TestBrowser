@@ -76,6 +76,10 @@
     <Reference Include="Microsoft.VisualStudio.Shell.Immutable.10.0" />
     <Reference Include="Microsoft.VisualStudio.Shell.Immutable.11.0" />
     <Reference Include="Microsoft.VisualStudio.Shell.Immutable.12.0" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
@@ -174,6 +178,8 @@
     <Compile Include="Models\TestMethodNode.cs" />
     <Compile Include="Models\TestModel.cs" />
     <Compile Include="Models\TestTree.cs" />
+    <Compile Include="Options\NodeKey.cs" />
+    <Compile Include="Options\TestBrowserOptions.cs" />
     <Compile Include="TestBrowserControl.xaml.cs">
       <DependentUpon>TestBrowserControl.xaml</DependentUpon>
     </Compile>

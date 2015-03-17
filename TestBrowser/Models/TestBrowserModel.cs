@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Caliburn.Micro;
 using HellBrick.TestBrowser.Common;
 using HellBrick.TestBrowser.Core;
+using HellBrick.TestBrowser.Options;
 using Microsoft.VisualStudio.TestWindow.Controller;
 using Microsoft.VisualStudio.TestWindow.Data;
 using Microsoft.VisualStudio.TestWindow.Extensibility;
@@ -16,14 +17,16 @@ namespace HellBrick.TestBrowser.Models
 	public sealed class TestBrowserModel: PropertyChangedBase, IDisposable
 	{
 		private TestServiceContext _serviceContext;
+		private TestBrowserOptions _options;
 		private TestRun _currentTestRun;
 
-		public TestBrowserModel( TestServiceContext serviceContext )
+		public TestBrowserModel( TestServiceContext serviceContext, TestBrowserOptions options )
 		{
 			_serviceContext = serviceContext;
+			_options = options ?? new TestBrowserOptions();
 			_serviceContext.RequestFactory.StateChanged += OnStateChanged;
 
-			TestTree = new Models.TestTree( _serviceContext.Dispatcher );
+			TestTree = new Models.TestTree( _serviceContext.Dispatcher, _options.ExpandedNodes );
 			InitializeCommands();
 		}
 
@@ -98,7 +101,7 @@ namespace HellBrick.TestBrowser.Models
 
 				return;
 			}
-			
+
 			_currentTestRun = new TestRun( runRequest, _serviceContext );
 			_currentTestRun.TestRunUpdated += OnTestsFinished;
 			MaxProgress = _currentTestRun.TestCount;
