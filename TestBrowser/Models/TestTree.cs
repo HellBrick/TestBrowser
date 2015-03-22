@@ -22,7 +22,8 @@ namespace HellBrick.TestBrowser.Models
 			_dispatcher = dispatcher;
 			_autoExpandedNodes = new HashSet<NodeKey>( autoExpandedNodes );
 			Children = new NodeCollection( _dispatcher );
-			RootCollectionWrapper = new ObservableCollection<INode>( Enumerable.Repeat( this, 1 ) );
+			_rootCollectionWrapper = new NodeCollection( _dispatcher );
+			_rootCollectionWrapper.Add( this );
 		}
 
 		#region INode Members
@@ -66,7 +67,11 @@ namespace HellBrick.TestBrowser.Models
 			get { return _testLookup; }
 		}
 
-		public ObservableCollection<INode> RootCollectionWrapper { get; private set; }
+		private NodeCollection _rootCollectionWrapper;
+		public NodeCollection VisualChildren
+		{
+			get { return _rootCollectionWrapper; }
+		}
 
 		public void InsertTest( TestModel newTest )
 		{
