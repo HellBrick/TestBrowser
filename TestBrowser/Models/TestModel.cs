@@ -31,23 +31,42 @@ namespace HellBrick.TestBrowser.Models
 
 		private void ParseMethodNameAndTestCase()
 		{
-			int openBracketIndex = _test.FullyQualifiedName.IndexOf( '(' );
+			//	xUnit test cases
+			if ( _test.ExecutorUri.Contains( "xunit" ) && TryParseMethodNameAndTestCase( _test.DisplayName ) )
+				return;
+
+			//	nUnit test cases
+			if ( _test.ExecutorUri.Contains( "nunit" ) && TryParseMethodNameAndTestCase( _test.FullyQualifiedName ) )
+				return;
+
+			//	Default behaviour (nUnit/MSTest w/o a test case)
+			TestCaseName = null;
+			MethodName = _test.DisplayName;
+
+			//	xUnit uses fully qualified name here => the location has to be trimmed
+			int dotIndex = MethodName.LastIndexOf( '.' );
+			if ( dotIndex > 0 )
+				MethodName = MethodName.Substring( dotIndex + 1 );
+		}
+
+		private bool TryParseMethodNameAndTestCase( string testName )
+		{
+			int openBracketIndex = testName.IndexOf( '(' );
 			if ( openBracketIndex > 0 )
 			{
-				int closeBracketIndex = _test.FullyQualifiedName.LastIndexOf( ')' );
+				int closeBracketIndex = testName.LastIndexOf( ')' );
 				if ( closeBracketIndex > 0 )
 				{
 					//	Fully qualified name contains Location + extra '.' in the beginning, which has to be skipped
 					int charsToSkip = Location.Length + 1;
 
-					MethodName = _test.FullyQualifiedName.Substring( charsToSkip, openBracketIndex - charsToSkip );
-					TestCaseName = _test.FullyQualifiedName.Substring( openBracketIndex + 1, closeBracketIndex - openBracketIndex - 1 );
-					return;
+					MethodName = testName.Substring( charsToSkip, openBracketIndex - charsToSkip );
+					TestCaseName = testName.Substring( openBracketIndex + 1, closeBracketIndex - openBracketIndex - 1 );
+					return true;
 				}
 			}
 
-			MethodName = _test.DisplayName;
-			TestCaseName = null;
+			return false;
 		}
 
 		public string MethodName { get; private set; }
