@@ -36,7 +36,6 @@ namespace HellBrick.TestBrowser.Models
 		{
 			try
 			{
-				_serviceContext.Logger.Log( MessageLevel.Informational, e.ToString() );
 				State = e.State;
 
 				switch ( e.State )
