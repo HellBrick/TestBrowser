@@ -78,16 +78,6 @@ namespace HellBrick.TestBrowser.Models
 				_currentTestRun.TestRunUpdated -= OnTestsFinished;
 				_currentTestRun.Dispose();
 			}
-
-			using ( var reader = _serviceContext.Storage.ActiveUnitTestReader )
-			{
-				using ( var query = reader.GetAllTests() )
-				{
-					var testsInLastRun = reader.GetTestsInLastRun( query );
-					foreach ( var test in testsInLastRun )
-						TestTree.Tests[ test.Id ].RaiseStateChanged();
-				}
-			}
 		}
 
 		private void OnExecutionStarted( OperationStateChangedEventArgs e )
