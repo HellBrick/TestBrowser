@@ -19,6 +19,7 @@ namespace HellBrick.TestBrowser.Core
 
 		public TestRun( TestRunRequest runRequest, TestServiceContext serviceContext )
 		{
+			CurentlyRunningTestIDs = new List<Guid>();
 			_runRequest = runRequest;
 			_serviceContext = serviceContext;
 
@@ -45,6 +46,7 @@ namespace HellBrick.TestBrowser.Core
 		{
 			List<TestData> finishedTests = FindNewFinishedTests();
 			StopMonitoring( finishedTests );
+			FindCurrentlyRunningTests();
 			RaiseTestRunUpdated( finishedTests );
 		}
 
@@ -71,14 +73,18 @@ namespace HellBrick.TestBrowser.Core
 				_testsToMonitor.Remove( test.FastId );
 		}
 
+		private void FindCurrentlyRunningTests()
+		{
+			CurentlyRunningTestIDs = _testsToMonitor.Values.Where( t => t.IsCurrentlyRunning ).Select( t => t.Id ).ToList();
+		}
+
 		private void RaiseTestRunUpdated( List<TestData> finishedTests )
 		{
 			var handler = TestRunUpdated;
 			if ( handler != null )
 			{
 				var finishedTestIDs = finishedTests.Select( t => t.Id ).ToList();
-				var currentlyRunningTestIDs = _testsToMonitor.Values.Where( t => t.IsCurrentlyRunning ).Select( t => t.Id ).ToList();
-				TestsRunUpdatedEventArgs updateEventArgs = new TestsRunUpdatedEventArgs( finishedTestIDs, currentlyRunningTestIDs );
+				TestsRunUpdatedEventArgs updateEventArgs = new TestsRunUpdatedEventArgs( finishedTestIDs, CurentlyRunningTestIDs );
 				handler( this, updateEventArgs );
 			}
 		}
@@ -100,5 +106,7 @@ namespace HellBrick.TestBrowser.Core
 		{
 			get { return _runRequest.RunStats; }
 		}
+
+		public IReadOnlyCollection<Guid> CurentlyRunningTestIDs { get; private set; }
 	}
 }
