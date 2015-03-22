@@ -32,11 +32,11 @@ namespace HellBrick.TestBrowser.Models
 		private void ParseMethodNameAndTestCase()
 		{
 			//	xUnit test cases
-			if ( TryParseMethodNameAndTestCase( _test.DisplayName ) )
+			if ( _test.ExecutorUri.Contains( "xunit" ) && TryParseMethodNameAndTestCase( _test.DisplayName ) )
 				return;
 
 			//	nUnit test cases
-			if ( TryParseMethodNameAndTestCase( _test.FullyQualifiedName ) )
+			if ( _test.ExecutorUri.Contains( "nunit" ) && TryParseMethodNameAndTestCase( _test.FullyQualifiedName ) )
 				return;
 
 			//	Default behaviour (nUnit/MSTest w/o a test case)
