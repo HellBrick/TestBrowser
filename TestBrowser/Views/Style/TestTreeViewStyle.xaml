@@ -3,6 +3,10 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:vs="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.12.0"
 	xmlns:pui="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Shell.12.0">
+	
+	<Style TargetType="{x:Type TextBlock}">
+		<Setter Property="TextTrimming" Value="CharacterEllipsis"></Setter>
+	</Style>
 
 	<PathGeometry x:Key="TreeArrow" Figures="M0,0 L0,6 L6,0 z" />
 	<Style x:Key="ExpandCollapseToggleStyle" TargetType="{x:Type ToggleButton}">

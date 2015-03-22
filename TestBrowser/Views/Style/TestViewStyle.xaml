@@ -33,6 +33,7 @@
 	<Style x:Key="TestTextStyle" TargetType="{x:Type TextBlock}">
 		<Style.Setters>
 			<Setter Property="VerticalAlignment" Value="Center"></Setter>
+			<Setter Property="TextTrimming" Value="CharacterEllipsis"></Setter>
 		</Style.Setters>
 		<Style.Triggers>
 			<DataTrigger Binding="{Binding IsCurrentlyRunning}" Value="True">
