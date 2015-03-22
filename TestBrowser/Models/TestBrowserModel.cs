@@ -28,6 +28,14 @@ namespace HellBrick.TestBrowser.Models
 
 			TestTree = new Models.TestTree( _serviceContext.Dispatcher, _options.ExpandedNodes );
 			InitializeCommands();
+			var discoverTask = DiscoverTestsAsync();	//	 no need to await it
+		}
+
+		private async Task DiscoverTestsAsync()
+		{
+			await _serviceContext.WaitForBuildAsync();
+			DiscoverAllOrRunOnInitializeOperation discoverOperation = new DiscoverAllOrRunOnInitializeOperation( _serviceContext.OperationData, false );
+			await _serviceContext.ExecuteOperationAsync( discoverOperation );
 		}
 
 		#region Global event handlers
