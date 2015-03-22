@@ -34,7 +34,7 @@ namespace HellBrick.TestBrowser.Models
 
 		public string Name
 		{
-			get { return "[Root]"; }
+			get { return "All tests"; }
 		}
 
 		public INode Parent
