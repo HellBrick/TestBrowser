@@ -29,7 +29,7 @@
 	</DataTemplate>
 
 	<DataTemplate DataType="{x:Type m:TestTree}">
-		<v:TestTreeView></v:TestTreeView>
+		<v:RootNodeView></v:RootNodeView>
 	</DataTemplate>
 
 	<DataTemplate DataType="{x:Type m:RunSummary}">

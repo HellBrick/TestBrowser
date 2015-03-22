@@ -200,6 +200,9 @@
     <Compile Include="Views\MergedNodeView.xaml.cs">
       <DependentUpon>MergedNodeView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\RootNodeView.xaml.cs">
+      <DependentUpon>RootNodeView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\RunSummaryView.xaml.cs">
       <DependentUpon>RunSummaryView.xaml</DependentUpon>
     </Compile>
@@ -251,6 +254,10 @@
     <Content Include="Resources\Package.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\RootNodeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Style\HyperLinkStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

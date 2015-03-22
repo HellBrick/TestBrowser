@@ -31,6 +31,6 @@
 		</ProgressBar>
 		<ItemsControl DockPanel.Dock="Top" ItemsSource="{Binding Commands}" Style="{StaticResource MenuItemsControlStyle}"></ItemsControl>
 		<v:TestDetailsView DataContext="{Binding SelectedTest}" Visibility="{Binding HasResults, Converter={StaticResource CollapseIfFalse}}" DockPanel.Dock="Bottom"></v:TestDetailsView>
-		<ContentPresenter Content="{Binding TestTree}"></ContentPresenter>
+		<v:TestTreeView DataContext="{Binding TestTree}"></v:TestTreeView>
 	</DockPanel>
 </UserControl>
