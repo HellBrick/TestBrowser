@@ -76,17 +76,14 @@ namespace HellBrick.TestBrowser.Models
 			if ( _currentTestRun != null )
 			{
 				_currentTestRun.TestRunUpdated -= OnTestsFinished;
-				_currentTestRun.Dispose();
-			}
 
-			using ( var reader = _serviceContext.Storage.ActiveUnitTestReader )
-			{
-				using ( var query = reader.GetAllTests() )
-				{
-					var testsInLastRun = reader.GetTestsInLastRun( query );
-					foreach ( var test in testsInLastRun )
-						TestTree.Tests[ test.Id ].RaiseStateChanged();
-				}
+				//	When the debugging session is terminated (Shift + F5),
+				//	the currently running tests are stuck in the 'currently running' state.
+				var testsStuckInRunningState = _currentTestRun.CurentlyRunningTestIDs.Select( id => TestTree.Tests[ id ] );
+				foreach ( var test in testsStuckInRunningState )
+					test.RaiseStateChanged();
+
+				_currentTestRun.Dispose();
 			}
 		}
 
