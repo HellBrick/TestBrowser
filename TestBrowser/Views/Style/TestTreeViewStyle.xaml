@@ -50,6 +50,7 @@
 		<Setter Property="Background" Value="{DynamicResource {x:Static vs:VsBrushes.ToolWindowBackgroundKey}}" />
 		<Setter Property="Foreground" Value="{DynamicResource {x:Static vs:VsBrushes.ToolWindowTextKey}}" />
 		<Setter Property="BorderThickness" Value="0"></Setter>
+		<Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"></Setter>
 	</Style>
 
 	<Style x:Key="TreeViewItemStyle" TargetType="{x:Type TreeViewItem}">
