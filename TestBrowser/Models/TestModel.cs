@@ -31,6 +31,10 @@ namespace HellBrick.TestBrowser.Models
 
 		private void ParseMethodNameAndTestCase()
 		{
+			//	xUnit test cases
+			if ( TryParseMethodNameAndTestCase( _test.DisplayName ) )
+				return;
+
 			//	nUnit test cases
 			if ( TryParseMethodNameAndTestCase( _test.FullyQualifiedName ) )
 				return;
