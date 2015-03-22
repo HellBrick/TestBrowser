@@ -46,8 +46,13 @@ namespace HellBrick.TestBrowser.Models
 				}
 			}
 
-			MethodName = _test.DisplayName;
 			TestCaseName = null;
+			MethodName = _test.DisplayName;
+
+			//	xUnit uses fully qualified name here => the location has to be trimmed
+			int dotIndex = MethodName.LastIndexOf( '.' );
+			if ( dotIndex > 0 )
+				MethodName = MethodName.Substring( dotIndex + 1 );
 		}
 
 		public string MethodName { get; private set; }
