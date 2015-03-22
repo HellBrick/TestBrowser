@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,7 @@ namespace HellBrick.TestBrowser.Models
 			_dispatcher = dispatcher;
 			_autoExpandedNodes = new HashSet<NodeKey>( autoExpandedNodes );
 			Children = new NodeCollection( _dispatcher );
+			RootCollectionWrapper = new ObservableCollection<INode>( Enumerable.Repeat( this, 1 ) );
 		}
 
 		#region INode Members
@@ -63,6 +65,8 @@ namespace HellBrick.TestBrowser.Models
 		{
 			get { return _testLookup; }
 		}
+
+		public ObservableCollection<INode> RootCollectionWrapper { get; private set; }
 
 		public void InsertTest( TestModel newTest )
 		{

@@ -25,7 +25,7 @@
 		</ResourceDictionary>
 	</UserControl.Resources>
 
-	<TreeView ItemsSource="{Binding Children}" Style="{DynamicResource TreeViewStyle}">
+	<TreeView ItemsSource="{Binding RootCollectionWrapper}" Style="{DynamicResource TreeViewStyle}">
 		<TreeView.ItemTemplate>
 			<HierarchicalDataTemplate DataType="{x:Type m:INode}" ItemsSource="{Binding Children}">
 				<ContentPresenter Content="{Binding .}"></ContentPresenter>
