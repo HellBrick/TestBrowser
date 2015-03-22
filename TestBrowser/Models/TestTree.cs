@@ -58,7 +58,11 @@ namespace HellBrick.TestBrowser.Models
 		}
 
 		public bool IsSelected { get; set; }
-		public bool IsExpanded { get; set; }
+		public bool IsExpanded
+		{
+			get { return true; }
+			set { }
+		}
 
 		#endregion
 
