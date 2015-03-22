@@ -4,13 +4,14 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Caliburn.Micro;
 using HellBrick.TestBrowser.Common;
 using HellBrick.TestBrowser.Options;
 using Microsoft.VisualStudio.TestWindow.Controller;
 
 namespace HellBrick.TestBrowser.Models
 {
-	public class TestTree: INode
+	public class TestTree: PropertyChangedBase, INode
 	{
 		private Dictionary<string, LocationNode> _locationLookup = new Dictionary<string, LocationNode>();
 		private Dictionary<string, TestMethodNode> _methodLookup = new Dictionary<string, TestMethodNode>();
@@ -70,7 +71,7 @@ namespace HellBrick.TestBrowser.Models
 		private NodeCollection _rootCollectionWrapper;
 		public NodeCollection VisualChildren
 		{
-			get { return _rootCollectionWrapper; }
+			get { return Children.Count( n => n.IsVisible ) < 2 ? Children : _rootCollectionWrapper; }
 		}
 
 		public void InsertTest( TestModel newTest )
@@ -132,6 +133,10 @@ namespace HellBrick.TestBrowser.Models
 					currentLocationNode = new LocationNode( _dispatcher, currentLocation, locationFragments[ i ] );
 					_locationLookup[ currentLocation ] = currentLocationNode;
 					InsertChildAndTryAutoExpand( currentParent, currentLocationNode );
+
+					//	If the parent is the root of the tree, the insertion might trigger the root visibility.
+					if ( currentParent == this )
+						NotifyOfPropertyChange( () => VisualChildren );
 				}
 
 				currentParent = currentLocationNode;
@@ -182,6 +187,10 @@ namespace HellBrick.TestBrowser.Models
 			var survivingLocation = parent as LocationNode;
 			if ( survivingLocation != null )
 				OptimizeTreeBranchAfterRemove( survivingLocation );
+
+			//	If the parent is the root of the tree, the removal might trigger the root visibility.
+			if ( parent == this )
+				NotifyOfPropertyChange( () => VisualChildren );
 		}
 
 		/// <param name="locationNode">The parent of the node that has just been inserted into the tree.</param>
