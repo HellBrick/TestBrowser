@@ -257,7 +257,7 @@ namespace HellBrick.TestBrowser.Models
 			if ( ShouldInvokeFullRun( selectedNode ) )
 				_serviceContext.ExecuteOperationAsync( new RunAllOperation( _serviceContext.OperationData ) { ShowTestWindowAfterRun = false } );
 			else
-				_serviceContext.RequestFactory.ExecuteTestsAsync( EnumerateSelectedTestIDs(), configProvider => { } );
+				_serviceContext.RequestFactory.ExecuteTestsAsync( EnumerateSelectedTestIDs( selectedNode ), configProvider => { } );
 		}
 
 		private void DebugSelected()
@@ -266,12 +266,7 @@ namespace HellBrick.TestBrowser.Models
 			if ( ShouldInvokeFullRun( selectedNode ) )
 				_serviceContext.RequestFactory.DebugTestsAsync();
 			else
-				_serviceContext.RequestFactory.DebugTestsAsync( EnumerateSelectedTestIDs() );
-		}
-
-		private IEnumerable<Guid> EnumerateSelectedTestIDs()
-		{
-			return EnumerateSelectedTestIDs( TestTree );
+				_serviceContext.RequestFactory.DebugTestsAsync( EnumerateSelectedTestIDs( selectedNode ) );
 		}
 
 		private INode FindSelectedNode()
@@ -284,20 +279,12 @@ namespace HellBrick.TestBrowser.Models
 			return selectedNode == null || selectedNode == TestTree;
 		}
 
-		private IEnumerable<Guid> EnumerateSelectedTestIDs( INode node )
+		private IEnumerable<Guid> EnumerateSelectedTestIDs( INode selectedNode )
 		{
-			if ( node.IsSelected )
-			{
-				//	If the node is selected, all its descendants are considered selected automatically.
-				return node.EnumerateDescendantsAndSelf()
-					.OfType<TestModel>()
-					.Select( t => t.ID );
-			}
-			else
-			{
-				//	Otherwise, we have to recursively examine all its descendants personally.
-				return node.Children.SelectMany( c => EnumerateSelectedTestIDs( c ) );
-			}
+			//	If the node is selected, all its descendants are considered selected automatically.
+			return selectedNode.EnumerateDescendantsAndSelf()
+				.OfType<TestModel>()
+				.Select( t => t.ID );
 		}
 
 		private void Cancel()
