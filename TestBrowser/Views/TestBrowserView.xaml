@@ -15,6 +15,7 @@
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="Style/MenuStyle.xaml"></ResourceDictionary>
+				<ResourceDictionary Source="Style/SplitterStyle.xaml"></ResourceDictionary>
 			</ResourceDictionary.MergedDictionaries>
 			<c:BoolToVisibilityConverter x:Key="HideIfFalse" IfFalse="Hidden"></c:BoolToVisibilityConverter>
 			<c:BoolToVisibilityConverter x:Key="CollapseIfFalse"></c:BoolToVisibilityConverter>
@@ -27,6 +28,7 @@
 			<RowDefinition Height="Auto"></RowDefinition>
 			<RowDefinition Height="1*"></RowDefinition>
 			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
 		</Grid.RowDefinitions>
 
 		<ProgressBar
@@ -38,6 +40,7 @@
 		</ProgressBar>
 		<ItemsControl ItemsSource="{Binding Commands}" Style="{StaticResource MenuItemsControlStyle}" Grid.Row="1"></ItemsControl>
 		<v:TestTreeView DataContext="{Binding TestTree}" Grid.Row="2"></v:TestTreeView>
-		<v:TestDetailsView DataContext="{Binding SelectedTest}" Visibility="{Binding HasResults, Converter={StaticResource CollapseIfFalse}}" Grid.Row="3"></v:TestDetailsView>
+		<GridSplitter ResizeDirection="Rows" Style="{StaticResource RowSplitterStyle}" Grid.Row="3"></GridSplitter>
+		<v:TestDetailsView DataContext="{Binding SelectedTest}" Visibility="{Binding HasResults, Converter={StaticResource CollapseIfFalse}}" Grid.Row="4"></v:TestDetailsView>
 	</Grid>
 </UserControl>
