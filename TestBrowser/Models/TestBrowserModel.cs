@@ -234,10 +234,8 @@ namespace HellBrick.TestBrowser.Models
 		{
 			Commands = new List<SafeCommand>()
 			{
-				new SafeCommand( _serviceContext.Dispatcher, () => RunAll(), () => CanRunTests(), "Run all" ),
-				new SafeCommand( _serviceContext.Dispatcher, () => DebugAll(), () => CanRunTests(), "Debug all" ),
-				new SafeCommand( _serviceContext.Dispatcher, () => RunSelected(), () => CanRunTests(), "Run selected" ),
-				new SafeCommand( _serviceContext.Dispatcher, () => DebugSelected(), () => CanRunTests(), "Debug selected" ),
+				new SafeCommand( _serviceContext.Dispatcher, () => RunSelected(), () => CanRunTests(), "Run" ),
+				new SafeCommand( _serviceContext.Dispatcher, () => DebugSelected(), () => CanRunTests(), "Debug" ),
 				new SafeCommand( _serviceContext.Dispatcher, () => Cancel(), () => CanCancel(), "Cancel" )
 			};
 		}
@@ -251,16 +249,6 @@ namespace HellBrick.TestBrowser.Models
 		private bool CanRunTests()
 		{
 			return _serviceContext.RequestFactory.OperationSetFinished;
-		}
-
-		private void RunAll()
-		{
-			_serviceContext.ExecuteOperationAsync( new RunAllOperation( _serviceContext.OperationData ) { ShowTestWindowAfterRun = false } );
-		}
-
-		private void DebugAll()
-		{
-			_serviceContext.RequestFactory.DebugTestsAsync();
 		}
 
 		private void RunSelected()
