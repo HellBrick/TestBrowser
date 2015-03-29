@@ -253,17 +253,35 @@ namespace HellBrick.TestBrowser.Models
 
 		private void RunSelected()
 		{
-			_serviceContext.RequestFactory.ExecuteTestsAsync( EnumerateSelectedTestIDs(), configProvider => { } );
+			INode selectedNode = FindSelectedNode();
+			if ( ShouldInvokeFullRun( selectedNode ) )
+				_serviceContext.ExecuteOperationAsync( new RunAllOperation( _serviceContext.OperationData ) { ShowTestWindowAfterRun = false } );
+			else
+				_serviceContext.RequestFactory.ExecuteTestsAsync( EnumerateSelectedTestIDs(), configProvider => { } );
 		}
 
 		private void DebugSelected()
 		{
-			_serviceContext.RequestFactory.DebugTestsAsync( EnumerateSelectedTestIDs() );
+			INode selectedNode = FindSelectedNode();
+			if ( ShouldInvokeFullRun( selectedNode ) )
+				_serviceContext.RequestFactory.DebugTestsAsync();
+			else
+				_serviceContext.RequestFactory.DebugTestsAsync( EnumerateSelectedTestIDs() );
 		}
 
 		private IEnumerable<Guid> EnumerateSelectedTestIDs()
 		{
 			return EnumerateSelectedTestIDs( TestTree );
+		}
+
+		private INode FindSelectedNode()
+		{
+			return TestTree.EnumerateDescendantsAndSelf().FirstOrDefault( n => n.IsSelected );
+		}
+
+		private bool ShouldInvokeFullRun( INode selectedNode )
+		{
+			return selectedNode == null || selectedNode == TestTree;
 		}
 
 		private IEnumerable<Guid> EnumerateSelectedTestIDs( INode node )
