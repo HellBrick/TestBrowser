@@ -157,6 +157,7 @@
     <Compile Include="Common\EventHandler.cs" />
     <Compile Include="Common\HSL.cs" />
     <Compile Include="Common\Input.cs" />
+    <Compile Include="Common\IsValueBiggerThanConverter.cs" />
     <Compile Include="Common\NullToVisibilityConverter.cs" />
     <Compile Include="Common\OrderedSafeObservableCollection.cs" />
     <Compile Include="Common\SafeCommand.cs" />

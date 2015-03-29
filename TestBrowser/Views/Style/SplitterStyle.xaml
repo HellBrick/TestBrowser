@@ -3,10 +3,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:vs="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.12.0">
 	
-	<Style x:Key="RowSplitterStyle" TargetType="{x:Type GridSplitter}">
-		<Setter Property="Width" Value="Auto"></Setter>
-		<Setter Property="Height" Value="5"></Setter>
-		<Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+	<Style x:Key="CommonSplitterStyle" TargetType="{x:Type GridSplitter}">
 		<Setter Property="Background" Value="{DynamicResource {x:Static vs:VsBrushes.EnvironmentBackgroundKey}}"></Setter>
 	</Style>
 	

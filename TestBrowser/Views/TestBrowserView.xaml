@@ -1,5 +1,6 @@
 ﻿<UserControl
 	x:Class="HellBrick.TestBrowser.Views.TestBrowserView"
+	x:Name="_controlRoot"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,6 +8,7 @@
 	xmlns:m="clr-namespace:HellBrick.TestBrowser.Models"
 	xmlns:c="clr-namespace:HellBrick.TestBrowser.Common"
 	xmlns:v="clr-namespace:HellBrick.TestBrowser.Views"
+	xmlns:s="clr-namespace:System;assembly=mscorlib"
 	mc:Ignorable="d" 
 	d:DesignHeight="300" d:DesignWidth="300"
 	d:DataContext="{d:DesignInstance Type={x:Type m:TestBrowserModel}}">
@@ -19,6 +21,54 @@
 			</ResourceDictionary.MergedDictionaries>
 			<c:BoolToVisibilityConverter x:Key="HideIfFalse" IfFalse="Hidden"></c:BoolToVisibilityConverter>
 			<c:BoolToVisibilityConverter x:Key="CollapseIfFalse"></c:BoolToVisibilityConverter>
+			<c:IsValueBiggerThanConverter x:Key="IsWide" Threshold="800"></c:IsValueBiggerThanConverter>
+
+			<Style x:Key="TestTreeViewStyle" TargetType="{x:Type v:TestTreeView}">
+				<Setter Property="Grid.Row" Value="2"></Setter>
+				<Setter Property="Grid.ColumnSpan" Value="3"></Setter>
+
+				<Style.Triggers>
+					<DataTrigger Binding="{Binding ActualWidth, ElementName=_controlRoot, Converter={StaticResource IsWide}}" Value="True">
+						<Setter Property="Grid.ColumnSpan" Value="1"></Setter>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
+
+			<s:Double x:Key="SplitterThickness">5</s:Double>
+			<Style x:Key="SplitterStyle" BasedOn="{StaticResource CommonSplitterStyle}" TargetType="{x:Type GridSplitter}">
+				<Setter Property="ResizeDirection" Value="Rows"></Setter>
+				<Setter Property="Width" Value="Auto"></Setter>
+				<Setter Property="Height" Value="{StaticResource SplitterThickness}"></Setter>
+				<Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+				<Setter Property="Grid.Row" Value="3"></Setter>
+				<Setter Property="Grid.ColumnSpan" Value="3"></Setter>
+
+				<Style.Triggers>
+					<DataTrigger Binding="{Binding ActualWidth, ElementName=_controlRoot, Converter={StaticResource IsWide}}" Value="True">
+						<Setter Property="ResizeDirection" Value="Columns"></Setter>
+						<Setter Property="Width" Value="{StaticResource SplitterThickness}"></Setter>
+						<Setter Property="Height" Value="Auto"></Setter>
+						<Setter Property="VerticalAlignment" Value="Stretch"></Setter>
+						<Setter Property="Grid.Column" Value="1"></Setter>
+						<Setter Property="Grid.ColumnSpan" Value="1"></Setter>
+						<Setter Property="Grid.Row" Value="2"></Setter>
+						<Setter Property="Grid.RowSpan" Value="3"></Setter>
+					</DataTrigger>					
+				</Style.Triggers>
+			</Style>
+
+			<Style x:Key="DetailsViewStyle" TargetType="{x:Type v:TestDetailsView}">
+				<Setter Property="Grid.Row" Value="4"></Setter>
+				<Setter Property="Grid.ColumnSpan" Value="3"></Setter>
+				<Style.Triggers>
+					<DataTrigger Binding="{Binding ActualWidth, ElementName=_controlRoot, Converter={StaticResource IsWide}}" Value="True">
+						<Setter Property="Grid.Column" Value="2"></Setter>
+						<Setter Property="Grid.ColumnSpan" Value="1"></Setter>
+						<Setter Property="Grid.Row" Value="2"></Setter>
+						<Setter Property="Grid.RowSpan" Value="3"></Setter>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
 		</ResourceDictionary>
 	</UserControl.Resources>
 
@@ -30,17 +80,22 @@
 			<RowDefinition Height="Auto"></RowDefinition>
 			<RowDefinition Height="150"></RowDefinition>
 		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="1*"></ColumnDefinition>
+			<ColumnDefinition Width="Auto"></ColumnDefinition>
+			<ColumnDefinition Width="Auto"></ColumnDefinition>
+		</Grid.ColumnDefinitions>
 
 		<ProgressBar
 			Visibility="{Binding IsDoingSomething, Converter={StaticResource HideIfFalse}}"
 			IsIndeterminate="{Binding IsDoingIndefiniteOperation}"
 			Maximum="{Binding MaxProgress}"
 			Value="{Binding CurrentProgress}"
-			Grid.Row="0">
+			Grid.Row="0" Grid.ColumnSpan="3">
 		</ProgressBar>
-		<ItemsControl ItemsSource="{Binding Commands}" Style="{StaticResource MenuItemsControlStyle}" Grid.Row="1"></ItemsControl>
-		<v:TestTreeView DataContext="{Binding TestTree}" Grid.Row="2"></v:TestTreeView>
-		<GridSplitter ResizeDirection="Rows" Style="{StaticResource RowSplitterStyle}" Grid.Row="3"></GridSplitter>
-		<v:TestDetailsView DataContext="{Binding SelectedTest}" Visibility="{Binding HasResults, Converter={StaticResource CollapseIfFalse}}" Grid.Row="4"></v:TestDetailsView>
+		<ItemsControl ItemsSource="{Binding Commands}" Style="{StaticResource MenuItemsControlStyle}" Grid.Row="1" Grid.ColumnSpan="3"></ItemsControl>
+		<v:TestTreeView DataContext="{Binding TestTree}" Style="{StaticResource TestTreeViewStyle}"></v:TestTreeView>
+		<GridSplitter Style="{StaticResource SplitterStyle}"></GridSplitter>
+		<v:TestDetailsView DataContext="{Binding SelectedTest}" Visibility="{Binding HasResults, Converter={StaticResource CollapseIfFalse}}" Style="{StaticResource DetailsViewStyle}"></v:TestDetailsView>
 	</Grid>
 </UserControl>
