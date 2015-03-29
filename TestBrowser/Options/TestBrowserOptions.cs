@@ -16,6 +16,7 @@ namespace HellBrick.TestBrowser.Options
 		public TestBrowserOptions()
 		{
 			ExpandedNodes = new List<NodeKey>();
+			HumanizeTestNames = true;
 		}
 
 		public static TestBrowserOptions FromStream( Stream stream )
@@ -34,5 +35,6 @@ namespace HellBrick.TestBrowser.Options
 		}
 
 		public List<NodeKey> ExpandedNodes { get; set; }
+		public bool HumanizeTestNames { get; set; }
 	}
 }
