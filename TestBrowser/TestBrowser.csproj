@@ -172,12 +172,14 @@
     <Compile Include="Core\TestRunRequestExtensions.cs" />
     <Compile Include="Core\TestServiceContext.cs" />
     <Compile Include="Common\SafeObservableCollection.cs" />
+    <Compile Include="Models\IHumanizable.cs" />
     <Compile Include="Models\INode.cs" />
     <Compile Include="Models\LocationNode.cs" />
     <Compile Include="Models\MergedNode.cs" />
     <Compile Include="Models\NodeCollection.cs" />
     <Compile Include="Models\NodeType.cs" />
     <Compile Include="Models\RunSummary.cs" />
+    <Compile Include="Models\SettingsModel.cs" />
     <Compile Include="Models\TestBrowserModel.cs" />
     <Compile Include="Models\TestMethodNode.cs" />
     <Compile Include="Models\TestModel.cs" />
@@ -209,6 +211,9 @@
     </Compile>
     <Compile Include="Views\RunSummaryView.xaml.cs">
       <DependentUpon>RunSummaryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TestBrowserView.xaml.cs">
       <DependentUpon>TestBrowserView.xaml</DependentUpon>
@@ -259,6 +264,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\RootNodeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

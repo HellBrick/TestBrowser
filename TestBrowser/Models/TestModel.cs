@@ -14,10 +14,11 @@ using Microsoft.VisualStudio.TestWindow.Model;
 
 namespace HellBrick.TestBrowser.Models
 {
-	public class TestModel: PropertyChangedBase, INode
+	public class TestModel: PropertyChangedBase, INode, IHumanizable
 	{
 		private TestServiceContext _serviceContext;
 		private TestData _test;
+		private string _humanizedMethodName;
 
 		public TestModel( TestData test, TestServiceContext serviceContext )
 		{
@@ -26,7 +27,7 @@ namespace HellBrick.TestBrowser.Models
 
 			Location = _test.Namespace + "." + _test.ClassName;
 			ParseMethodNameAndTestCase();
-			MethodName = Humanizer.StringHumanizeExtensions.Humanize( MethodName );
+			_humanizedMethodName = Humanizer.StringHumanizeExtensions.Humanize( MethodName );
 			InitializeCommands();
 		}
 
@@ -117,7 +118,7 @@ namespace HellBrick.TestBrowser.Models
 			get { return NodeType.Test; }
 		}
 
-		public string Name { get { return TestCaseName ?? MethodName; } }
+		public string Name { get { return TestCaseName ?? ( HumanizeName ? _humanizedMethodName : MethodName ); } }
 		public INode Parent { get; set; }
 
 		private List<INode> _emptyList = new List<INode>();
@@ -163,6 +164,21 @@ namespace HellBrick.TestBrowser.Models
 
 		#endregion
 
+		#region IHumanizable Members
+
+		private bool _humanizeName = true;
+		public bool HumanizeName
+		{
+			get { return _humanizeName; }
+			set
+			{
+				_humanizeName = value;
+				NotifyOfPropertyChange( () => Name );
+			}
+		}
+
+		#endregion
+
 		private struct TestOpenTarget: IOpenTarget
 		{
 			private TestData _testData;
@@ -201,6 +217,5 @@ namespace HellBrick.TestBrowser.Models
 
 			#endregion
 		}
-
 	}
 }

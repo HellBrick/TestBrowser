@@ -23,12 +23,19 @@ namespace HellBrick.TestBrowser.Models
 		public TestBrowserModel( TestServiceContext serviceContext, TestBrowserOptions options )
 		{
 			_serviceContext = serviceContext;
-			_options = options ?? new TestBrowserOptions();
+			InitializeSettings( options );
 			_serviceContext.RequestFactory.StateChanged += OnStateChanged;
 
 			TestTree = new Models.TestTree( _serviceContext.Dispatcher, _options.ExpandedNodes );
 			InitializeCommands();
 			var discoverTask = DiscoverTestsAsync();	//	 no need to await it
+		}
+
+		private void InitializeSettings( TestBrowserOptions options )
+		{
+			_options = options ?? new TestBrowserOptions();
+			Settings = new SettingsModel( _options );
+			Settings.PropertyChanged += OnSettingsChanged;
 		}
 
 		private async Task DiscoverTestsAsync()
@@ -39,6 +46,17 @@ namespace HellBrick.TestBrowser.Models
 		}
 
 		#region Global event handlers
+
+		private void OnSettingsChanged( object sender, System.ComponentModel.PropertyChangedEventArgs e )
+		{
+			if ( e.PropertyName == "HumanizeTestNames" )
+			{
+				foreach ( var humanizableNode in TestTree.EnumerateDescendants().OfType<IHumanizable>() )
+				{
+					humanizableNode.HumanizeName = Settings.HumanizeTestNames;
+				}
+			}
+		}
 
 		private void OnStateChanged( object sender, OperationStateChangedEventArgs e )
 		{
@@ -141,7 +159,7 @@ namespace HellBrick.TestBrowser.Models
 			var newTests = newTestLookup.Where( kvp => !TestTree.Tests.ContainsKey( kvp.Key ) );
 			foreach ( var kvp in newTests )
 			{
-				TestModel test = new TestModel( kvp.Value as TestData, _serviceContext );
+				TestModel test = new TestModel( kvp.Value as TestData, _serviceContext ) { HumanizeName = Settings.HumanizeTestNames };
 				test.SelectionChanged += OnTestSelectionChanged;
 				TestTree.InsertTest( test );
 			}
@@ -225,6 +243,7 @@ namespace HellBrick.TestBrowser.Models
 		}
 
 		public List<SafeCommand> Commands { get; private set; }
+		public SettingsModel Settings { get; private set; }
 
 		#endregion
 
@@ -304,6 +323,7 @@ namespace HellBrick.TestBrowser.Models
 		public void Dispose()
 		{
 			_serviceContext.RequestFactory.StateChanged -= OnStateChanged;
+			Settings.PropertyChanged -= OnSettingsChanged;
 			_currentTestRun.Dispose();
 		}
 

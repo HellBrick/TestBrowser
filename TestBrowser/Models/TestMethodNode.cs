@@ -8,12 +8,13 @@ using Microsoft.VisualStudio.TestWindow.Controller;
 
 namespace HellBrick.TestBrowser.Models
 {
-	public class TestMethodNode: PropertyChangedBase, INode
+	public class TestMethodNode: PropertyChangedBase, INode, IHumanizable
 	{
 		public TestMethodNode( SafeDispatcher dispatcher, string methodName )
 		{
 			_children = new NodeCollection( dispatcher );
-			Name = methodName;
+			_originalMethodName = methodName;
+			_humanizedMethodName = Humanizer.StringHumanizeExtensions.Humanize( _originalMethodName );
 		}
 
 		public override string ToString()
@@ -28,7 +29,12 @@ namespace HellBrick.TestBrowser.Models
 			get { return NodeType.Method; }
 		}
 
-		public string Name { get; private set; }
+		private string _originalMethodName;
+		private string _humanizedMethodName;
+		public string Name
+		{
+			get { return HumanizeName ? _humanizedMethodName : _originalMethodName; }
+		}
 
 		public INode Parent { get; set; }
 
@@ -49,6 +55,21 @@ namespace HellBrick.TestBrowser.Models
 		{
 			get { return _isExpanded; }
 			set { _isExpanded = value; NotifyOfPropertyChange( () => IsExpanded ); }
+		}
+
+		#endregion
+
+		#region IHumanizable Members
+
+		private bool _humanizeName = true;
+		public bool HumanizeName
+		{
+			get { return _humanizeName; }
+			set
+			{
+				_humanizeName = value;
+				NotifyOfPropertyChange( () => Name );
+			}
 		}
 
 		#endregion
