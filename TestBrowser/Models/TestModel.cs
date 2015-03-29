@@ -26,6 +26,7 @@ namespace HellBrick.TestBrowser.Models
 
 			Location = _test.Namespace + "." + _test.ClassName;
 			ParseMethodNameAndTestCase();
+			MethodName = Humanizer.StringHumanizeExtensions.Humanize( MethodName );
 			InitializeCommands();
 		}
 
