@@ -53,7 +53,7 @@
 						<Setter Property="Grid.ColumnSpan" Value="1"></Setter>
 						<Setter Property="Grid.Row" Value="2"></Setter>
 						<Setter Property="Grid.RowSpan" Value="3"></Setter>
-					</DataTrigger>					
+					</DataTrigger>
 				</Style.Triggers>
 			</Style>
 
