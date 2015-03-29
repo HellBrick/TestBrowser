@@ -63,7 +63,7 @@ namespace HellBrick.TestBrowser.Models
 			}
 			catch ( Exception ex )
 			{
-				_serviceContext.Logger.LogException( ex );
+				_serviceContext.Logger.Log( MessageLevel.Error, ex.ToString() );
 			}
 		}
 
