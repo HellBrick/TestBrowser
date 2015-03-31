@@ -70,7 +70,7 @@ namespace HellBrick.TestBrowser
 				ExpandedNodes = TestBrowserPackage.RootModel.TestTree
 					.EnumerateDescendantsAndSelf()
 					.Where( n => n.IsVisible && n.IsExpanded )
-					.Select( n => new NodeKey( n.Type, n.Name ) )
+					.Select( n => new NodeKey( n.Type, n.Key ) )
 					.ToList()
 			};
 

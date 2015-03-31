@@ -118,7 +118,7 @@ namespace HellBrick.TestBrowser.Models
 		private void InsertChildAndTryAutoExpand( INode parent, INode child )
 		{
 			parent.InsertChild( child );
-			if ( _autoExpandedNodes.Remove( new NodeKey( child.Type, child.Name ) ) )
+			if ( _autoExpandedNodes.Remove( new NodeKey( child.Type, child.Key ) ) )
 				child.IsExpanded = true;
 		}
 
