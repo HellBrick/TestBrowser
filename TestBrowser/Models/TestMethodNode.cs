@@ -36,6 +36,11 @@ namespace HellBrick.TestBrowser.Models
 			get { return HumanizeName ? _humanizedMethodName : _originalMethodName; }
 		}
 
+		public string Key
+		{
+			get { return _originalMethodName; }
+		}
+
 		public INode Parent { get; set; }
 
 		private NodeCollection _children;

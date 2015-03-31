@@ -119,6 +119,12 @@ namespace HellBrick.TestBrowser.Models
 		}
 
 		public string Name { get { return TestCaseName ?? ( HumanizeName ? _humanizedMethodName : MethodName ); } }
+
+		public string Key
+		{
+			get { return TestCaseName ?? MethodName; }
+		}
+
 		public INode Parent { get; set; }
 
 		private List<INode> _emptyList = new List<INode>();
