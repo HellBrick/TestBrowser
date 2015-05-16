@@ -20,6 +20,9 @@ namespace HellBrick.TestBrowser.Views
 	/// </summary>
 	public partial class CommandBarView: UserControl
 	{
+		private static readonly TimeSpan _popupReopenThreshold = TimeSpan.FromMilliseconds( 100 );
+		private DateTime? _popupClosedTimestamp;
+
 		public CommandBarView()
 		{
 			InitializeComponent();
@@ -27,7 +30,14 @@ namespace HellBrick.TestBrowser.Views
 
 		private void OnSettingsHyperlinkClick( object sender, RoutedEventArgs e )
 		{
-			SettingsPopup.IsOpen = !SettingsPopup.IsOpen;
+			TimeSpan timeSincePopupClosing = _popupClosedTimestamp.HasValue ? DateTime.UtcNow - _popupClosedTimestamp.Value : TimeSpan.MaxValue;
+			if ( timeSincePopupClosing > _popupReopenThreshold )
+				SettingsPopup.IsOpen = true;
+		}
+
+		private void OnSettingsPopupClosed( object sender, EventArgs e )
+		{
+			_popupClosedTimestamp = DateTime.UtcNow;
 		}
 	}
 }

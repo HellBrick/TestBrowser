@@ -29,7 +29,8 @@
 			Placement="Left"
 			VerticalOffset="{Binding ElementName=SettingsText, Path=ActualHeight}"
 			HorizontalOffset="{Binding ElementName=SettingsText, Path=ActualWidth}"
-			Style="{StaticResource PopupStyle}">
+			Style="{StaticResource PopupStyle}"
+			Closed="OnSettingsPopupClosed">
 
 			<ContentPresenter Content="{Binding Settings}"></ContentPresenter>
 		</Popup>
