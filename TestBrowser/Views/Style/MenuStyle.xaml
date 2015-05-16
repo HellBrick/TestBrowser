@@ -37,6 +37,7 @@
 
 	<Style x:Key="PopupStyle" TargetType="{x:Type Popup}">
 		<Setter Property="AllowsTransparency" Value="True"></Setter>
+		<Setter Property="StaysOpen" Value="False"></Setter>
 	</Style>
 
 </ResourceDictionary>
