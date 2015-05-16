@@ -20,6 +20,6 @@
 
 	<DockPanel LastChildFill="True">
 		<Image Style="{StaticResource TestIconStyle}"></Image>
-		<TextBlock Text="{Binding Name, Mode=OneTime}" Style="{StaticResource TestTextStyle}"></TextBlock>
+		<TextBlock Text="{Binding Name}" Style="{StaticResource TestTextStyle}"></TextBlock>
 	</DockPanel>
 </UserControl>

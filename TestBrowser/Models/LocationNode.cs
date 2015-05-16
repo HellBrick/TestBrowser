@@ -68,6 +68,12 @@ namespace HellBrick.TestBrowser.Models
 		}
 
 		public string Name { get; private set; }
+
+		public string Key
+		{
+			get { return Name; }
+		}
+
 		public INode Parent { get; set; }
 		public NodeCollection Children { get; private set; }
 

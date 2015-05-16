@@ -65,16 +65,13 @@ namespace HellBrick.TestBrowser
 			if ( key != TestBrowserOptions.OptionStreamKey )
 				return;
 
-			TestBrowserOptions options = new TestBrowserOptions()
-			{
-				ExpandedNodes = TestBrowserPackage.RootModel.TestTree
-					.EnumerateDescendantsAndSelf()
-					.Where( n => n.IsVisible && n.IsExpanded )
-					.Select( n => new NodeKey( n.Type, n.Name ) )
-					.ToList()
-			};
+			_options.ExpandedNodes = TestBrowserPackage.RootModel.TestTree
+				.EnumerateDescendantsAndSelf()
+				.Where( n => n.IsVisible && n.IsExpanded )
+				.Select( n => new NodeKey( n.Type, n.Key ) )
+				.ToList();
 
-			options.WriteToStream( stream );
+			_options.WriteToStream( stream );
 		}
 
 		protected override void OnLoadOptions( string key, Stream stream )
@@ -84,7 +81,7 @@ namespace HellBrick.TestBrowser
 			if ( key != TestBrowserOptions.OptionStreamKey )
 				return;
 
-			_options = TestBrowserOptions.FromStream( stream );
+			_options = TestBrowserOptions.FromStream( stream ) ?? new TestBrowserOptions();
 		}
 
 		#endregion

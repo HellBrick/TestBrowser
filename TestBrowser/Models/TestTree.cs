@@ -39,6 +39,11 @@ namespace HellBrick.TestBrowser.Models
 			get { return "All tests"; }
 		}
 
+		public string Key
+		{
+			get { return Name; }
+		}
+
 		public INode Parent
 		{
 			get { return null; }
@@ -92,7 +97,7 @@ namespace HellBrick.TestBrowser.Models
 				string key = MethodNodeKey( locationNode, newTest.MethodName );
 				TestMethodNode methodNode;
 				if ( !_methodLookup.TryGetValue( key, out methodNode ) )
-					methodNode = CreateMethodNode( locationNode, key, newTest.MethodName );
+					methodNode = CreateMethodNode( locationNode, key, newTest.MethodName, newTest.HumanizeName );
 
 				insertionNode = methodNode;
 			}
@@ -113,7 +118,7 @@ namespace HellBrick.TestBrowser.Models
 		private void InsertChildAndTryAutoExpand( INode parent, INode child )
 		{
 			parent.InsertChild( child );
-			if ( _autoExpandedNodes.Remove( new NodeKey( child.Type, child.Name ) ) )
+			if ( _autoExpandedNodes.Remove( new NodeKey( child.Type, child.Key ) ) )
 				child.IsExpanded = true;
 		}
 
@@ -154,9 +159,9 @@ namespace HellBrick.TestBrowser.Models
 			return location.Location + methodName;
 		}
 
-		private TestMethodNode CreateMethodNode( LocationNode locationNode, string key, string methodName )
+		private TestMethodNode CreateMethodNode( LocationNode locationNode, string key, string methodName, bool humanizeTestName )
 		{
-			TestMethodNode methodNode = new TestMethodNode( _dispatcher, methodName );
+			TestMethodNode methodNode = new TestMethodNode( _dispatcher, methodName ) { HumanizeName = humanizeTestName };
 			InsertChildAndTryAutoExpand( locationNode, methodNode );
 			_methodLookup.Add( key, methodNode );
 			return methodNode;

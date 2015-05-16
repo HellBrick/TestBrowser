@@ -26,6 +26,11 @@ namespace HellBrick.TestBrowser.Models
 
 		public string Name { get; private set; }
 
+		public string Key
+		{
+			get { return Name; }
+		}
+
 		public INode Parent
 		{
 			get { return Nodes[ 0 ].Parent; }

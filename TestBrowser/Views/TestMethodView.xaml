@@ -9,5 +9,5 @@
 	d:DesignHeight="300" d:DesignWidth="300"
 	d:DataContext="{d:DesignInstance Type={x:Type vm:TestMethodNode}}">
 	
-	<TextBlock Text="{Binding Name, Mode=OneTime}"></TextBlock>
+	<TextBlock Text="{Binding Name}"></TextBlock>
 </UserControl>

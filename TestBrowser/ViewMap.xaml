@@ -35,5 +35,9 @@
 	<DataTemplate DataType="{x:Type m:RunSummary}">
 		<v:RunSummaryView></v:RunSummaryView>
 	</DataTemplate>
-	
+
+	<DataTemplate DataType="{x:Type m:SettingsModel}">
+		<v:SettingsView></v:SettingsView>
+	</DataTemplate>
+
 </ResourceDictionary>
