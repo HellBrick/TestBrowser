@@ -161,11 +161,10 @@ namespace HellBrick.TestBrowser.Models
 			_serviceContext.Host.Open( new TestOpenTarget( _test ) );
 		}
 
-		private bool _isExpanded;
 		public bool IsExpanded
 		{
-			get { return _isExpanded; }
-			set { _isExpanded = value; NotifyOfPropertyChange( () => IsExpanded ); }
+			get { return false; }
+			set { }
 		}
 
 		#endregion

@@ -26,7 +26,7 @@ namespace HellBrick.TestBrowser.Models
 			InitializeSettings( options );
 			_serviceContext.RequestFactory.StateChanged += OnStateChanged;
 
-			TestTree = new Models.TestTree( _serviceContext.Dispatcher, _options.ExpandedNodes );
+			TestTree = new Models.TestTree( _serviceContext.Dispatcher, _options.CollapsedNodes );
 			InitializeCommands();
 			var discoverTask = DiscoverTestsAsync();	//	 no need to await it
 		}

@@ -55,7 +55,7 @@ namespace HellBrick.TestBrowser.Models
 			set { _isSelected = value; NotifyOfPropertyChange( () => IsSelected ); }
 		}
 
-		private bool _isExpanded;
+		private bool _isExpanded = true;
 		public bool IsExpanded
 		{
 			get { return _isExpanded; }

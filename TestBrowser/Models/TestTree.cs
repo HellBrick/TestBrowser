@@ -15,13 +15,13 @@ namespace HellBrick.TestBrowser.Models
 	{
 		private Dictionary<string, LocationNode> _locationLookup = new Dictionary<string, LocationNode>();
 		private Dictionary<string, TestMethodNode> _methodLookup = new Dictionary<string, TestMethodNode>();
-		private HashSet<NodeKey> _autoExpandedNodes;
+		private HashSet<NodeKey> _autoCollapsedNodes;
 		private SafeDispatcher _dispatcher;
 
-		public TestTree( SafeDispatcher dispatcher, IEnumerable<NodeKey> autoExpandedNodes )
+		public TestTree( SafeDispatcher dispatcher, IEnumerable<NodeKey> autoCollapsedNodes )
 		{
 			_dispatcher = dispatcher;
-			_autoExpandedNodes = new HashSet<NodeKey>( autoExpandedNodes );
+			_autoCollapsedNodes = new HashSet<NodeKey>( autoCollapsedNodes );
 			Children = new NodeCollection( _dispatcher );
 			_rootCollectionWrapper = new NodeCollection( _dispatcher );
 			_rootCollectionWrapper.Add( this );
@@ -118,8 +118,8 @@ namespace HellBrick.TestBrowser.Models
 		private void InsertChildAndTryAutoExpand( INode parent, INode child )
 		{
 			parent.InsertChild( child );
-			if ( _autoExpandedNodes.Remove( new NodeKey( child.Type, child.Key ) ) )
-				child.IsExpanded = true;
+			if ( _autoCollapsedNodes.Remove( new NodeKey( child.Type, child.Key ) ) )
+				child.IsExpanded = false;
 		}
 
 		private LocationNode CreateLocationNode( string location )
