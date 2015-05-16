@@ -17,5 +17,22 @@
 		</ResourceDictionary>
 	</UserControl.Resources>
 
-	<ItemsControl ItemsSource="{Binding Commands}" Style="{StaticResource MenuItemsControlStyle}"></ItemsControl>
+	<DockPanel LastChildFill="True">
+		<TextBlock DockPanel.Dock="Right" Style="{StaticResource MenuTextBlockStyle}" Name="SettingsText">
+			<Hyperlink Command="{Binding .}" Style="{StaticResource HyperlinkStyle}" Click="OnSettingsHyperlinkClick">
+				<Run Text="Settings"></Run>
+			</Hyperlink>
+		</TextBlock>
+		<Popup
+			Name="SettingsPopup"
+			PlacementTarget="{Binding ElementName=SettingsText}"
+			Placement="Left"
+			VerticalOffset="{Binding ElementName=SettingsText, Path=ActualHeight}"
+			HorizontalOffset="{Binding ElementName=SettingsText, Path=ActualWidth}">
+			
+			<ContentPresenter Content="{Binding Settings}"></ContentPresenter>
+		</Popup>
+
+		<ItemsControl ItemsSource="{Binding Commands}" Style="{StaticResource MenuItemsControlStyle}"></ItemsControl>
+	</DockPanel>
 </UserControl>

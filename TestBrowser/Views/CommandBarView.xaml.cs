@@ -24,5 +24,10 @@ namespace HellBrick.TestBrowser.Views
 		{
 			InitializeComponent();
 		}
+
+		private void OnSettingsHyperlinkClick( object sender, RoutedEventArgs e )
+		{
+			SettingsPopup.IsOpen = !SettingsPopup.IsOpen;
+		}
 	}
 }
