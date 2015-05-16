@@ -163,7 +163,7 @@ namespace HellBrick.TestBrowser.Models
 
 		public bool IsExpanded
 		{
-			get { return false; }
+			get { return true; }
 			set { }
 		}
 
