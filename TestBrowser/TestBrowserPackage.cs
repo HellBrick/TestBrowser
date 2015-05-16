@@ -65,9 +65,9 @@ namespace HellBrick.TestBrowser
 			if ( key != TestBrowserOptions.OptionStreamKey )
 				return;
 
-			_options.ExpandedNodes = TestBrowserPackage.RootModel.TestTree
+			_options.CollapsedNodes = TestBrowserPackage.RootModel.TestTree
 				.EnumerateDescendantsAndSelf()
-				.Where( n => n.IsVisible && n.IsExpanded )
+				.Where( n => n.IsVisible && !n.IsExpanded )
 				.Select( n => new NodeKey( n.Type, n.Key ) )
 				.ToList();
 

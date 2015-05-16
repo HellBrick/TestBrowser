@@ -15,7 +15,7 @@ namespace HellBrick.TestBrowser.Options
 
 		public TestBrowserOptions()
 		{
-			ExpandedNodes = new List<NodeKey>();
+			CollapsedNodes = new List<NodeKey>();
 			HumanizeTestNames = true;
 		}
 
@@ -34,7 +34,7 @@ namespace HellBrick.TestBrowser.Options
 			writer.Flush();
 		}
 
-		public List<NodeKey> ExpandedNodes { get; set; }
+		public List<NodeKey> CollapsedNodes { get; set; }
 		public bool HumanizeTestNames { get; set; }
 	}
 }
