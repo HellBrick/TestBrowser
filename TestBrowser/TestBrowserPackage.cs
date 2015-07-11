@@ -119,15 +119,15 @@ namespace HellBrick.TestBrowser
 
 		private void InitializeServiceContext()
 		{
-			var container = InitalizeContainer();
-			_serviceContext = container.GetExportedValue<TestServiceContext>();
-		}
+			IComponentModel service = this.GetService<IComponentModel>( typeof( SComponentModel ) );
+			if ( service == null )
+				throw new InvalidOperationException( $"Can't get {nameof( SComponentModel )} service" );
 
-		private CompositionContainer InitalizeContainer()
-		{
-			var container = this.GetCompositionContainer();
-			container.AppendCatalog( new TypeCatalog( typeof( TestServiceContext ) ) );
-			return container;
+			var typeCatalog = new TypeCatalog( typeof( TestServiceContext ) );
+			var definition = typeCatalog.FirstOrDefault();
+			var part = definition.CreatePart();
+			service.DefaultCompositionService.SatisfyImportsOnce( part );
+			_serviceContext = part.GetExportedValue( part.ExportDefinitions.FirstOrDefault() ) as TestServiceContext;
 		}
 
 		private void InitializeViewModels()
