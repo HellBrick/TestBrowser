@@ -36,7 +36,6 @@ namespace HellBrick.TestBrowser
 		private TestServiceContext _serviceContext;
 		private TestBrowserOptions _options;
 		private DTE _dte;
-		private DTE2 _dte2;
 
 		public TestBrowserPackage()
 		{
@@ -108,7 +107,6 @@ namespace HellBrick.TestBrowser
 		private void InitializeEvents()
 		{
 			_dte = this.GetService<DTE>();
-			_dte2 = _dte as DTE2;
 			_dte.Events.SolutionEvents.BeforeClosing += BeforeSolutionClosing;
 		}
 
