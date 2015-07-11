@@ -18,7 +18,7 @@ namespace HellBrick.TestBrowser
 	/// <summary>
 	/// Interaction logic for MyControl.xaml
 	/// </summary>
-	public partial class TestBrowserControl: UserControl
+	public partial class TestBrowserControl : UserControl
 	{
 		public TestBrowserControl( TestBrowserModel dataContext )
 		{

@@ -31,7 +31,7 @@ namespace HellBrick.TestBrowser
 	// This attribute registers a tool window exposed by this package.
 	[ProvideToolWindow( typeof( TestBrowserToolWindow ) )]
 	[Guid( GuidList.guidTestBrowserPkgString )]
-	public sealed class TestBrowserPackage: Package
+	public sealed class TestBrowserPackage : Package
 	{
 		private TestServiceContext _serviceContext;
 		private TestBrowserOptions _options;
