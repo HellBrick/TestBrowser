@@ -106,10 +106,7 @@ namespace HellBrick.TestBrowser.Models
 			base.NotifyOfPropertyChange( nameof( HasResults ) );
 		}
 
-		public override string ToString()
-		{
-			return String.Format( "[{0}] {1}/{2}", State, Location, Name );
-		}
+		public override string ToString() => $"[{State}] {Location}/{Name}";
 
 		#region INode Members
 

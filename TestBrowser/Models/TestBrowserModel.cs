@@ -119,7 +119,7 @@ namespace HellBrick.TestBrowser.Models
 			{
 				_serviceContext.Logger.Log(
 					MessageLevel.Error,
-					String.Format( "ExecutionStarted event with {0} operation ({1} expected)", e.Operation.GetType().Name, typeof( TestRunRequest ).Name ) );
+					$"ExecutionStarted event with {e.Operation.GetType().Name} operation ({typeof( TestRunRequest ).Name} expected)" );
 
 				return;
 			}
