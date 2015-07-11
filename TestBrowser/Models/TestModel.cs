@@ -74,20 +74,18 @@ namespace HellBrick.TestBrowser.Models
 		public string MethodName { get; private set; }
 		public string TestCaseName { get; private set; }
 		public string Location { get; private set; }
-		public TestState State { get { return _test.State; } }
-		public Guid ID { get { return _test.Id; } }
-		public bool IsStale { get { return _test.Stale; } }
-		public bool IsCurrentlyRunning { get { return _test.IsCurrentlyRunning; } }
+
+		public TestState State => _test.State;
+		public Guid ID => _test.Id;
+		public bool IsStale => _test.Stale;
+		public bool IsCurrentlyRunning => _test.IsCurrentlyRunning;
 
 		public Result[] Results
 		{
 			get { return _test.Results.Select( r => _serviceContext.TestObjectFactory.CreateResult( r ) ).ToArray(); }
 		}
 
-		public bool HasResults
-		{
-			get { return _test.Results.Count > 0; }
-		}
+		public bool HasResults => _test.Results.Count > 0;
 
 		public event EventHandler<TestModel, EventArgs> SelectionChanged;
 		private void RaiseSelectionChanged()
@@ -110,30 +108,17 @@ namespace HellBrick.TestBrowser.Models
 
 		#region INode Members
 
-		public NodeType Type
-		{
-			get { return NodeType.Test; }
-		}
+		public NodeType Type => NodeType.Test;
 
-		public string Name { get { return TestCaseName ?? ( HumanizeName ? _humanizedMethodName : MethodName ); } }
+		public string Name => TestCaseName ?? ( HumanizeName ? _humanizedMethodName : MethodName );
 
-		public string Key
-		{
-			get { return TestCaseName ?? MethodName; }
-		}
+		public string Key => TestCaseName ?? MethodName;
 
 		public INode Parent { get; set; }
 
-		private List<INode> _emptyList = new List<INode>();
-		public ICollection<INode> Children
-		{
-			get { return _emptyList; }
-		}
+		public ICollection<INode> Children { get; } = new List<INode>();
 
-		public bool IsVisible
-		{
-			get { return true; }
-		}
+		public bool IsVisible => true;
 
 		private bool _isSelected;
 		public bool IsSelected
@@ -192,30 +177,11 @@ namespace HellBrick.TestBrowser.Models
 
 			#region IOpenTarget Members
 
-			public bool Enabled
-			{
-				get { return !String.IsNullOrEmpty( FilePath ); }
-			}
-
-			public string FileName
-			{
-				get { return Path.GetFileName( FilePath ); }
-			}
-
-			public string FilePath
-			{
-				get { return _testData.FilePath; }
-			}
-
-			public int LineNumber
-			{
-				get { return _testData.LineNumber; }
-			}
-
-			public string Name
-			{
-				get { return _testData.FullyQualifiedName; }
-			}
+			public bool Enabled => !String.IsNullOrEmpty( FilePath );
+			public string FileName => Path.GetFileName( FilePath );
+			public string FilePath => _testData.FilePath;
+			public int LineNumber => _testData.LineNumber;
+			public string Name => _testData.FullyQualifiedName;
 
 			#endregion
 		}

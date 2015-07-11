@@ -19,17 +19,9 @@ namespace HellBrick.TestBrowser.Models
 
 		#region INode Members
 
-		public NodeType Type
-		{
-			get { return NodeType.Location; }
-		}
-
+		public NodeType Type => NodeType.Location;
 		public string Name { get; }
-
-		public string Key
-		{
-			get { return Name; }
-		}
+		public string Key => Name;
 
 		public INode Parent
 		{
@@ -37,15 +29,8 @@ namespace HellBrick.TestBrowser.Models
 			set {}
 		}
 
-		public ICollection<INode> Children
-		{
-			get { return Nodes[ Nodes.Count - 1 ].Children; }
-		}
-
-		public bool IsVisible
-		{
-			get { return true; }
-		}
+		public ICollection<INode> Children => Nodes[ Nodes.Count - 1 ].Children;
+		public bool IsVisible => true;
 
 		private bool _isSelected;
 		public bool IsSelected

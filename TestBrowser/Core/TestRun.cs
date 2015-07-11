@@ -102,10 +102,7 @@ namespace HellBrick.TestBrowser.Core
 
 		public event EventHandler<TestsRunUpdatedEventArgs> TestRunUpdated;
 		public int TestCount { get; private set; }
-		public TestRunRequestStats Stats
-		{
-			get { return _runRequest.RunStats; }
-		}
+		public TestRunRequestStats Stats => _runRequest.RunStats;
 
 		public IReadOnlyCollection<Guid> CurentlyRunningTestIDs { get; private set; }
 	}

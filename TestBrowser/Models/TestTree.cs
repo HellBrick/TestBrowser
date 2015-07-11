@@ -29,20 +29,9 @@ namespace HellBrick.TestBrowser.Models
 
 		#region INode Members
 
-		public NodeType Type
-		{
-			get { return NodeType.Location; }
-		}
-
-		public string Name
-		{
-			get { return "All tests"; }
-		}
-
-		public string Key
-		{
-			get { return Name; }
-		}
+		public NodeType Type => NodeType.Location;
+		public string Name => "All tests";
+		public string Key => Name;
 
 		public INode Parent
 		{
@@ -50,17 +39,10 @@ namespace HellBrick.TestBrowser.Models
 			set { }
 		}
 
-		ICollection<INode> INode.Children
-		{
-			get { return this.Children; }
-		}
-
+		ICollection<INode> INode.Children => this.Children;
 		public NodeCollection Children { get; private set; }
 
-		public bool IsVisible
-		{
-			get { return true; }
-		}
+		public bool IsVisible => true;
 
 		public bool IsSelected { get; set; }
 		public bool IsExpanded
@@ -72,16 +54,10 @@ namespace HellBrick.TestBrowser.Models
 		#endregion
 
 		private Dictionary<Guid, TestModel> _testLookup = new Dictionary<Guid, TestModel>();
-		public IReadOnlyDictionary<Guid, TestModel> Tests
-		{
-			get { return _testLookup; }
-		}
+		public IReadOnlyDictionary<Guid, TestModel> Tests => _testLookup;
 
 		private NodeCollection _rootCollectionWrapper;
-		public NodeCollection VisualChildren
-		{
-			get { return Children.Count( n => n.IsVisible ) < 2 ? Children : _rootCollectionWrapper; }
-		}
+		public NodeCollection VisualChildren => Children.Count( n => n.IsVisible ) < 2 ? Children : _rootCollectionWrapper;
 
 		public void InsertTest( TestModel newTest )
 		{
@@ -154,10 +130,7 @@ namespace HellBrick.TestBrowser.Models
 			return currentParent as LocationNode;
 		}
 
-		private string MethodNodeKey( LocationNode location, string methodName )
-		{
-			return location.Location + methodName;
-		}
+		private string MethodNodeKey( LocationNode location, string methodName ) => location.Location + methodName;
 
 		private TestMethodNode CreateMethodNode( LocationNode locationNode, string key, string methodName, bool humanizeTestName )
 		{
