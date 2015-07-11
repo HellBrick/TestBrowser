@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace HellBrick.TestBrowser.Common
 {
-	public class Input
+	public static class Input
 	{
 		public static readonly DependencyProperty InputBindingsProperty =
 			DependencyProperty.RegisterAttached( "InputBindings", typeof( InputBindingCollection ), typeof( Input ),
