@@ -10,7 +10,7 @@ namespace HellBrick.TestBrowser.Options
 {
 	public class TestBrowserOptions
 	{
-		private static JsonSerializer _serializer = new JsonSerializer();
+		private static readonly JsonSerializer _serializer = new JsonSerializer();
 		public static string OptionStreamKey = "TestBrowser.Options";
 
 		public TestBrowserOptions()

@@ -10,7 +10,7 @@ namespace HellBrick.TestBrowser.Models
 {
 	public class NodeCollection: OrderedSafeObservableCollection<INode>
 	{
-		private static IComparer<INode> _comparer = new NodeComparer();
+		private static readonly IComparer<INode> _comparer = new NodeComparer();
 
 		public NodeCollection( SafeDispatcher dispatcher )
 			: base( dispatcher, _comparer )

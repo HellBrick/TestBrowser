@@ -24,15 +24,15 @@ namespace HellBrick.TestBrowser.Models
 
 		public NodeType Type => NodeType.Method;
 
-		private string _originalMethodName;
-		private string _humanizedMethodName;
+		private readonly string _originalMethodName;
+		private readonly string _humanizedMethodName;
 		public string Name => HumanizeName ? _humanizedMethodName : _originalMethodName;
 
 		public string Key => _originalMethodName;
 
 		public INode Parent { get; set; }
 
-		private NodeCollection _children;
+		private readonly NodeCollection _children;
 		public ICollection<INode> Children => _children;
 
 		public bool IsVisible => true;

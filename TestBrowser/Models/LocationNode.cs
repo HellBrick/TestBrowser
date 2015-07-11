@@ -11,7 +11,7 @@ namespace HellBrick.TestBrowser.Models
 {
 	public class LocationNode: PropertyChangedBase, INode
 	{
-		private SafeDispatcher _dispatcher;
+		private readonly SafeDispatcher _dispatcher;
 
 		public LocationNode( SafeDispatcher dispatcher, string location, string name )
 		{

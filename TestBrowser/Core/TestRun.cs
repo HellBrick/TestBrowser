@@ -11,9 +11,9 @@ namespace HellBrick.TestBrowser.Core
 {
 	public sealed class TestRun: IDisposable
 	{
-		private TestRunRequest _runRequest;
-		private TestServiceContext _serviceContext;
-		private Dictionary<int, TestData> _testsToMonitor;
+		private readonly TestRunRequest _runRequest;
+		private readonly TestServiceContext _serviceContext;
+		private readonly Dictionary<int, TestData> _testsToMonitor;
 
 		#region Construction
 

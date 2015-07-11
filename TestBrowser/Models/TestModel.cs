@@ -17,9 +17,9 @@ namespace HellBrick.TestBrowser.Models
 {
 	public class TestModel: PropertyChangedBase, INode, IHumanizable
 	{
-		private TestServiceContext _serviceContext;
-		private TestData _test;
-		private string _humanizedMethodName;
+		private readonly TestServiceContext _serviceContext;
+		private readonly TestData _test;
+		private readonly string _humanizedMethodName;
 
 		public TestModel( TestData test, TestServiceContext serviceContext )
 		{
@@ -169,7 +169,7 @@ namespace HellBrick.TestBrowser.Models
 
 		private struct TestOpenTarget: IOpenTarget
 		{
-			private TestData _testData;
+			private readonly TestData _testData;
 
 			public TestOpenTarget( TestData testData )
 			{

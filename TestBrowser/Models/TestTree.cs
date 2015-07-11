@@ -13,10 +13,10 @@ namespace HellBrick.TestBrowser.Models
 {
 	public class TestTree: PropertyChangedBase, INode
 	{
-		private Dictionary<string, LocationNode> _locationLookup = new Dictionary<string, LocationNode>();
-		private Dictionary<string, TestMethodNode> _methodLookup = new Dictionary<string, TestMethodNode>();
-		private HashSet<NodeKey> _autoCollapsedNodes;
-		private SafeDispatcher _dispatcher;
+		private readonly Dictionary<string, LocationNode> _locationLookup = new Dictionary<string, LocationNode>();
+		private readonly Dictionary<string, TestMethodNode> _methodLookup = new Dictionary<string, TestMethodNode>();
+		private readonly HashSet<NodeKey> _autoCollapsedNodes;
+		private readonly SafeDispatcher _dispatcher;
 
 		public TestTree( SafeDispatcher dispatcher, IEnumerable<NodeKey> autoCollapsedNodes )
 		{
@@ -53,10 +53,10 @@ namespace HellBrick.TestBrowser.Models
 
 		#endregion
 
-		private Dictionary<Guid, TestModel> _testLookup = new Dictionary<Guid, TestModel>();
+		private readonly Dictionary<Guid, TestModel> _testLookup = new Dictionary<Guid, TestModel>();
 		public IReadOnlyDictionary<Guid, TestModel> Tests => _testLookup;
 
-		private NodeCollection _rootCollectionWrapper;
+		private readonly NodeCollection _rootCollectionWrapper;
 		public NodeCollection VisualChildren => Children.Count( n => n.IsVisible ) < 2 ? Children : _rootCollectionWrapper;
 
 		public void InsertTest( TestModel newTest )

@@ -11,8 +11,8 @@ namespace HellBrick.TestBrowser.Common
 	public class SafeCommand: Caliburn.Micro.PropertyChangedBase, ICommand
 	{
 		private readonly SafeDispatcher _dispatcher;
-		private Action _execute;
-		private Func<bool> _canExecute;
+		private readonly Action _execute;
+		private readonly Func<bool> _canExecute;
 
 		public SafeCommand( SafeDispatcher dispatcher, Action execute, string text )
 			: this( dispatcher, execute, () => true, text )
