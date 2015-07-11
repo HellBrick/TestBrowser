@@ -63,7 +63,7 @@ namespace HellBrick.TestBrowser.Core
 		{
 			#region CodeGen
 
-			private static Func<IOperationData, IHost, WaitForBuildOperation> _factoryMethod;
+			private static readonly Func<IOperationData, IHost, WaitForBuildOperation> _factoryMethod;
 
 			static WaitForBuildOperationFactory()
 			{

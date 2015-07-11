@@ -9,7 +9,7 @@ namespace HellBrick.TestBrowser.Common
 {
 	public class OrderedSafeObservableCollection<T>: SafeObservableCollection<T>
 	{
-		private IComparer<T> _comparer;
+		private readonly IComparer<T> _comparer;
 
 		public OrderedSafeObservableCollection( SafeDispatcher dispatcher, IComparer<T> comparer )
 			: base( dispatcher )

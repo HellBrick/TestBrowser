@@ -16,7 +16,7 @@ namespace HellBrick.TestBrowser.Models
 {
 	public sealed class TestBrowserModel: PropertyChangedBase, IDisposable
 	{
-		private TestServiceContext _serviceContext;
+		private readonly TestServiceContext _serviceContext;
 		private TestBrowserOptions _options;
 		private TestRun _currentTestRun;
 

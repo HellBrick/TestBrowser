@@ -10,7 +10,7 @@ namespace HellBrick.TestBrowser.Common
 {
 	public class SafeCommand: Caliburn.Micro.PropertyChangedBase, ICommand
 	{
-		private SafeDispatcher _dispatcher;
+		private readonly SafeDispatcher _dispatcher;
 		private Action _execute;
 		private Func<bool> _canExecute;
 

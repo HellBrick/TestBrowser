@@ -11,7 +11,7 @@ namespace HellBrick.TestBrowser.Models
 {
 	public class RunSummary: PropertyChangedBase
 	{
-		private TestRun _testRun;
+		private readonly TestRun _testRun;
 
 		public RunSummary( TestRun testRun )
 		{

@@ -10,7 +10,7 @@ namespace HellBrick.TestBrowser.Models
 {
 	public class SettingsModel: PropertyChangedBase
 	{
-		private TestBrowserOptions _options;
+		private readonly TestBrowserOptions _options;
 
 		public SettingsModel( TestBrowserOptions options )
 		{

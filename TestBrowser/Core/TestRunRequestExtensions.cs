@@ -21,8 +21,8 @@ namespace HellBrick.TestBrowser.Core
 			public static Dictionary<EventHandler<TestRunRequestStats>, Delegate> DelegateMap;
 			public static EventInfo Event;
 
-			private static Type _eventArgsType;
-			private static Type _eventHandlerType;
+			private static readonly Type _eventArgsType;
+			private static readonly Type _eventHandlerType;
 
 			static CodeGen()
 			{
