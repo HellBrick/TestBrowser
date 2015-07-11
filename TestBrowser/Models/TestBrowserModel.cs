@@ -49,7 +49,7 @@ namespace HellBrick.TestBrowser.Models
 
 		private void OnSettingsChanged( object sender, System.ComponentModel.PropertyChangedEventArgs e )
 		{
-			if ( e.PropertyName == "HumanizeTestNames" )
+			if ( e.PropertyName == nameof( SettingsModel.HumanizeTestNames ) )
 			{
 				foreach ( var humanizableNode in TestTree.EnumerateDescendants().OfType<IHumanizable>() )
 				{
