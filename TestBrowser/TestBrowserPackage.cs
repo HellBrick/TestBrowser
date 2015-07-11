@@ -39,6 +39,8 @@ namespace HellBrick.TestBrowser
 
 		public TestBrowserPackage()
 		{
+			//	LoadOptions() is not guaranteed to be called.
+			_options = new TestBrowserOptions();
 		}
 
 		public static TestBrowserModel RootModel { get; private set; }
