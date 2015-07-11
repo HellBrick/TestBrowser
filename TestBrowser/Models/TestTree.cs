@@ -145,7 +145,7 @@ namespace HellBrick.TestBrowser.Models
 
 					//	If the parent is the root of the tree, the insertion might trigger the root visibility.
 					if ( currentParent == this )
-						NotifyOfPropertyChange( () => VisualChildren );
+						NotifyOfPropertyChange( nameof( VisualChildren ) );
 				}
 
 				currentParent = currentLocationNode;
@@ -199,7 +199,7 @@ namespace HellBrick.TestBrowser.Models
 
 			//	If the parent is the root of the tree, the removal might trigger the root visibility.
 			if ( parent == this )
-				NotifyOfPropertyChange( () => VisualChildren );
+				NotifyOfPropertyChange( nameof( VisualChildren ) );
 		}
 
 		/// <param name="locationNode">The parent of the node that has just been inserted into the tree.</param>

@@ -20,9 +20,9 @@ namespace HellBrick.TestBrowser.Models
 
 		public void RaisePropertiesChanged()
 		{
-			NotifyOfPropertyChange( () => IsRunning );
-			NotifyOfPropertyChange( () => TestsPassed );
-			NotifyOfPropertyChange( () => TestsFailed );
+			NotifyOfPropertyChange( nameof( IsRunning ) );
+			NotifyOfPropertyChange( nameof( TestsPassed ) );
+			NotifyOfPropertyChange( nameof( TestsFailed ) );
 		}
 
 		#region Properties

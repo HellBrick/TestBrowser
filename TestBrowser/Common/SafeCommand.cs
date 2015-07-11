@@ -51,7 +51,7 @@ namespace HellBrick.TestBrowser.Common
 
 		public void RaiseCanExecuteChanged()
 		{
-			base.NotifyOfPropertyChange( () => IsEnabled );
+			base.NotifyOfPropertyChange( nameof( IsEnabled ) );
 
 			var handler = CanExecuteChanged;
 			if ( handler != null )

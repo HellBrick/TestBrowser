@@ -99,11 +99,11 @@ namespace HellBrick.TestBrowser.Models
 
 		public void RaiseStateChanged()
 		{
-			base.NotifyOfPropertyChange( () => State );
-			base.NotifyOfPropertyChange( () => IsStale );
-			base.NotifyOfPropertyChange( () => IsCurrentlyRunning );
-			base.NotifyOfPropertyChange( () => Results );
-			base.NotifyOfPropertyChange( () => HasResults );
+			base.NotifyOfPropertyChange( nameof( State ) );
+			base.NotifyOfPropertyChange( nameof( IsStale ) );
+			base.NotifyOfPropertyChange( nameof( IsCurrentlyRunning ) );
+			base.NotifyOfPropertyChange( nameof( Results ) );
+			base.NotifyOfPropertyChange( nameof( HasResults ) );
 		}
 
 		public override string ToString()
@@ -142,7 +142,7 @@ namespace HellBrick.TestBrowser.Models
 		public bool IsSelected
 		{
 			get { return _isSelected; }
-			set { _isSelected = value; NotifyOfPropertyChange( () => IsSelected ); RaiseSelectionChanged(); }
+			set { _isSelected = value; NotifyOfPropertyChange( nameof( IsSelected ) ); RaiseSelectionChanged(); }
 		}
 
 		#endregion
@@ -178,7 +178,7 @@ namespace HellBrick.TestBrowser.Models
 			set
 			{
 				_humanizeName = value;
-				NotifyOfPropertyChange( () => Name );
+				NotifyOfPropertyChange( nameof( Name ) );
 			}
 		}
 

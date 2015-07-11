@@ -27,7 +27,7 @@ namespace HellBrick.TestBrowser.Models
 		public MergedNode MergedNode
 		{
 			get { return _mergedNode; }
-			set { _mergedNode = value; NotifyOfPropertyChange( () => IsVisible ); }
+			set { _mergedNode = value; NotifyOfPropertyChange( nameof( IsVisible ) ); }
 		}
 
 		public bool IsMerged
@@ -91,14 +91,14 @@ namespace HellBrick.TestBrowser.Models
 		public bool IsSelected
 		{
 			get { return _isSelected; }
-			set { _isSelected = value; NotifyOfPropertyChange( () => IsSelected ); }
+			set { _isSelected = value; NotifyOfPropertyChange( nameof( IsSelected ) ); }
 		}
 
 		private bool _isExpanded = true;
 		public bool IsExpanded
 		{
 			get { return _isExpanded; }
-			set { _isExpanded = value; NotifyOfPropertyChange( () => IsExpanded ); }
+			set { _isExpanded = value; NotifyOfPropertyChange( nameof( IsExpanded ) ); }
 		}
 
 		#endregion

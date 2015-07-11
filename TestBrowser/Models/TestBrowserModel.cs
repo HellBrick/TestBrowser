@@ -184,7 +184,7 @@ namespace HellBrick.TestBrowser.Models
 		public RunSummary LastRunSummary
 		{
 			get { return _lastRunSummary; }
-			private set { _lastRunSummary = value; NotifyOfPropertyChange( () => LastRunSummary ); }
+			private set { _lastRunSummary = value; NotifyOfPropertyChange( nameof( LastRunSummary ) ); }
 		}
 
 		private TestOperationStates _state = TestOperationStates.None;
@@ -194,10 +194,10 @@ namespace HellBrick.TestBrowser.Models
 			set
 			{
 				_state = value;
-				base.NotifyOfPropertyChange( () => State );
+				base.NotifyOfPropertyChange( nameof( State ) );
 				RefreshCommands();
-				NotifyOfPropertyChange( () => IsDoingSomething );
-				NotifyOfPropertyChange( () => IsDoingIndefiniteOperation );
+				NotifyOfPropertyChange( nameof( IsDoingSomething ) );
+				NotifyOfPropertyChange( nameof( IsDoingIndefiniteOperation ) );
 			}
 		}
 
@@ -225,21 +225,21 @@ namespace HellBrick.TestBrowser.Models
 		public int MaxProgress
 		{
 			get { return _maxProgress; }
-			set { _maxProgress = value; base.NotifyOfPropertyChange( () => MaxProgress ); }
+			set { _maxProgress = value; base.NotifyOfPropertyChange( nameof( MaxProgress ) ); }
 		}
 
 		private int _currentProgress;
 		public int CurrentProgress
 		{
 			get { return _currentProgress; }
-			set { _currentProgress = value; base.NotifyOfPropertyChange( () => CurrentProgress ); }
+			set { _currentProgress = value; base.NotifyOfPropertyChange( nameof( CurrentProgress ) ); }
 		}
 
 		private TestModel _selectedTest;
 		public TestModel SelectedTest
 		{
 			get { return _selectedTest; }
-			set { _selectedTest = value; base.NotifyOfPropertyChange( () => SelectedTest ); }
+			set { _selectedTest = value; base.NotifyOfPropertyChange( nameof( SelectedTest ) ); }
 		}
 
 		public List<SafeCommand> Commands { get; private set; }

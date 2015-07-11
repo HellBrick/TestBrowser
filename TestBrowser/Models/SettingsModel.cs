@@ -20,7 +20,7 @@ namespace HellBrick.TestBrowser.Models
 		public bool HumanizeTestNames
 		{
 			get { return _options.HumanizeTestNames; }
-			set { _options.HumanizeTestNames = value; NotifyOfPropertyChange( () => HumanizeTestNames ); }
+			set { _options.HumanizeTestNames = value; NotifyOfPropertyChange( nameof( HumanizeTestNames ) ); }
 		}
 	}
 }
