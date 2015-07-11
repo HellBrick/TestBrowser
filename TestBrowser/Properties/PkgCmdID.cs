@@ -6,6 +6,6 @@ namespace HellBrick.TestBrowser
 {
 	static class PkgCmdIDList
 	{
-		public const uint cmdidTestBrowserTool = 0x101;
+		public const uint TestBrowserOpenCommand = 0x101;
 	};
 }

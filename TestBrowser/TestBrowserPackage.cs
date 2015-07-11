@@ -31,12 +31,11 @@ namespace HellBrick.TestBrowser
 	// This attribute registers a tool window exposed by this package.
 	[ProvideToolWindow( typeof( TestBrowserToolWindow ) )]
 	[Guid( GuidList.guidTestBrowserPkgString )]
-	public sealed class TestBrowserPackage: Package
+	public sealed class TestBrowserPackage : Package
 	{
 		private TestServiceContext _serviceContext;
 		private TestBrowserOptions _options;
 		private DTE _dte;
-		private DTE2 _dte2;
 
 		public TestBrowserPackage()
 		{
@@ -108,7 +107,6 @@ namespace HellBrick.TestBrowser
 		private void InitializeEvents()
 		{
 			_dte = this.GetService<DTE>();
-			_dte2 = _dte as DTE2;
 			_dte.Events.SolutionEvents.BeforeClosing += BeforeSolutionClosing;
 		}
 
@@ -119,15 +117,15 @@ namespace HellBrick.TestBrowser
 
 		private void InitializeServiceContext()
 		{
-			var container = InitalizeContainer();
-			_serviceContext = container.GetExportedValue<TestServiceContext>();
-		}
+			IComponentModel service = this.GetService<IComponentModel>( typeof( SComponentModel ) );
+			if ( service == null )
+				throw new InvalidOperationException( $"Can't get {nameof( SComponentModel )} service" );
 
-		private CompositionContainer InitalizeContainer()
-		{
-			var container = this.GetCompositionContainer();
-			container.AppendCatalog( new TypeCatalog( typeof( TestServiceContext ) ) );
-			return container;
+			var typeCatalog = new TypeCatalog( typeof( TestServiceContext ) );
+			var definition = typeCatalog.FirstOrDefault();
+			var part = definition.CreatePart();
+			service.DefaultCompositionService.SatisfyImportsOnce( part );
+			_serviceContext = part.GetExportedValue( part.ExportDefinitions.FirstOrDefault() ) as TestServiceContext;
 		}
 
 		private void InitializeViewModels()
@@ -142,7 +140,7 @@ namespace HellBrick.TestBrowser
 			if ( null != mcs )
 			{
 				// Create the command for the tool window
-				CommandID toolwndCommandID = new CommandID( GuidList.guidTestBrowserCmdSet, (int) PkgCmdIDList.cmdidTestBrowserTool );
+				CommandID toolwndCommandID = new CommandID( GuidList.guidTestBrowserCmdSet, (int) PkgCmdIDList.TestBrowserOpenCommand );
 				MenuCommand menuToolWin = new MenuCommand( ShowToolWindow, toolwndCommandID );
 				mcs.AddCommand( menuToolWin );
 			}
