@@ -15,7 +15,7 @@ namespace HellBrick.TestBrowser.Models
 			Name = String.Join( ".", mergedNodes.Select( n => n.Name ) );
 		}
 
-		public IReadOnlyList<LocationNode> Nodes { get; private set; }
+		public IReadOnlyList<LocationNode> Nodes { get; }
 
 		#region INode Members
 
@@ -24,7 +24,7 @@ namespace HellBrick.TestBrowser.Models
 			get { return NodeType.Location; }
 		}
 
-		public string Name { get; private set; }
+		public string Name { get; }
 
 		public string Key
 		{
