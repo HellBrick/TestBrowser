@@ -57,7 +57,7 @@
           If you do not want an image next to your command, remove the Icon node /> -->
 
 
-			<Button guid="guidTestBrowserCmdSet" id="cmdidTestBrowserTool" priority="0x0100" type="Button">
+			<Button guid="guidTestBrowserCmdSet" id="TestBrowserOpenCommand" priority="0x0100" type="Button">
 				<Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1"/>
 				<Icon guid="guidImages" id="bmpPic2" />
 				<Strings>
@@ -87,18 +87,18 @@
 
 	<Symbols>
 		<!-- This is the package guid. -->
-		<GuidSymbol name="guidTestBrowserPkg" value="{95628654-1ff6-4434-bb0e-d90a65c763f0}" />
+		<GuidSymbol name="guidTestBrowserPkg" value="{70cb3239-bde6-4a23-9c90-8d355765613b}" />
 
 		<!-- This is the guid used to group the menu commands together -->
-		<GuidSymbol name="guidTestBrowserCmdSet" value="{bc1b1326-1b3d-49fa-a255-b22ba976873f}">
+		<GuidSymbol name="guidTestBrowserCmdSet" value="{b937e73a-73e4-4c3f-914e-8743d9a7fd5e}">
 
 			<IDSymbol name="MyMenuGroup" value="0x1020" />
-			<IDSymbol name="cmdidTestBrowserTool" value="0x0101" />
+			<IDSymbol name="TestBrowserOpenCommand" value="0x0101" />
 		</GuidSymbol>
 
 
 
-		<GuidSymbol name="guidImages" value="{9601a348-2751-47f1-86a2-79b1dc2116d0}" >
+		<GuidSymbol name="guidImages" value="{ff514df4-7e4d-4833-9f39-fdc4b1972902}" >
 			<IDSymbol name="bmpPic1" value="1" />
 			<IDSymbol name="bmpPic2" value="2" />
 			<IDSymbol name="bmpPicSearch" value="3" />

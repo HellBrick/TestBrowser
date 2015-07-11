@@ -142,7 +142,7 @@ namespace HellBrick.TestBrowser
 			if ( null != mcs )
 			{
 				// Create the command for the tool window
-				CommandID toolwndCommandID = new CommandID( GuidList.guidTestBrowserCmdSet, (int) PkgCmdIDList.cmdidTestBrowserTool );
+				CommandID toolwndCommandID = new CommandID( GuidList.guidTestBrowserCmdSet, (int) PkgCmdIDList.TestBrowserOpenCommand );
 				MenuCommand menuToolWin = new MenuCommand( ShowToolWindow, toolwndCommandID );
 				mcs.AddCommand( menuToolWin );
 			}

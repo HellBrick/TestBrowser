@@ -11,7 +11,7 @@ using Microsoft.VisualStudio.Shell;
 
 namespace HellBrick.TestBrowser
 {
-	[Guid( "a771a04c-f8c6-4f54-8bf1-2e64e7cdd770" )]
+	[Guid( "2cf8fca7-b42d-4640-828c-c13246d59e9c" )]
 	public class TestBrowserToolWindow : ToolWindowPane
 	{
 		public TestBrowserToolWindow() :
