@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Caliburn.Micro;
 using HellBrick.TestBrowser.Common;
 using HellBrick.TestBrowser.Core;
+using Humanizer;
 using Microsoft.VisualStudio.TestWindow.Controller;
 using Microsoft.VisualStudio.TestWindow.Data;
 using Microsoft.VisualStudio.TestWindow.Extensibility;
@@ -27,7 +28,7 @@ namespace HellBrick.TestBrowser.Models
 
 			Location = _test.Namespace + "." + _test.ClassName;
 			ParseMethodNameAndTestCase();
-			_humanizedMethodName = Humanizer.StringHumanizeExtensions.Humanize( MethodName );
+			_humanizedMethodName = MethodName.Humanize();
 			InitializeCommands();
 		}
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
+using Humanizer;
 using Microsoft.VisualStudio.TestWindow.Controller;
 
 namespace HellBrick.TestBrowser.Models
@@ -14,7 +15,7 @@ namespace HellBrick.TestBrowser.Models
 		{
 			_children = new NodeCollection( dispatcher );
 			_originalMethodName = methodName;
-			_humanizedMethodName = Humanizer.StringHumanizeExtensions.Humanize( _originalMethodName );
+			_humanizedMethodName = _originalMethodName.Humanize();
 		}
 
 		public override string ToString() => Name;
