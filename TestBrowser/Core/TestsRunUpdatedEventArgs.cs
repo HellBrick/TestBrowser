@@ -14,7 +14,7 @@ namespace HellBrick.TestBrowser.Core
 			CurrentlyRunningTests = currentlyRunningTests;
 		}
 
-		public IReadOnlyCollection<Guid> FinishedTests { get; private set; }
-		public IReadOnlyCollection<Guid> CurrentlyRunningTests { get; private set; }
+		public IReadOnlyCollection<Guid> FinishedTests { get; }
+		public IReadOnlyCollection<Guid> CurrentlyRunningTests { get; }
 	}
 }

@@ -49,14 +49,7 @@ namespace HellBrick.TestBrowser.Common
 
 		#endregion
 
-		public TValue this[ TKey key ]
-		{
-			get { return _lookup[ key ]; }
-		}
-
-		public bool ContainsKey( TKey key )
-		{
-			return _lookup.ContainsKey( key );
-		}
+		public TValue this[ TKey key ] => _lookup[ key ];
+		public bool ContainsKey( TKey key ) => _lookup.ContainsKey( key );
 	}
 }

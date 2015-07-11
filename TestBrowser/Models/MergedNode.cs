@@ -15,21 +15,13 @@ namespace HellBrick.TestBrowser.Models
 			Name = String.Join( ".", mergedNodes.Select( n => n.Name ) );
 		}
 
-		public IReadOnlyList<LocationNode> Nodes { get; private set; }
+		public IReadOnlyList<LocationNode> Nodes { get; }
 
 		#region INode Members
 
-		public NodeType Type
-		{
-			get { return NodeType.Location; }
-		}
-
-		public string Name { get; private set; }
-
-		public string Key
-		{
-			get { return Name; }
-		}
+		public NodeType Type => NodeType.Location;
+		public string Name { get; }
+		public string Key => Name;
 
 		public INode Parent
 		{
@@ -37,28 +29,21 @@ namespace HellBrick.TestBrowser.Models
 			set {}
 		}
 
-		public ICollection<INode> Children
-		{
-			get { return Nodes[ Nodes.Count - 1 ].Children; }
-		}
-
-		public bool IsVisible
-		{
-			get { return true; }
-		}
+		public ICollection<INode> Children => Nodes[ Nodes.Count - 1 ].Children;
+		public bool IsVisible => true;
 
 		private bool _isSelected;
 		public bool IsSelected
 		{
 			get { return _isSelected; }
-			set { _isSelected = value; NotifyOfPropertyChange( () => IsSelected ); }
+			set { _isSelected = value; NotifyOfPropertyChange( nameof( IsSelected ) ); }
 		}
 
 		private bool _isExpanded = true;
 		public bool IsExpanded
 		{
 			get { return _isExpanded; }
-			set { _isExpanded = value; NotifyOfPropertyChange( () => IsExpanded ); }
+			set { _isExpanded = value; NotifyOfPropertyChange( nameof( IsExpanded ) ); }
 		}
 
 		#endregion

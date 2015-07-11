@@ -17,49 +17,37 @@ namespace HellBrick.TestBrowser.Models
 			_humanizedMethodName = Humanizer.StringHumanizeExtensions.Humanize( _originalMethodName );
 		}
 
-		public override string ToString()
-		{
-			return Name;
-		}
+		public override string ToString() => Name;
 
 		#region INode Members
 
-		public NodeType Type
-		{
-			get { return NodeType.Method; }
-		}
+		public NodeType Type => NodeType.Method;
 
 		private string _originalMethodName;
 		private string _humanizedMethodName;
-		public string Name
-		{
-			get { return HumanizeName ? _humanizedMethodName : _originalMethodName; }
-		}
+		public string Name => HumanizeName ? _humanizedMethodName : _originalMethodName;
 
-		public string Key
-		{
-			get { return _originalMethodName; }
-		}
+		public string Key => _originalMethodName;
 
 		public INode Parent { get; set; }
 
 		private NodeCollection _children;
-		public ICollection<INode> Children { get { return _children; } }
+		public ICollection<INode> Children => _children;
 
-		public bool IsVisible { get { return true; } }
+		public bool IsVisible => true;
 
 		private bool _isSelected;
 		public bool IsSelected
 		{
 			get { return _isSelected; }
-			set { _isSelected = value; NotifyOfPropertyChange( () => IsSelected ); }
+			set { _isSelected = value; NotifyOfPropertyChange( nameof( IsSelected ) ); }
 		}
 
 		private bool _isExpanded = true;
 		public bool IsExpanded
 		{
 			get { return _isExpanded; }
-			set { _isExpanded = value; NotifyOfPropertyChange( () => IsExpanded ); }
+			set { _isExpanded = value; NotifyOfPropertyChange( nameof( IsExpanded ) ); }
 		}
 
 		#endregion
@@ -73,7 +61,7 @@ namespace HellBrick.TestBrowser.Models
 			set
 			{
 				_humanizeName = value;
-				NotifyOfPropertyChange( () => Name );
+				NotifyOfPropertyChange( nameof( Name ) );
 			}
 		}
 

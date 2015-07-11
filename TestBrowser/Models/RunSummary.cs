@@ -20,32 +20,17 @@ namespace HellBrick.TestBrowser.Models
 
 		public void RaisePropertiesChanged()
 		{
-			NotifyOfPropertyChange( () => IsRunning );
-			NotifyOfPropertyChange( () => TestsPassed );
-			NotifyOfPropertyChange( () => TestsFailed );
+			NotifyOfPropertyChange( nameof( IsRunning ) );
+			NotifyOfPropertyChange( nameof( TestsPassed ) );
+			NotifyOfPropertyChange( nameof( TestsFailed ) );
 		}
 
 		#region Properties
 
-		public bool IsRunning
-		{
-			get { return _testRun.Stats.ResultCount < _testRun.TestCount; }
-		}
-
-		public int TestsPassed
-		{
-			get { return _testRun.Stats.Stats[ TestState.Passed ]; }
-		}
-
-		public int TestsFailed
-		{
-			get { return _testRun.Stats.Stats[ TestState.Failed ]; }
-		}
-
-		public int TestCount
-		{
-			get { return _testRun.TestCount; }
-		}
+		public bool IsRunning => _testRun.Stats.ResultCount < _testRun.TestCount;
+		public int TestsPassed => _testRun.Stats.Stats[ TestState.Passed ];
+		public int TestsFailed => _testRun.Stats.Stats[ TestState.Failed ];
+		public int TestCount => _testRun.TestCount;
 
 		#endregion
 	}

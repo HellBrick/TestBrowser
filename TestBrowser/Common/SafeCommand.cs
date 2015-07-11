@@ -28,22 +28,12 @@ namespace HellBrick.TestBrowser.Common
 		}
 
 		public string Text { get; private set; }
-		public bool IsEnabled
-		{
-			get { return CanExecute( null ); }
-		}
+		public bool IsEnabled => CanExecute( null );
 
 		#region ICommand Members
 
-		public bool CanExecute( object parameter )
-		{
-			return _canExecute();
-		}
-
-		public void Execute( object parameter )
-		{
-			_execute();
-		}
+		public bool CanExecute( object parameter ) => _canExecute();
+		public void Execute( object parameter ) => _execute();
 
 		public event EventHandler CanExecuteChanged;
 
@@ -51,7 +41,7 @@ namespace HellBrick.TestBrowser.Common
 
 		public void RaiseCanExecuteChanged()
 		{
-			base.NotifyOfPropertyChange( () => IsEnabled );
+			base.NotifyOfPropertyChange( nameof( IsEnabled ) );
 
 			var handler = CanExecuteChanged;
 			if ( handler != null )

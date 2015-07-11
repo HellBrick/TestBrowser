@@ -49,7 +49,7 @@ namespace HellBrick.TestBrowser.Models
 
 		private void OnSettingsChanged( object sender, System.ComponentModel.PropertyChangedEventArgs e )
 		{
-			if ( e.PropertyName == "HumanizeTestNames" )
+			if ( e.PropertyName == nameof( SettingsModel.HumanizeTestNames ) )
 			{
 				foreach ( var humanizableNode in TestTree.EnumerateDescendants().OfType<IHumanizable>() )
 				{
@@ -119,7 +119,7 @@ namespace HellBrick.TestBrowser.Models
 			{
 				_serviceContext.Logger.Log(
 					MessageLevel.Error,
-					String.Format( "ExecutionStarted event with {0} operation ({1} expected)", e.Operation.GetType().Name, typeof( TestRunRequest ).Name ) );
+					$"ExecutionStarted event with {e.Operation.GetType().Name} operation ({typeof( TestRunRequest ).Name} expected)" );
 
 				return;
 			}
@@ -184,7 +184,7 @@ namespace HellBrick.TestBrowser.Models
 		public RunSummary LastRunSummary
 		{
 			get { return _lastRunSummary; }
-			private set { _lastRunSummary = value; NotifyOfPropertyChange( () => LastRunSummary ); }
+			private set { _lastRunSummary = value; NotifyOfPropertyChange( nameof( LastRunSummary ) ); }
 		}
 
 		private TestOperationStates _state = TestOperationStates.None;
@@ -194,17 +194,14 @@ namespace HellBrick.TestBrowser.Models
 			set
 			{
 				_state = value;
-				base.NotifyOfPropertyChange( () => State );
+				base.NotifyOfPropertyChange( nameof( State ) );
 				RefreshCommands();
-				NotifyOfPropertyChange( () => IsDoingSomething );
-				NotifyOfPropertyChange( () => IsDoingIndefiniteOperation );
+				NotifyOfPropertyChange( nameof( IsDoingSomething ) );
+				NotifyOfPropertyChange( nameof( IsDoingIndefiniteOperation ) );
 			}
 		}
 
-		public bool IsDoingSomething
-		{
-			get { return !_serviceContext.RequestFactory.OperationSetFinished; }
-		}
+		public bool IsDoingSomething => !_serviceContext.RequestFactory.OperationSetFinished;
 
 		public bool IsDoingIndefiniteOperation
 		{
@@ -225,21 +222,21 @@ namespace HellBrick.TestBrowser.Models
 		public int MaxProgress
 		{
 			get { return _maxProgress; }
-			set { _maxProgress = value; base.NotifyOfPropertyChange( () => MaxProgress ); }
+			set { _maxProgress = value; base.NotifyOfPropertyChange( nameof( MaxProgress ) ); }
 		}
 
 		private int _currentProgress;
 		public int CurrentProgress
 		{
 			get { return _currentProgress; }
-			set { _currentProgress = value; base.NotifyOfPropertyChange( () => CurrentProgress ); }
+			set { _currentProgress = value; base.NotifyOfPropertyChange( nameof( CurrentProgress ) ); }
 		}
 
 		private TestModel _selectedTest;
 		public TestModel SelectedTest
 		{
 			get { return _selectedTest; }
-			set { _selectedTest = value; base.NotifyOfPropertyChange( () => SelectedTest ); }
+			set { _selectedTest = value; base.NotifyOfPropertyChange( nameof( SelectedTest ) ); }
 		}
 
 		public List<SafeCommand> Commands { get; private set; }
@@ -265,10 +262,7 @@ namespace HellBrick.TestBrowser.Models
 				command.RaiseCanExecuteChanged();
 		}
 
-		private bool CanRunTests()
-		{
-			return _serviceContext.RequestFactory.OperationSetFinished;
-		}
+		private bool CanRunTests() => _serviceContext.RequestFactory.OperationSetFinished;
 
 		private void RunSelected()
 		{
@@ -288,15 +282,9 @@ namespace HellBrick.TestBrowser.Models
 				_serviceContext.RequestFactory.DebugTestsAsync( EnumerateSelectedTestIDs( selectedNode ) );
 		}
 
-		private INode FindSelectedNode()
-		{
-			return TestTree.EnumerateDescendantsAndSelf().FirstOrDefault( n => n.IsSelected );
-		}
+		private INode FindSelectedNode() => TestTree.EnumerateDescendantsAndSelf().FirstOrDefault( n => n.IsSelected );
 
-		private bool ShouldInvokeFullRun( INode selectedNode )
-		{
-			return selectedNode == null || selectedNode == TestTree;
-		}
+		private bool ShouldInvokeFullRun( INode selectedNode ) => selectedNode == null || selectedNode == TestTree;
 
 		private IEnumerable<Guid> EnumerateSelectedTestIDs( INode selectedNode )
 		{
@@ -306,15 +294,8 @@ namespace HellBrick.TestBrowser.Models
 				.Select( t => t.ID );
 		}
 
-		private void Cancel()
-		{
-			_serviceContext.RequestFactory.Cancel();
-		}
-
-		private bool CanCancel()
-		{
-			return _serviceContext.RequestFactory.CanCancel;
-		}
+		private void Cancel() => _serviceContext.RequestFactory.Cancel();
+		private bool CanCancel() => _serviceContext.RequestFactory.CanCancel;
 
 		#endregion
 

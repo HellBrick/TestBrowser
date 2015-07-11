@@ -15,13 +15,10 @@ namespace HellBrick.TestBrowser.Options
 			Name = name;
 		}
 
-		public NodeType Type { get; private set; }
-		public string Name { get; private set; }
+		public NodeType Type { get; }
+		public string Name { get; }
 
-		public override string ToString()
-		{
-			return String.Format( "[{0}] {1}", Type, Name );
-		}
+		public override string ToString() => $"{Type} {Name}";
 
 		#region IEquatable<NodeKey> Members
 

@@ -12,10 +12,7 @@ namespace HellBrick.TestBrowser.Core
 {
 	internal static class TestRunRequestExtensions
 	{
-		public static TestRunRequestInternals Internals( this TestRunRequest request )
-		{
-			return new TestRunRequestInternals( request );
-		}
+		public static TestRunRequestInternals Internals( this TestRunRequest request ) => new TestRunRequestInternals( request );
 
 		private static class CodeGen
 		{
@@ -99,10 +96,7 @@ namespace HellBrick.TestBrowser.Core
 				_instance = instance;
 			}
 
-			public TestRunConfiguration TestRunConfig
-			{
-				get { return CodeGen.TestRunConfigAccessor( _instance ); }
-			}
+			public TestRunConfiguration TestRunConfig => CodeGen.TestRunConfigAccessor( _instance );
 
 			public event EventHandler<TestRunRequestStats> TestRunStatsChanged
 			{
