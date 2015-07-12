@@ -166,6 +166,7 @@
     <Compile Include="Common\SafeCommand.cs" />
     <Compile Include="Common\SafeObservableDictionary.cs" />
     <Compile Include="Common\TestStateToImageSourceConverter.cs" />
+    <Compile Include="Core\IOptionsService.cs" />
     <Compile Include="Core\TestsRunUpdatedEventArgs.cs" />
     <Compile Include="Core\TestRun.cs" />
     <Compile Include="Core\TestRunRequestExtensions.cs" />
