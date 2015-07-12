@@ -54,6 +54,8 @@ namespace HellBrick.TestBrowser.Models
 			};
 
 			_optionsService.SaveOptions( options );
+			SolutionBrowser?.Dispose();
+			SolutionBrowser = null;
 		}
 	}
 }
