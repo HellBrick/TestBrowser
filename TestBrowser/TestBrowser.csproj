@@ -178,6 +178,7 @@
     <Compile Include="Models\MergedNode.cs" />
     <Compile Include="Models\NodeCollection.cs" />
     <Compile Include="Models\NodeType.cs" />
+    <Compile Include="Models\RootModel.cs" />
     <Compile Include="Models\RunSummary.cs" />
     <Compile Include="Models\SettingsModel.cs" />
     <Compile Include="Models\SolutionTestBrowserModel.cs" />

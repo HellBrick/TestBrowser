@@ -35,15 +35,12 @@ namespace HellBrick.TestBrowser
 	{
 		private TestServiceContext _serviceContext;
 		private TestBrowserOptions _options;
-		private DTE _dte;
 
 		public TestBrowserPackage()
 		{
-			//	LoadOptions() is not guaranteed to be called.
-			_options = new TestBrowserOptions();
 		}
 
-		public static SolutionTestBrowserModel RootModel { get; private set; }
+		public static RootModel RootModel { get; private set; }
 
 		#region IOptionsService
 
@@ -91,8 +88,6 @@ namespace HellBrick.TestBrowser
 			InitializeServiceContext();
 			try
 			{
-				_options = ( this as IOptionsService ).LoadOptions();
-				InitializeEvents();
 				InitializeViewModels();
 				InitializeCommands();
 			}
@@ -100,27 +95,6 @@ namespace HellBrick.TestBrowser
 			{
 				_serviceContext.Logger.Log( Microsoft.VisualStudio.TestWindow.Extensibility.MessageLevel.Error, ex.ToString() );
 			}
-		}
-
-		private void InitializeEvents()
-		{
-			_dte = this.GetService<DTE>();
-			_dte.Events.SolutionEvents.BeforeClosing += BeforeSolutionClosing;
-		}
-
-		private void BeforeSolutionClosing()
-		{
-			TestBrowserOptions options = new TestBrowserOptions()
-			{
-				HumanizeTestNames = TestBrowserPackage.RootModel.Settings.HumanizeTestNames,
-				CollapsedNodes = TestBrowserPackage.RootModel.TestTree
-					.EnumerateDescendantsAndSelf()
-					.Where( n => n.IsVisible && !n.IsExpanded )
-					.Select( n => new NodeKey( n.Type, n.Key ) )
-					.ToList()
-			};
-
-			( this as IOptionsService ).SaveOptions( options );
 		}
 
 		private void InitializeServiceContext()
@@ -138,7 +112,7 @@ namespace HellBrick.TestBrowser
 
 		private void InitializeViewModels()
 		{
-			RootModel = new SolutionTestBrowserModel( _serviceContext, _options );
+			RootModel = new RootModel( _serviceContext, this, this.GetService<DTE>() );
 		}
 
 		private void InitializeCommands()
@@ -168,12 +142,12 @@ namespace HellBrick.TestBrowser
 			Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure( windowFrame.Show() );
 		}
 
+		#endregion
+
 		protected override int QueryClose( out bool canClose )
 		{
-			_dte.Events.SolutionEvents.BeforeClosing -= BeforeSolutionClosing;
+			RootModel.Dispose();
 			return base.QueryClose( out canClose );
 		}
-
-		#endregion
 	}
 }
