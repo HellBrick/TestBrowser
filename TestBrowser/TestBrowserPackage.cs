@@ -29,7 +29,7 @@ namespace HellBrick.TestBrowser
 	// This attribute is needed to let the shell know that this package exposes some menus.
 	[ProvideMenuResource( "Menus.ctmenu", 1 )]
 	// This attribute registers a tool window exposed by this package.
-	[ProvideToolWindow( typeof( TestBrowserToolWindow ) )]
+	[ProvideToolWindow( typeof( TestBrowserToolWindow ), Style = VsDockStyle.Tabbed, Orientation = ToolWindowOrientation.Right, Window = ToolWindowGuids.SolutionExplorer )]
 	[Guid( GuidList.guidTestBrowserPkgString )]
 	public sealed class TestBrowserPackage : Package
 	{
