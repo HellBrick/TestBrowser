@@ -7,7 +7,7 @@
 	xmlns:m="clr-namespace:HellBrick.TestBrowser.Models"
 	mc:Ignorable="d" 
 	d:DesignHeight="300" d:DesignWidth="300"
-	d:DataContext="{d:DesignInstance Type={x:Type m:TestBrowserModel}}">
+	d:DataContext="{d:DesignInstance Type={x:Type m:SolutionTestBrowserModel}}">
 
 	<UserControl.Resources>
 		<ResourceDictionary>

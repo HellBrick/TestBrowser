@@ -1,0 +1,10 @@
+﻿<ResourceDictionary
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:local="clr-namespace:HellBrick.TestBrowser.Views.Style">
+
+	<Style x:Key="NoSolutionTextStyle" TargetType="{x:Type TextBlock}">
+		<Setter Property="HorizontalAlignment" Value="Center"></Setter>
+		<Setter Property="Margin" Value="0,21,0,0"></Setter>
+	</Style>
+</ResourceDictionary>

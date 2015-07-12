@@ -1,0 +1,30 @@
+﻿<UserControl
+	x:Class="HellBrick.TestBrowser.Views.RootView"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+	xmlns:local="clr-namespace:HellBrick.TestBrowser.Views"
+	xmlns:m="clr-namespace:HellBrick.TestBrowser.Models"
+	xmlns:c="clr-namespace:HellBrick.TestBrowser.Common"
+	mc:Ignorable="d" 
+	d:DesignHeight="300" d:DesignWidth="300"
+	d:DataContext="{d:DesignInstance Type={x:Type m:RootModel}}">
+
+	<UserControl.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="Style/RootViewStyle.xaml"></ResourceDictionary>
+			</ResourceDictionary.MergedDictionaries>
+
+			<c:NullToVisibilityConverter x:Key="CollapsedIfNull" IfNull="Collapsed" IfNotNull="Visible"></c:NullToVisibilityConverter>
+			<c:NullToVisibilityConverter x:Key="CollapsedIfNotNull" IfNull="Visible" IfNotNull="Collapsed"></c:NullToVisibilityConverter>
+		</ResourceDictionary>
+	</UserControl.Resources>
+
+	<Grid>
+		<ContentPresenter Content="{Binding SolutionBrowser}" Visibility="{Binding SolutionBrowser, Converter={StaticResource CollapsedIfNull}}"></ContentPresenter>
+
+		<TextBlock Style="{StaticResource NoSolutionTextStyle}" Visibility="{Binding SolutionBrowser, Converter={StaticResource CollapsedIfNotNull}}">Solution is not loaded</TextBlock>
+	</Grid>
+</UserControl>

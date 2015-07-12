@@ -31,48 +31,31 @@ namespace HellBrick.TestBrowser
 	// This attribute registers a tool window exposed by this package.
 	[ProvideToolWindow( typeof( TestBrowserToolWindow ), Style = VsDockStyle.Tabbed, Orientation = ToolWindowOrientation.Right, Window = ToolWindowGuids.SolutionExplorer )]
 	[Guid( GuidList.guidTestBrowserPkgString )]
-	public sealed class TestBrowserPackage : Package
+	public sealed class TestBrowserPackage : Package, IOptionsService
 	{
 		private TestServiceContext _serviceContext;
 		private TestBrowserOptions _options;
-		private DTE _dte;
 
 		public TestBrowserPackage()
 		{
-			//	LoadOptions() is not guaranteed to be called.
-			_options = new TestBrowserOptions();
 		}
 
-		public static TestBrowserModel RootModel { get; private set; }
+		public static RootModel RootModel { get; private set; }
 
-		#region Options
+		#region IOptionsService
 
-		private void SaveOptions()
-		{
-			var service = this.GetService<IVsSolutionPersistence>();
-			service.SavePackageUserOpts( this, TestBrowserOptions.OptionStreamKey );
-		}
-
-		private void LoadOptions()
+		TestBrowserOptions IOptionsService.LoadOptions()
 		{
 			var service = this.GetService<IVsSolutionPersistence>();
 			service.LoadPackageUserOpts( this, TestBrowserOptions.OptionStreamKey );
+			return _options ?? new TestBrowserOptions();
 		}
 
-		protected override void OnSaveOptions( string key, Stream stream )
+		void IOptionsService.SaveOptions( TestBrowserOptions options )
 		{
-			base.OnSaveOptions( key, stream );
-
-			if ( key != TestBrowserOptions.OptionStreamKey )
-				return;
-
-			_options.CollapsedNodes = TestBrowserPackage.RootModel.TestTree
-				.EnumerateDescendantsAndSelf()
-				.Where( n => n.IsVisible && !n.IsExpanded )
-				.Select( n => new NodeKey( n.Type, n.Key ) )
-				.ToList();
-
-			_options.WriteToStream( stream );
+			_options = options;
+			var service = this.GetService<IVsSolutionPersistence>();
+			service.SavePackageUserOpts( this, TestBrowserOptions.OptionStreamKey );
 		}
 
 		protected override void OnLoadOptions( string key, Stream stream )
@@ -82,7 +65,17 @@ namespace HellBrick.TestBrowser
 			if ( key != TestBrowserOptions.OptionStreamKey )
 				return;
 
-			_options = TestBrowserOptions.FromStream( stream ) ?? new TestBrowserOptions();
+			_options = TestBrowserOptions.FromStream( stream );
+		}
+
+		protected override void OnSaveOptions( string key, Stream stream )
+		{
+			base.OnSaveOptions( key, stream );
+
+			if ( key != TestBrowserOptions.OptionStreamKey )
+				return;
+
+			_options.WriteToStream( stream );
 		}
 
 		#endregion
@@ -95,8 +88,6 @@ namespace HellBrick.TestBrowser
 			InitializeServiceContext();
 			try
 			{
-				LoadOptions();
-				InitializeEvents();
 				InitializeViewModels();
 				InitializeCommands();
 			}
@@ -104,17 +95,6 @@ namespace HellBrick.TestBrowser
 			{
 				_serviceContext.Logger.Log( Microsoft.VisualStudio.TestWindow.Extensibility.MessageLevel.Error, ex.ToString() );
 			}
-		}
-
-		private void InitializeEvents()
-		{
-			_dte = this.GetService<DTE>();
-			_dte.Events.SolutionEvents.BeforeClosing += BeforeSolutionClosing;
-		}
-
-		private void BeforeSolutionClosing()
-		{
-			SaveOptions();
 		}
 
 		private void InitializeServiceContext()
@@ -132,7 +112,7 @@ namespace HellBrick.TestBrowser
 
 		private void InitializeViewModels()
 		{
-			RootModel = new TestBrowserModel( _serviceContext, _options );
+			RootModel = new RootModel( _serviceContext, this, this.GetService<DTE>() );
 		}
 
 		private void InitializeCommands()
@@ -162,14 +142,12 @@ namespace HellBrick.TestBrowser
 			Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure( windowFrame.Show() );
 		}
 
+		#endregion
+
 		protected override int QueryClose( out bool canClose )
 		{
-			SaveOptions();
-			_dte.Events.SolutionEvents.BeforeClosing -= BeforeSolutionClosing;
-
+			RootModel.Dispose();
 			return base.QueryClose( out canClose );
 		}
-
-		#endregion
 	}
 }
