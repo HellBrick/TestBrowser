@@ -20,7 +20,7 @@ namespace HellBrick.TestBrowser
 	/// </summary>
 	public partial class TestBrowserControl : UserControl
 	{
-		public TestBrowserControl( SolutionTestBrowserModel dataContext )
+		public TestBrowserControl( RootModel dataContext )
 		{
 			DataContext = dataContext;
 			InitializeComponent();
