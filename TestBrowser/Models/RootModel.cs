@@ -10,7 +10,7 @@ using HellBrick.TestBrowser.Options;
 
 namespace HellBrick.TestBrowser.Models
 {
-	public class RootModel : PropertyChangedBase, IDisposable
+	public sealed class RootModel : PropertyChangedBase, IDisposable
 	{
 		private readonly TestServiceContext _testServiceContext;
 		private readonly IOptionsService _optionsService;
