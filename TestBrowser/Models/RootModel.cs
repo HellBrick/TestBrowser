@@ -24,7 +24,6 @@ namespace HellBrick.TestBrowser.Models
 
 			_dte.Events.SolutionEvents.Opened += CreateTestBrowser;
 			_dte.Events.SolutionEvents.BeforeClosing += SaveOptionsAndDisposeTestBrowser;
-			_dte.Events.DTEEvents.OnBeginShutdown += SaveOptionsAndDisposeTestBrowser;
 
 			if ( !String.IsNullOrEmpty( _dte.Solution.FullName ) )
 				CreateTestBrowser();
@@ -40,8 +39,10 @@ namespace HellBrick.TestBrowser.Models
 		public void Dispose()
 		{
 			_dte.Events.SolutionEvents.BeforeClosing -= SaveOptionsAndDisposeTestBrowser;
-			_dte.Events.DTEEvents.OnBeginShutdown -= SaveOptionsAndDisposeTestBrowser;
 			_dte.Events.SolutionEvents.Opened -= CreateTestBrowser;
+
+			if ( _solutionBrowser != null )
+				SaveOptionsAndDisposeTestBrowser();
 		}
 
 		private void CreateTestBrowser()
