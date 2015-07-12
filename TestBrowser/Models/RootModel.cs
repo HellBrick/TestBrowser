@@ -22,10 +22,12 @@ namespace HellBrick.TestBrowser.Models
 			_optionsService = optionsService;
 			_dte = dte;
 
+			_dte.Events.SolutionEvents.Opened += CreateTestBrowser;
 			_dte.Events.SolutionEvents.BeforeClosing += SaveOptionsAndDisposeTestBrowser;
 			_dte.Events.DTEEvents.OnBeginShutdown += SaveOptionsAndDisposeTestBrowser;
 
-			SolutionBrowser = new SolutionTestBrowserModel( _testServiceContext, _optionsService.LoadOptions() );
+			if ( !String.IsNullOrEmpty( _dte.Solution.FullName ) )
+				CreateTestBrowser();
 		}
 
 		private SolutionTestBrowserModel _solutionBrowser;
@@ -39,6 +41,12 @@ namespace HellBrick.TestBrowser.Models
 		{
 			_dte.Events.SolutionEvents.BeforeClosing -= SaveOptionsAndDisposeTestBrowser;
 			_dte.Events.DTEEvents.OnBeginShutdown -= SaveOptionsAndDisposeTestBrowser;
+			_dte.Events.SolutionEvents.Opened -= CreateTestBrowser;
+		}
+
+		private void CreateTestBrowser()
+		{
+			SolutionBrowser = new SolutionTestBrowserModel( _testServiceContext, _optionsService.LoadOptions() );
 		}
 
 		private void SaveOptionsAndDisposeTestBrowser()
