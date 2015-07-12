@@ -305,7 +305,7 @@ namespace HellBrick.TestBrowser.Models
 		{
 			_serviceContext.RequestFactory.StateChanged -= OnStateChanged;
 			Settings.PropertyChanged -= OnSettingsChanged;
-			_currentTestRun.Dispose();
+			_currentTestRun?.Dispose();
 		}
 
 		#endregion
