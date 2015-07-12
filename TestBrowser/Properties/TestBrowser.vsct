@@ -62,6 +62,7 @@
 				<Icon guid="guidImages" id="bmpPic2" />
 				<Strings>
 					<ButtonText>Test Browser</ButtonText>
+					<LocCanonicalName>TestBrowser</LocCanonicalName>
 				</Strings>
 			</Button>
 
