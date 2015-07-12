@@ -43,7 +43,7 @@ namespace HellBrick.TestBrowser
 			_options = new TestBrowserOptions();
 		}
 
-		public static TestBrowserModel RootModel { get; private set; }
+		public static SolutionTestBrowserModel RootModel { get; private set; }
 
 		#region Options
 
@@ -132,7 +132,7 @@ namespace HellBrick.TestBrowser
 
 		private void InitializeViewModels()
 		{
-			RootModel = new TestBrowserModel( _serviceContext, _options );
+			RootModel = new SolutionTestBrowserModel( _serviceContext, _options );
 		}
 
 		private void InitializeCommands()

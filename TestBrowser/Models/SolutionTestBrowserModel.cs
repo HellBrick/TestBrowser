@@ -14,13 +14,13 @@ using Microsoft.VisualStudio.TestWindow.Extensibility;
 
 namespace HellBrick.TestBrowser.Models
 {
-	public sealed class TestBrowserModel: PropertyChangedBase, IDisposable
+	public sealed class SolutionTestBrowserModel: PropertyChangedBase, IDisposable
 	{
 		private readonly TestServiceContext _serviceContext;
 		private TestBrowserOptions _options;
 		private TestRun _currentTestRun;
 
-		public TestBrowserModel( TestServiceContext serviceContext, TestBrowserOptions options )
+		public SolutionTestBrowserModel( TestServiceContext serviceContext, TestBrowserOptions options )
 		{
 			_serviceContext = serviceContext;
 			InitializeSettings( options );

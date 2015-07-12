@@ -8,8 +8,8 @@
 	xmlns:tv="clr-namespace:Microsoft.VisualStudio.TestWindow.UI;assembly=Microsoft.VisualStudio.TestWindow.Core"
 	xmlns:ext="clr-namespace:Microsoft.VisualStudio.TestWindow.Extensibility;assembly=Microsoft.VisualStudio.TestWindow.Interfaces">
 
-	<DataTemplate DataType="{x:Type m:TestBrowserModel}">
-		<v:TestBrowserView></v:TestBrowserView>
+	<DataTemplate DataType="{x:Type m:SolutionTestBrowserModel}">
+		<v:SolutionTestBrowserView></v:SolutionTestBrowserView>
 	</DataTemplate>
 
 	<DataTemplate DataType="{x:Type m:TestModel}">
