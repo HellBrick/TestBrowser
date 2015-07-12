@@ -57,8 +57,8 @@
           If you do not want an image next to your command, remove the Icon node /> -->
 
 
-			<Button guid="guidTestBrowserCmdSet" id="TestBrowserOpenCommand" priority="0x0100" type="Button">
-				<Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1"/>
+			<Button guid="guidTestBrowserCmdSet" id="TestBrowserOpenCommand" priority="0xFFFF" type="Button">
+				<Parent guid="guidSHLMainMenu" id="IDG_VS_VIEW_ORG_WINDOWS"/>
 				<Icon guid="guidImages" id="bmpPic2" />
 				<Strings>
 					<ButtonText>Test Browser</ButtonText>
