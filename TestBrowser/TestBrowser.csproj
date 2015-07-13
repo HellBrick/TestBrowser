@@ -361,7 +361,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\packages\HellBrick.Diagnostics.1.0.0\tools\analyzers\HellBrick.Diagnostics.dll" />
+    <Analyzer Include="..\packages\HellBrick.Diagnostics.1.0.1\tools\analyzers\HellBrick.Diagnostics.dll" />
   </ItemGroup>
   <PropertyGroup>
     <UseCodebase>true</UseCodebase>
