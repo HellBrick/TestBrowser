@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 namespace HellBrick.TestBrowser.Views
 {
 	/// <summary>
-	/// Interaction logic for TestBrowserView.xaml
+	/// Interaction logic for SolutionTestBrowserView.xaml
 	/// </summary>
 	public partial class SolutionTestBrowserView: UserControl
 	{
