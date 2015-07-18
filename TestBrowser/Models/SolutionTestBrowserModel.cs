@@ -159,7 +159,7 @@ namespace HellBrick.TestBrowser.Models
 			var newTests = newTestLookup.Where( kvp => !TestTree.Tests.ContainsKey( kvp.Key ) );
 			foreach ( var kvp in newTests )
 			{
-				TestModel test = new TestModel( kvp.Value as TestData, _serviceContext ) { HumanizeName = Settings.HumanizeTestNames };
+				TestModel test = new TestModel( this, kvp.Value as TestData, _serviceContext ) { HumanizeName = Settings.HumanizeTestNames };
 				test.SelectionChanged += OnTestSelectionChanged;
 				TestTree.InsertTest( test );
 			}
