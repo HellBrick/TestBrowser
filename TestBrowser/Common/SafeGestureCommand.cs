@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.TestWindow.Controller;
 
 namespace HellBrick.TestBrowser.Common
 {
-	public class SafeGestureCommand : SafeCommand
+	public class SafeGestureCommand : SafeCommand, IGestureCommand
 	{
 		public SafeGestureCommand( SafeDispatcher dispatcher, Action execute, string text, params InputGesture[] gestures )
 			: base( dispatcher, execute, text )

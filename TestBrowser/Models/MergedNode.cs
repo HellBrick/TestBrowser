@@ -31,7 +31,7 @@ namespace HellBrick.TestBrowser.Models
 		}
 
 		public ICollection<INode> Children => Nodes[ Nodes.Count - 1 ].Children;
-		public ICollection<SafeGestureCommand> Commands { get; } = new List<SafeGestureCommand>();
+		public ICollection<IGestureCommand> Commands { get; } = new List<IGestureCommand>();
 		public bool IsVisible => true;
 
 		private bool _isSelected;

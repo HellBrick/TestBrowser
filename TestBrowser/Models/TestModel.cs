@@ -119,7 +119,7 @@ namespace HellBrick.TestBrowser.Models
 		public INode Parent { get; set; }
 
 		public ICollection<INode> Children { get; } = new List<INode>();
-		public ICollection<SafeGestureCommand> Commands { get; private set; }
+		public ICollection<IGestureCommand> Commands { get; private set; }
 
 		public bool IsVisible => true;
 
@@ -136,7 +136,7 @@ namespace HellBrick.TestBrowser.Models
 
 		private void InitializeCommands()
 		{
-			Commands = new List<SafeGestureCommand>()
+			Commands = new List<IGestureCommand>()
 			{
 				new SafeGestureCommand( _serviceContext.Dispatcher, () => GoToTest(), "Go to test", new KeyGesture( System.Windows.Input.Key.F12 ), new MouseGesture( MouseAction.LeftDoubleClick ) )
 			};

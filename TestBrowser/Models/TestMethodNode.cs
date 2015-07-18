@@ -35,7 +35,7 @@ namespace HellBrick.TestBrowser.Models
 
 		private readonly NodeCollection _children;
 		public ICollection<INode> Children => _children;
-		public ICollection<SafeGestureCommand> Commands { get; } = new List<SafeGestureCommand>();
+		public ICollection<IGestureCommand> Commands { get; } = new List<IGestureCommand>();
 
 		public bool IsVisible => true;
 

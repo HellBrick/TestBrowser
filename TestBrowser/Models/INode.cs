@@ -15,7 +15,7 @@ namespace HellBrick.TestBrowser.Models
 		string Key { get; }
 		INode Parent { get; set; }
 		ICollection<INode> Children { get; }
-		ICollection<SafeGestureCommand> Commands { get; }
+		ICollection<IGestureCommand> Commands { get; }
 		bool IsVisible { get; }
 		bool IsSelected { get; }
 		bool IsExpanded { get; set; }
