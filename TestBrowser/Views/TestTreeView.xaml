@@ -14,6 +14,7 @@
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="Style/TestTreeViewStyle.xaml"></ResourceDictionary>
+				<ResourceDictionary Source="Style/ContextMenuStyle.xaml"></ResourceDictionary>
 			</ResourceDictionary.MergedDictionaries>
 			
 			<c:BoolToVisibilityConverter x:Key="BoolToVisibility"></c:BoolToVisibilityConverter>
@@ -22,6 +23,7 @@
 				<MouseBinding Command="{Binding GoToTestCommand}" MouseAction="LeftDoubleClick"></MouseBinding>
 				<KeyBinding Command="{Binding GoToTestCommand}" Key="F12"></KeyBinding>
 			</InputBindingCollection>
+			
 		</ResourceDictionary>
 	</UserControl.Resources>
 
