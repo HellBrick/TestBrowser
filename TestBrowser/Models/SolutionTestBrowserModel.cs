@@ -270,6 +270,11 @@ namespace HellBrick.TestBrowser.Models
 		private void RunSelected()
 		{
 			INode selectedNode = FindSelectedNode();
+			RunNode( selectedNode );
+		}
+
+		public void RunNode( INode selectedNode )
+		{
 			if ( ShouldInvokeFullRun( selectedNode ) )
 				_serviceContext.ExecuteOperationAsync( new RunAllOperation( _serviceContext.OperationData ) { ShowTestWindowAfterRun = false } );
 			else
@@ -279,6 +284,11 @@ namespace HellBrick.TestBrowser.Models
 		private void DebugSelected()
 		{
 			INode selectedNode = FindSelectedNode();
+			DebugNode( selectedNode );
+		}
+
+		public void DebugNode( INode selectedNode )
+		{
 			if ( ShouldInvokeFullRun( selectedNode ) )
 				_serviceContext.RequestFactory.DebugTestsAsync();
 			else
