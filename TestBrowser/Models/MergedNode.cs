@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
+using HellBrick.TestBrowser.Common;
 
 namespace HellBrick.TestBrowser.Models
 {
@@ -30,6 +31,7 @@ namespace HellBrick.TestBrowser.Models
 		}
 
 		public ICollection<INode> Children => Nodes[ Nodes.Count - 1 ].Children;
+		public ICollection<SafeGestureCommand> Commands { get; } = new List<SafeGestureCommand>();
 		public bool IsVisible => true;
 
 		private bool _isSelected;

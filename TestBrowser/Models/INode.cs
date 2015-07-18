@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HellBrick.TestBrowser.Common;
 
 namespace HellBrick.TestBrowser.Models
 {
@@ -14,6 +15,7 @@ namespace HellBrick.TestBrowser.Models
 		string Key { get; }
 		INode Parent { get; set; }
 		ICollection<INode> Children { get; }
+		ICollection<SafeGestureCommand> Commands { get; }
 		bool IsVisible { get; }
 		bool IsSelected { get; }
 		bool IsExpanded { get; set; }

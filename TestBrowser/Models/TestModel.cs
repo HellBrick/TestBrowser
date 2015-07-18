@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Caliburn.Micro;
 using HellBrick.TestBrowser.Common;
 using HellBrick.TestBrowser.Core;
@@ -118,6 +119,7 @@ namespace HellBrick.TestBrowser.Models
 		public INode Parent { get; set; }
 
 		public ICollection<INode> Children { get; } = new List<INode>();
+		public ICollection<SafeGestureCommand> Commands { get; private set; }
 
 		public bool IsVisible => true;
 
@@ -134,10 +136,11 @@ namespace HellBrick.TestBrowser.Models
 
 		private void InitializeCommands()
 		{
-			GoToTestCommand = new SafeCommand( _serviceContext.Dispatcher, () => GoToTest(), "Go to test" );
+			Commands = new List<SafeGestureCommand>()
+			{
+				new SafeGestureCommand( _serviceContext.Dispatcher, () => GoToTest(), "Go to test", new KeyGesture( System.Windows.Input.Key.F12 ) )
+			};
 		}
-
-		public SafeCommand GoToTestCommand { get; private set; }
 
 		private void GoToTest()
 		{
