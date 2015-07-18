@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
+using HellBrick.TestBrowser.Common;
 using Humanizer;
 using Microsoft.VisualStudio.TestWindow.Controller;
 
@@ -34,6 +35,7 @@ namespace HellBrick.TestBrowser.Models
 
 		private readonly NodeCollection _children;
 		public ICollection<INode> Children => _children;
+		public ICollection<SafeGestureCommand> Commands { get; } = new List<SafeGestureCommand>();
 
 		public bool IsVisible => true;
 

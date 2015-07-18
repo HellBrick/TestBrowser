@@ -54,6 +54,7 @@ namespace HellBrick.TestBrowser.Models
 		public NodeCollection Children { get; private set; }
 
 		ICollection<INode> INode.Children => this.Children;
+		public ICollection<SafeGestureCommand> Commands { get; } = new List<SafeGestureCommand>();
 
 		public bool IsVisible => !IsMerged || IsLastMergedNode;
 

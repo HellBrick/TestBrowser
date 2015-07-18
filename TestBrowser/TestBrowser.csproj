@@ -157,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\BoolToVisibilityConverter.cs" />
+    <Compile Include="Common\CommandsToBindingsConverter.cs" />
     <Compile Include="Common\EventHandler.cs" />
     <Compile Include="Common\HSL.cs" />
     <Compile Include="Common\Input.cs" />
@@ -164,6 +165,7 @@
     <Compile Include="Common\NullToVisibilityConverter.cs" />
     <Compile Include="Common\OrderedSafeObservableCollection.cs" />
     <Compile Include="Common\SafeCommand.cs" />
+    <Compile Include="Common\SafeGestureCommand.cs" />
     <Compile Include="Common\SafeObservableDictionary.cs" />
     <Compile Include="Common\TestStateToImageSourceConverter.cs" />
     <Compile Include="Core\IOptionsService.cs" />
@@ -284,6 +286,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Style\ContextMenuStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
