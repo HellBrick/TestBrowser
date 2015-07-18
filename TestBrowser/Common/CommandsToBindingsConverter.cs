@@ -17,11 +17,12 @@ namespace HellBrick.TestBrowser.Common
 			if ( commandCollection == null )
 				return null;
 
-			var bindingList = commandCollection
-				.Select( c => new InputBinding( c, c.Gesture ) )
-				.ToList();
+			var bindingList =
+				from command in commandCollection
+				from gesture in command.Gestures
+				select new InputBinding( command, gesture );
 
-			return new InputBindingCollection( bindingList );
+			return new InputBindingCollection( bindingList.ToList() );
 		}
 
 		public object ConvertBack( object value, Type targetType, object parameter, CultureInfo culture )
