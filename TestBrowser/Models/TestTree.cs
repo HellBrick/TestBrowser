@@ -307,7 +307,7 @@ namespace HellBrick.TestBrowser.Models
 			foreach ( var node in intervalToMerge.LastNode.EnumerateAncestorsAndSelf().Cast<LocationNode>().Take( intervalToMerge.Length ) )
 				nodes[ i-- ] = node;
 
-			MergedNode mergedNode = new MergedNode( nodes );
+			MergedNode mergedNode = new MergedNode( _testBrowser, _dispatcher, nodes );
 			foreach ( var node in nodes )
 				node.MergedNode = mergedNode;
 
