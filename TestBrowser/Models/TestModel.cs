@@ -138,7 +138,7 @@ namespace HellBrick.TestBrowser.Models
 		{
 			Commands = new List<SafeGestureCommand>()
 			{
-				new SafeGestureCommand( _serviceContext.Dispatcher, () => GoToTest(), "Go to test", new KeyGesture( System.Windows.Input.Key.F12 ) )
+				new SafeGestureCommand( _serviceContext.Dispatcher, () => GoToTest(), "Go to test", new KeyGesture( System.Windows.Input.Key.F12 ), new MouseGesture( MouseAction.LeftDoubleClick ) )
 			};
 		}
 
