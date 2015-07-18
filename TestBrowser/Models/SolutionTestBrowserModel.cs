@@ -26,7 +26,7 @@ namespace HellBrick.TestBrowser.Models
 			InitializeSettings( options );
 			_serviceContext.RequestFactory.StateChanged += OnStateChanged;
 
-			TestTree = new Models.TestTree( _serviceContext.Dispatcher, _options.CollapsedNodes );
+			TestTree = new Models.TestTree( this, _serviceContext.Dispatcher, _options.CollapsedNodes );
 			InitializeCommands();
 			var discoverTask = DiscoverTestsAsync();	//	 no need to await it
 		}
@@ -159,7 +159,7 @@ namespace HellBrick.TestBrowser.Models
 			var newTests = newTestLookup.Where( kvp => !TestTree.Tests.ContainsKey( kvp.Key ) );
 			foreach ( var kvp in newTests )
 			{
-				TestModel test = new TestModel( kvp.Value as TestData, _serviceContext ) { HumanizeName = Settings.HumanizeTestNames };
+				TestModel test = new TestModel( this, kvp.Value as TestData, _serviceContext ) { HumanizeName = Settings.HumanizeTestNames };
 				test.SelectionChanged += OnTestSelectionChanged;
 				TestTree.InsertTest( test );
 			}
@@ -246,6 +246,8 @@ namespace HellBrick.TestBrowser.Models
 
 		#region Commands
 
+		public event EventHandler CanRunTestsChanged;
+
 		private void InitializeCommands()
 		{
 			Commands = new List<SafeCommand>()
@@ -258,15 +260,21 @@ namespace HellBrick.TestBrowser.Models
 
 		private void RefreshCommands()
 		{
+			_serviceContext.Dispatcher.Invoke( () => CanRunTestsChanged?.Invoke( this, EventArgs.Empty ) );
 			foreach ( var command in Commands )
 				command.RaiseCanExecuteChanged();
 		}
 
-		private bool CanRunTests() => _serviceContext.RequestFactory.OperationSetFinished && TestTree.VisualChildren.Count > 0;
+		public bool CanRunTests() => _serviceContext.RequestFactory.OperationSetFinished && TestTree.VisualChildren.Count > 0;
 
 		private void RunSelected()
 		{
 			INode selectedNode = FindSelectedNode();
+			RunNode( selectedNode );
+		}
+
+		public void RunNode( INode selectedNode )
+		{
 			if ( ShouldInvokeFullRun( selectedNode ) )
 				_serviceContext.ExecuteOperationAsync( new RunAllOperation( _serviceContext.OperationData ) { ShowTestWindowAfterRun = false } );
 			else
@@ -276,6 +284,11 @@ namespace HellBrick.TestBrowser.Models
 		private void DebugSelected()
 		{
 			INode selectedNode = FindSelectedNode();
+			DebugNode( selectedNode );
+		}
+
+		public void DebugNode( INode selectedNode )
+		{
 			if ( ShouldInvokeFullRun( selectedNode ) )
 				_serviceContext.RequestFactory.DebugTestsAsync();
 			else

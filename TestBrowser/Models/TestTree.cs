@@ -11,42 +11,43 @@ using Microsoft.VisualStudio.TestWindow.Controller;
 
 namespace HellBrick.TestBrowser.Models
 {
-	public class TestTree: PropertyChangedBase, INode
+	public class TestTree : RunnableNode
 	{
 		private readonly Dictionary<string, LocationNode> _locationLookup = new Dictionary<string, LocationNode>();
 		private readonly Dictionary<string, TestMethodNode> _methodLookup = new Dictionary<string, TestMethodNode>();
+		private readonly SolutionTestBrowserModel _testBrowser;
 		private readonly HashSet<NodeKey> _autoCollapsedNodes;
 		private readonly SafeDispatcher _dispatcher;
+		private readonly NodeCollection _children;
 
-		public TestTree( SafeDispatcher dispatcher, IEnumerable<NodeKey> autoCollapsedNodes )
+		public TestTree( SolutionTestBrowserModel testBrowser, SafeDispatcher dispatcher, IEnumerable<NodeKey> autoCollapsedNodes )
+			: base ( testBrowser, dispatcher )
 		{
+			_testBrowser = testBrowser;
 			_dispatcher = dispatcher;
 			_autoCollapsedNodes = new HashSet<NodeKey>( autoCollapsedNodes );
-			Children = new NodeCollection( _dispatcher );
+			_children = new NodeCollection( _dispatcher );
 			_rootCollectionWrapper = new NodeCollection( _dispatcher );
 			_rootCollectionWrapper.Add( this );
 		}
 
-		#region INode Members
+		#region RunnableNode Members
 
-		public NodeType Type => NodeType.Location;
-		public string Name => "All tests";
-		public string Key => Name;
+		public override NodeType Type => NodeType.Location;
+		public override string Name => "All tests";
+		public override string Key => Name;
 
-		public INode Parent
+		public override INode Parent
 		{
 			get { return null; }
 			set { }
 		}
 
-		ICollection<INode> INode.Children => this.Children;
-		public NodeCollection Children { get; private set; }
-		public ICollection<SafeGestureCommand> Commands { get; } = new List<SafeGestureCommand>();
+		public override ICollection<INode> Children => _children;
+		public override bool IsVisible => true;
+		public override bool IsSelected { get; set; }
 
-		public bool IsVisible => true;
-
-		public bool IsSelected { get; set; }
-		public bool IsExpanded
+		public override bool IsExpanded
 		{
 			get { return true; }
 			set { }
@@ -58,7 +59,7 @@ namespace HellBrick.TestBrowser.Models
 		public IReadOnlyDictionary<Guid, TestModel> Tests => _testLookup;
 
 		private readonly NodeCollection _rootCollectionWrapper;
-		public NodeCollection VisualChildren => Children.Count( n => n.IsVisible ) < 2 ? Children : _rootCollectionWrapper;
+		public NodeCollection VisualChildren => _children.Count( n => n.IsVisible ) < 2 ? _children : _rootCollectionWrapper;
 
 		public void InsertTest( TestModel newTest )
 		{
@@ -116,7 +117,7 @@ namespace HellBrick.TestBrowser.Models
 				LocationNode currentLocationNode;
 				if ( !_locationLookup.TryGetValue( currentLocation, out currentLocationNode ) )
 				{
-					currentLocationNode = new LocationNode( _dispatcher, currentLocation, locationFragments[ i ] );
+					currentLocationNode = new LocationNode( _testBrowser, _dispatcher, currentLocation, locationFragments[ i ] );
 					_locationLookup[ currentLocation ] = currentLocationNode;
 					InsertChildAndTryAutoExpand( currentParent, currentLocationNode );
 
@@ -306,7 +307,7 @@ namespace HellBrick.TestBrowser.Models
 			foreach ( var node in intervalToMerge.LastNode.EnumerateAncestorsAndSelf().Cast<LocationNode>().Take( intervalToMerge.Length ) )
 				nodes[ i-- ] = node;
 
-			MergedNode mergedNode = new MergedNode( nodes );
+			MergedNode mergedNode = new MergedNode( _testBrowser, _dispatcher, nodes );
 			foreach ( var node in nodes )
 				node.MergedNode = mergedNode;
 

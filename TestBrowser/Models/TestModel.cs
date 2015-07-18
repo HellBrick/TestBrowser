@@ -16,13 +16,14 @@ using Microsoft.VisualStudio.TestWindow.Model;
 
 namespace HellBrick.TestBrowser.Models
 {
-	public class TestModel: PropertyChangedBase, INode, IHumanizable
+	public class TestModel : RunnableNode, IHumanizable
 	{
 		private readonly TestServiceContext _serviceContext;
 		private readonly TestData _test;
 		private readonly string _humanizedMethodName;
 
-		public TestModel( TestData test, TestServiceContext serviceContext )
+		public TestModel( SolutionTestBrowserModel testBrowser, TestData test, TestServiceContext serviceContext )
+			: base( testBrowser, serviceContext.Dispatcher )
 		{
 			_serviceContext = serviceContext;
 			_test = test;
@@ -30,7 +31,6 @@ namespace HellBrick.TestBrowser.Models
 			Location = _test.Namespace + "." + _test.ClassName;
 			ParseMethodNameAndTestCase();
 			_humanizedMethodName = MethodName.Humanize();
-			InitializeCommands();
 		}
 
 		private void ParseMethodNameAndTestCase()
@@ -108,49 +108,44 @@ namespace HellBrick.TestBrowser.Models
 
 		public override string ToString() => $"[{State}] {Location}/{Name}";
 
-		#region INode Members
+		#region RunnableNode members
 
-		public NodeType Type => NodeType.Test;
+		public override NodeType Type => NodeType.Test;
+		public override string Name => TestCaseName ?? ( HumanizeName ? _humanizedMethodName : MethodName );
+		public override string Key => TestCaseName ?? MethodName;
 
-		public string Name => TestCaseName ?? ( HumanizeName ? _humanizedMethodName : MethodName );
+		public override INode Parent { get; set; }
 
-		public string Key => TestCaseName ?? MethodName;
-
-		public INode Parent { get; set; }
-
-		public ICollection<INode> Children { get; } = new List<INode>();
-		public ICollection<SafeGestureCommand> Commands { get; private set; }
-
-		public bool IsVisible => true;
+		public override ICollection<INode> Children { get; } = new List<INode>();
+		public override bool IsVisible => true;
 
 		private bool _isSelected;
-		public bool IsSelected
+		public override bool IsSelected
 		{
 			get { return _isSelected; }
 			set { _isSelected = value; NotifyOfPropertyChange( nameof( IsSelected ) ); RaiseSelectionChanged(); }
 		}
 
-		#endregion
-
-		#region Commands
-
-		private void InitializeCommands()
+		public override bool IsExpanded
 		{
-			Commands = new List<SafeGestureCommand>()
-			{
-				new SafeGestureCommand( _serviceContext.Dispatcher, () => GoToTest(), "Go to test", new KeyGesture( System.Windows.Input.Key.F12 ), new MouseGesture( MouseAction.LeftDoubleClick ) )
-			};
+			get { return true; }
+			set { }
 		}
+
+		protected override IEnumerable<IGestureCommand> EnumerateCommands()
+		{
+			foreach ( var baseCommand in base.EnumerateCommands() )
+				yield return baseCommand;
+
+			yield return new SafeGestureCommand(
+				_serviceContext.Dispatcher, () => GoToTest(), "Go to test",
+				new KeyGesture( System.Windows.Input.Key.F12 ),
+				new MouseGesture( MouseAction.LeftDoubleClick ) );
+      }
 
 		private void GoToTest()
 		{
 			_serviceContext.Host.Open( new TestOpenTarget( _test ) );
-		}
-
-		public bool IsExpanded
-		{
-			get { return true; }
-			set { }
 		}
 
 		#endregion

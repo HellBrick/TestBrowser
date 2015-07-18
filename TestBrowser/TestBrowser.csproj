@@ -159,7 +159,9 @@
     <Compile Include="Common\BoolToVisibilityConverter.cs" />
     <Compile Include="Common\CommandsToBindingsConverter.cs" />
     <Compile Include="Common\EventHandler.cs" />
+    <Compile Include="Common\GestureExtensions.cs" />
     <Compile Include="Common\HSL.cs" />
+    <Compile Include="Common\IGestureCommand.cs" />
     <Compile Include="Common\Input.cs" />
     <Compile Include="Common\IsValueBiggerThanConverter.cs" />
     <Compile Include="Common\NullToVisibilityConverter.cs" />
@@ -181,6 +183,7 @@
     <Compile Include="Models\NodeCollection.cs" />
     <Compile Include="Models\NodeType.cs" />
     <Compile Include="Models\RootModel.cs" />
+    <Compile Include="Models\RunnableNode.cs" />
     <Compile Include="Models\RunSummary.cs" />
     <Compile Include="Models\SettingsModel.cs" />
     <Compile Include="Models\SolutionTestBrowserModel.cs" />

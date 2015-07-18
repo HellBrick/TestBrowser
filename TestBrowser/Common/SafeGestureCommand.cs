@@ -9,13 +9,13 @@ using Microsoft.VisualStudio.TestWindow.Controller;
 
 namespace HellBrick.TestBrowser.Common
 {
-	public class SafeGestureCommand : SafeCommand
+	public class SafeGestureCommand : SafeCommand, IGestureCommand
 	{
 		public SafeGestureCommand( SafeDispatcher dispatcher, Action execute, string text, params InputGesture[] gestures )
 			: base( dispatcher, execute, text )
 		{
 			Gestures = gestures;
-			GestureText = Gestures.OfType<KeyGesture>().FirstOrDefault()?.GetDisplayStringForCulture( CultureInfo.InvariantCulture );
+			GestureText = Gestures.GetGestureText();
       }
 
 		public InputGesture[] Gestures { get; }

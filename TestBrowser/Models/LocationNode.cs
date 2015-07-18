@@ -9,16 +9,20 @@ using Microsoft.VisualStudio.TestWindow.Controller;
 
 namespace HellBrick.TestBrowser.Models
 {
-	public class LocationNode: PropertyChangedBase, INode
+	public class LocationNode : RunnableNode
 	{
+		private readonly SolutionTestBrowserModel _testBrowser;
 		private readonly SafeDispatcher _dispatcher;
+		private readonly NodeCollection _children;
 
-		public LocationNode( SafeDispatcher dispatcher, string location, string name )
+		public LocationNode( SolutionTestBrowserModel testBrowser, SafeDispatcher dispatcher, string location, string name )
+			: base( testBrowser, dispatcher )
 		{
+			_testBrowser = testBrowser;
 			_dispatcher = dispatcher;
 			Location = location;
 			Name = name;
-			Children = new NodeCollection( _dispatcher );
+			_children = new NodeCollection( _dispatcher );
 		}
 
 		public string Location { get; set; }
@@ -32,7 +36,7 @@ namespace HellBrick.TestBrowser.Models
 
 		public bool IsMerged => _mergedNode != null;
 
-		public bool ShouldBeMerged => Children.Count == 1 && Children[ 0 ].Type == NodeType.Location;
+		public bool ShouldBeMerged => _children.Count == 1 && _children[ 0 ].Type == NodeType.Location;
 
 		public bool RequiresMerge => !IsMerged && ShouldBeMerged;
 
@@ -42,31 +46,24 @@ namespace HellBrick.TestBrowser.Models
 
 		public override string ToString() => Location;
 
-		#region INode Members
+		#region RunnableNode members
 
-		public NodeType Type => NodeType.Location;
-
-		public string Name { get; }
-
-		public string Key => Name;
-
-		public INode Parent { get; set; }
-		public NodeCollection Children { get; private set; }
-
-		ICollection<INode> INode.Children => this.Children;
-		public ICollection<SafeGestureCommand> Commands { get; } = new List<SafeGestureCommand>();
-
-		public bool IsVisible => !IsMerged || IsLastMergedNode;
+		public override NodeType Type => NodeType.Location;
+		public override string Name { get; }
+		public override string Key => Name;
+		public override INode Parent { get; set; }
+		public override ICollection<INode> Children => _children;
+		public override bool IsVisible => !IsMerged || IsLastMergedNode;
 
 		private bool _isSelected;
-		public bool IsSelected
+		public override bool IsSelected
 		{
 			get { return _isSelected; }
 			set { _isSelected = value; NotifyOfPropertyChange( nameof( IsSelected ) ); }
 		}
 
 		private bool _isExpanded = true;
-		public bool IsExpanded
+		public override bool IsExpanded
 		{
 			get { return _isExpanded; }
 			set { _isExpanded = value; NotifyOfPropertyChange( nameof( IsExpanded ) ); }

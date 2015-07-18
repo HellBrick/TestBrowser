@@ -5,12 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
 using HellBrick.TestBrowser.Common;
+using Microsoft.VisualStudio.TestWindow.Controller;
 
 namespace HellBrick.TestBrowser.Models
 {
-	public class MergedNode: PropertyChangedBase, INode
+	public class MergedNode : RunnableNode
 	{
-		public MergedNode( LocationNode[] mergedNodes )
+		public MergedNode( SolutionTestBrowserModel testBrowser, SafeDispatcher dispatcher, LocationNode[] mergedNodes )
+			: base( testBrowser, dispatcher )
 		{
 			Nodes = mergedNodes.ToList();
 			Name = String.Join( ".", mergedNodes.Select( n => n.Name ) );
@@ -18,31 +20,30 @@ namespace HellBrick.TestBrowser.Models
 
 		public IReadOnlyList<LocationNode> Nodes { get; }
 
-		#region INode Members
+		#region RunnableNode members
 
-		public NodeType Type => NodeType.Location;
-		public string Name { get; }
-		public string Key => Name;
+		public override NodeType Type => NodeType.Location;
+		public override string Name { get; }
+		public override string Key => Name;
 
-		public INode Parent
+		public override INode Parent
 		{
 			get { return Nodes[ 0 ].Parent; }
 			set {}
 		}
 
-		public ICollection<INode> Children => Nodes[ Nodes.Count - 1 ].Children;
-		public ICollection<SafeGestureCommand> Commands { get; } = new List<SafeGestureCommand>();
-		public bool IsVisible => true;
+		public override ICollection<INode> Children => Nodes[ Nodes.Count - 1 ].Children;
+		public override bool IsVisible => true;
 
 		private bool _isSelected;
-		public bool IsSelected
+		public override bool IsSelected
 		{
 			get { return _isSelected; }
 			set { _isSelected = value; NotifyOfPropertyChange( nameof( IsSelected ) ); }
 		}
 
 		private bool _isExpanded = true;
-		public bool IsExpanded
+		public override bool IsExpanded
 		{
 			get { return _isExpanded; }
 			set { _isExpanded = value; NotifyOfPropertyChange( nameof( IsExpanded ) ); }
