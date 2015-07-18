@@ -117,7 +117,7 @@ namespace HellBrick.TestBrowser.Models
 				LocationNode currentLocationNode;
 				if ( !_locationLookup.TryGetValue( currentLocation, out currentLocationNode ) )
 				{
-					currentLocationNode = new LocationNode( _dispatcher, currentLocation, locationFragments[ i ] );
+					currentLocationNode = new LocationNode( _testBrowser, _dispatcher, currentLocation, locationFragments[ i ] );
 					_locationLookup[ currentLocation ] = currentLocationNode;
 					InsertChildAndTryAutoExpand( currentParent, currentLocationNode );
 
