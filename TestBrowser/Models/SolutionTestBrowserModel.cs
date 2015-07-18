@@ -265,7 +265,7 @@ namespace HellBrick.TestBrowser.Models
 				command.RaiseCanExecuteChanged();
 		}
 
-		private bool CanRunTests() => _serviceContext.RequestFactory.OperationSetFinished && TestTree.VisualChildren.Count > 0;
+		public bool CanRunTests() => _serviceContext.RequestFactory.OperationSetFinished && TestTree.VisualChildren.Count > 0;
 
 		private void RunSelected()
 		{
