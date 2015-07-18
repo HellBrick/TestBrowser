@@ -246,6 +246,8 @@ namespace HellBrick.TestBrowser.Models
 
 		#region Commands
 
+		public event EventHandler CanRunTestsChanged;
+
 		private void InitializeCommands()
 		{
 			Commands = new List<SafeCommand>()
@@ -258,6 +260,7 @@ namespace HellBrick.TestBrowser.Models
 
 		private void RefreshCommands()
 		{
+			_serviceContext.Dispatcher.Invoke( () => CanRunTestsChanged?.Invoke( this, EventArgs.Empty ) );
 			foreach ( var command in Commands )
 				command.RaiseCanExecuteChanged();
 		}
