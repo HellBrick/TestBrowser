@@ -159,6 +159,7 @@
     <Compile Include="Common\BoolToVisibilityConverter.cs" />
     <Compile Include="Common\CommandsToBindingsConverter.cs" />
     <Compile Include="Common\EventHandler.cs" />
+    <Compile Include="Common\GestureExtensions.cs" />
     <Compile Include="Common\HSL.cs" />
     <Compile Include="Common\IGestureCommand.cs" />
     <Compile Include="Common\Input.cs" />

@@ -15,7 +15,7 @@ namespace HellBrick.TestBrowser.Common
 			: base( dispatcher, execute, text )
 		{
 			Gestures = gestures;
-			GestureText = Gestures.OfType<KeyGesture>().FirstOrDefault()?.GetDisplayStringForCulture( CultureInfo.InvariantCulture );
+			GestureText = Gestures.GetGestureText();
       }
 
 		public InputGesture[] Gestures { get; }
