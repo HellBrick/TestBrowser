@@ -14,6 +14,7 @@ namespace HellBrick.TestBrowser.Models
 		private readonly SolutionTestBrowserModel _testBrowser;
 		private readonly SafeDispatcher _dispatcher;
 		private readonly NodeCollection _children;
+		private INode _currentPresenter;
 
 		public LocationNode( SolutionTestBrowserModel testBrowser, SafeDispatcher dispatcher, string location, string name )
 			: base( testBrowser, dispatcher )
@@ -23,18 +24,49 @@ namespace HellBrick.TestBrowser.Models
 			Location = location;
 			Name = name;
 			_children = new NodeCollection( _dispatcher );
+			_currentPresenter = this;
 		}
 
 		public string Location { get; set; }
 
-		private MergedNode _mergedNode;
-		public MergedNode MergedNode
+		public bool TryRecalculatePresenter()
 		{
-			get { return _mergedNode; }
-			set { _mergedNode = value; NotifyOfPropertyChange( nameof( IsVisible ) ); }
+			var nodesToMerge = this.EnumerateNodesToMerge().ToArray();
+			bool shouldBeMerged = nodesToMerge.Length > 1;
+			var mergedNode = _currentPresenter as MergedNode;
+			var isMerged = mergedNode != null;
+
+			bool isPresenterUpdated =
+				isMerged && nodesToMerge.LastOrDefault() != mergedNode.Nodes.LastOrDefault() ||
+				!isMerged && shouldBeMerged;
+
+			if ( isPresenterUpdated )
+			{
+				_currentPresenter = shouldBeMerged ? CreateMergedPresenter( nodesToMerge ) : this;
+				NotifyOfPropertyChange( nameof( Presenter ) );
+			}
+
+			return isPresenterUpdated;
 		}
 
-		public bool IsMerged => _mergedNode != null;
+		private IEnumerable<LocationNode> EnumerateNodesToMerge()
+		{
+			foreach ( var node in this.EnumerateDescendantsAndSelf().OfType<LocationNode>() )
+			{
+				yield return node;
+
+				if ( node.Children.Count > 1 )
+					break;
+			}
+		}
+
+		private INode CreateMergedPresenter( LocationNode[] nodesToMerge )
+		{
+			if ( nodesToMerge.Length < 2 )
+				throw new InvalidOperationException( $"{nameof( CreateMergedPresenter )}() is not supposed to be called when there's nothing to merge." );
+
+			return new MergedNode( _testBrowser, _dispatcher, nodesToMerge );
+		}
 
 		/// <remarks>
 		/// The node should be merged if it has only 1 child and this child is a <see cref="LocationNode"/>.
@@ -66,12 +98,6 @@ namespace HellBrick.TestBrowser.Models
 			}
 		}
 
-		public bool RequiresMerge => !IsMerged && ShouldBeMerged;
-
-		public bool IsLastMergedNode => IsMerged && this == MergedNode.Nodes.Last();
-
-		public bool RequiresBreakUp => IsMerged && !ShouldBeMerged && !IsLastMergedNode;
-
 		public override string ToString() => Location;
 
 		#region RunnableNode members
@@ -81,8 +107,8 @@ namespace HellBrick.TestBrowser.Models
 		public override string Key => Name;
 		public override INode Parent { get; set; }
 		public override ICollection<INode> Children => _children;
-		public override INode Presenter => this;
-		public override bool IsVisible => !IsMerged || IsLastMergedNode;
+		public override INode Presenter => _currentPresenter;
+		public override bool IsVisible => true;
 
 		private bool _isSelected;
 		public override bool IsSelected
@@ -99,5 +125,19 @@ namespace HellBrick.TestBrowser.Models
 		}
 
 		#endregion
+
+		private struct MergeableInterval
+		{
+			public MergeableInterval( LocationNode firstNode, LocationNode lastNode, int intervalLength )
+			{
+				FirstNode = firstNode;
+				LastNode = lastNode;
+				Length = intervalLength;
+			}
+
+			public readonly LocationNode FirstNode;
+			public readonly LocationNode LastNode;
+			public readonly int Length;
+		}
 	}
 }
