@@ -23,6 +23,7 @@ namespace HellBrick.TestBrowser.Models
 		public override string Name => "All tests";
 		public override NodeType Type => NodeType.Location;
 		public override ICollection<INode> Children => _children;
+		public override INode Presenter => this;
 		public override bool IsVisible => true;
 
 		public override bool IsSelected { get; set; }

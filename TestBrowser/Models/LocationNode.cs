@@ -81,6 +81,7 @@ namespace HellBrick.TestBrowser.Models
 		public override string Key => Name;
 		public override INode Parent { get; set; }
 		public override ICollection<INode> Children => _children;
+		public override INode Presenter => this;
 		public override bool IsVisible => !IsMerged || IsLastMergedNode;
 
 		private bool _isSelected;

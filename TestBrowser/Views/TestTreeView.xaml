@@ -24,8 +24,8 @@
 
 	<TreeView ItemsSource="{Binding VisualChildren}" Style="{DynamicResource TreeViewStyle}">
 		<TreeView.ItemTemplate>
-			<HierarchicalDataTemplate DataType="{x:Type m:INode}" ItemsSource="{Binding Children}">
-				<ContentPresenter Content="{Binding .}"></ContentPresenter>
+			<HierarchicalDataTemplate DataType="{x:Type m:INode}" ItemsSource="{Binding Presenter.Children}">
+				<ContentPresenter Content="{Binding Presenter}"></ContentPresenter>
 			</HierarchicalDataTemplate>
 		</TreeView.ItemTemplate>
 		<TreeView.ItemContainerStyle>

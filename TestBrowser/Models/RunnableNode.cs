@@ -28,6 +28,7 @@ namespace HellBrick.TestBrowser.Models
 		public abstract string Key { get; }
 		public abstract string Name { get; }
 		public abstract INode Parent { get; set; }
+		public abstract INode Presenter { get; }
 		public abstract NodeType Type { get; }
 
 		public ICollection<IGestureCommand> Commands => EnumerateCommands().ToList();
