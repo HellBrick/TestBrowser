@@ -36,7 +36,35 @@ namespace HellBrick.TestBrowser.Models
 
 		public bool IsMerged => _mergedNode != null;
 
-		public bool ShouldBeMerged => _children.Count == 1 && _children[ 0 ].Type == NodeType.Location;
+		/// <remarks>
+		/// The node should be merged if it has only 1 child and this child is a <see cref="LocationNode"/>.
+		/// However, if the node's visual child is a merged node, it will actually have *2* children in the tree: <see cref="Models.MergedNode"/> and a hidden <see cref="LocationNode"/>.
+		/// </remarks>
+		public bool ShouldBeMerged
+		{
+			get
+			{
+				bool singleNodeIsFound = false;
+
+				foreach ( var node in _children )
+				{
+					if ( node is MergedNode )
+						continue;
+
+					if ( node is LocationNode )
+					{
+						if ( singleNodeIsFound )
+							return false;
+
+						singleNodeIsFound = true;
+					}
+					else
+						return false;
+				}
+
+				return singleNodeIsFound;
+			}
+		}
 
 		public bool RequiresMerge => !IsMerged && ShouldBeMerged;
 
