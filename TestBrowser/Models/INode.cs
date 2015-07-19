@@ -17,7 +17,6 @@ namespace HellBrick.TestBrowser.Models
 		INode Presenter { get; }
 		ICollection<INode> Children { get; }
 		ICollection<IGestureCommand> Commands { get; }
-		bool IsVisible { get; }
 		bool IsSelected { get; }
 		bool IsExpanded { get; set; }
 	}

@@ -16,8 +16,7 @@
 				<ResourceDictionary Source="Style/TestTreeViewStyle.xaml"></ResourceDictionary>
 				<ResourceDictionary Source="Style/ContextMenuStyle.xaml"></ResourceDictionary>
 			</ResourceDictionary.MergedDictionaries>
-			
-			<c:BoolToVisibilityConverter x:Key="BoolToVisibility"></c:BoolToVisibilityConverter>
+
 			<c:CommandsToBindingsConverter x:Key="CommandsToBindings"></c:CommandsToBindingsConverter>			
 		</ResourceDictionary>
 	</UserControl.Resources>
@@ -31,7 +30,6 @@
 		<TreeView.ItemContainerStyle>
 			<Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource TreeViewItemStyle}">
 				<Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"></Setter>
-				<Setter Property="Visibility" Value="{Binding IsVisible, Converter={StaticResource BoolToVisibility}}"></Setter>
 				<Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"></Setter>
 				<Setter Property="c:Input.InputBindings" Value="{Binding Commands, Converter={StaticResource CommandsToBindings}}"></Setter>
 				<Setter Property="ContextMenu">

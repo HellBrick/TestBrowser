@@ -42,7 +42,7 @@ namespace HellBrick.TestBrowser.Models
 
 			if ( isPresenterUpdated )
 			{
-				_currentPresenter = shouldBeMerged ? CreateMergedPresenter( nodesToMerge ) : this;
+				_currentPresenter = shouldBeMerged ? new MergedNode( _testBrowser, _dispatcher, nodesToMerge ) as INode : this as INode;
 				NotifyOfPropertyChange( nameof( Presenter ) );
 			}
 
@@ -60,44 +60,6 @@ namespace HellBrick.TestBrowser.Models
 			}
 		}
 
-		private INode CreateMergedPresenter( LocationNode[] nodesToMerge )
-		{
-			if ( nodesToMerge.Length < 2 )
-				throw new InvalidOperationException( $"{nameof( CreateMergedPresenter )}() is not supposed to be called when there's nothing to merge." );
-
-			return new MergedNode( _testBrowser, _dispatcher, nodesToMerge );
-		}
-
-		/// <remarks>
-		/// The node should be merged if it has only 1 child and this child is a <see cref="LocationNode"/>.
-		/// However, if the node's visual child is a merged node, it will actually have *2* children in the tree: <see cref="Models.MergedNode"/> and a hidden <see cref="LocationNode"/>.
-		/// </remarks>
-		public bool ShouldBeMerged
-		{
-			get
-			{
-				bool singleNodeIsFound = false;
-
-				foreach ( var node in _children )
-				{
-					if ( node is MergedNode )
-						continue;
-
-					if ( node is LocationNode )
-					{
-						if ( singleNodeIsFound )
-							return false;
-
-						singleNodeIsFound = true;
-					}
-					else
-						return false;
-				}
-
-				return singleNodeIsFound;
-			}
-		}
-
 		public override string ToString() => Location;
 
 		#region RunnableNode members
@@ -108,7 +70,6 @@ namespace HellBrick.TestBrowser.Models
 		public override INode Parent { get; set; }
 		public override ICollection<INode> Children => _children;
 		public override INode Presenter => _currentPresenter;
-		public override bool IsVisible => true;
 
 		private bool _isSelected;
 		public override bool IsSelected

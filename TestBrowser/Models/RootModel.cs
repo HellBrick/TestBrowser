@@ -57,7 +57,7 @@ namespace HellBrick.TestBrowser.Models
 				HumanizeTestNames = SolutionBrowser.Settings.HumanizeTestNames,
 				CollapsedNodes = SolutionBrowser.TestTree.RootNode
 					.EnumerateDescendantsAndSelf()
-					.Where( n => n.IsVisible && !n.IsExpanded )
+					.Where( n => !n.IsExpanded )
 					.Select( n => new NodeKey( n.Type, n.Key ) )
 					.ToList()
 			};
