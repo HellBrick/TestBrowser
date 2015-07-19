@@ -96,10 +96,7 @@ namespace HellBrick.TestBrowser.Models
 					currentLocationNode = new LocationNode( _testBrowser, _dispatcher, currentLocation, locationFragments[ i ] );
 					_locationLookup[ currentLocation ] = currentLocationNode;
 					InsertChildAndTryAutoExpand( currentParent, currentLocationNode );
-
-					//	If the parent is the root of the tree, the insertion might trigger the root visibility.
-					if ( currentParent == _rootNode )
-						NotifyOfPropertyChange( nameof( VisualChildren ) );
+					UpdateRootVisibilityAfterChangeAt( currentParent );
 				}
 
 				currentParent = currentLocationNode;
@@ -148,9 +145,7 @@ namespace HellBrick.TestBrowser.Models
 			if ( survivingLocation != null )
 				OptimizeTreeAfterChangeAt( survivingLocation );
 
-			//	If the parent is the root of the tree, the removal might trigger the root visibility.
-			if ( parent == this )
-				NotifyOfPropertyChange( nameof( VisualChildren ) );
+			UpdateRootVisibilityAfterChangeAt( parent );
 		}
 
 		/// <param name="locationNode">The parent of the node that has just been inserted into or removed from the tree.</param>
@@ -158,6 +153,12 @@ namespace HellBrick.TestBrowser.Models
 		{
 			foreach ( var node in locationNode.EnumerateAncestorsAndSelf().OfType<LocationNode>() )
 				node.TryRecalculatePresenter();
+		}
+
+		private void UpdateRootVisibilityAfterChangeAt( INode parent )
+		{
+			if ( parent == _rootNode )
+				NotifyOfPropertyChange( nameof( VisualChildren ) );
 		}
 	}
 }
