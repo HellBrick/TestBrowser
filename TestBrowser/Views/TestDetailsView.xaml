@@ -21,15 +21,15 @@
 		</ResourceDictionary>
 	</UserControl.Resources>
 
-	<StackPanel Style="{StaticResource PanelStyle}">
-		<TextBlock Text="{Binding MethodName, Mode=OneTime}" Style="{StaticResource MethodNameStyle}"></TextBlock>
+	<DockPanel LastChildFill="True" Style="{StaticResource PanelStyle}">
+		<TextBlock Text="{Binding MethodName, Mode=OneTime}" Style="{StaticResource MethodNameStyle}" DockPanel.Dock="Top"></TextBlock>
 		<TextBlock
 			DataContext="{Binding TestCaseName, Mode=OneTime}"
 			Text="{Binding ., Mode=OneTime}"
 			Visibility="{Binding ., Mode=OneTime, Converter={StaticResource CollapseIfNull}}"
-			Style="{StaticResource TestCaseStyle}">
+			Style="{StaticResource TestCaseStyle}"
+			DockPanel.Dock="Top">
 		</TextBlock>
 		<tv:ResultsSummaryList DataContext="{Binding .}" Style="{StaticResource ResultListStyle}"></tv:ResultsSummaryList>
-	</StackPanel>
-
+	</DockPanel>
 </UserControl>
