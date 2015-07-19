@@ -10,9 +10,10 @@ using Microsoft.VisualStudio.TestWindow.Controller;
 
 namespace HellBrick.TestBrowser.Models
 {
-	public class TestMethodNode: PropertyChangedBase, INode, IHumanizable
+	public class TestMethodNode : RunnableNode, IHumanizable
 	{
-		public TestMethodNode( SafeDispatcher dispatcher, string methodName )
+		public TestMethodNode( SolutionTestBrowserModel testBrowser, SafeDispatcher dispatcher, string methodName )
+			: base( testBrowser, dispatcher )
 		{
 			_children = new NodeCollection( dispatcher );
 			_originalMethodName = methodName;
@@ -21,33 +22,32 @@ namespace HellBrick.TestBrowser.Models
 
 		public override string ToString() => Name;
 
-		#region INode Members
+		#region RunnableNode members
 
-		public NodeType Type => NodeType.Method;
+		public override NodeType Type => NodeType.Method;
 
 		private readonly string _originalMethodName;
 		private readonly string _humanizedMethodName;
-		public string Name => HumanizeName ? _humanizedMethodName : _originalMethodName;
+		public override string Name => HumanizeName ? _humanizedMethodName : _originalMethodName;
 
-		public string Key => _originalMethodName;
+		public override string Key => _originalMethodName;
 
-		public INode Parent { get; set; }
+		public override INode Parent { get; set; }
 
 		private readonly NodeCollection _children;
-		public ICollection<INode> Children => _children;
-		public ICollection<IGestureCommand> Commands { get; } = new List<IGestureCommand>();
+		public override ICollection<INode> Children => _children;
 
-		public bool IsVisible => true;
+		public override bool IsVisible => true;
 
 		private bool _isSelected;
-		public bool IsSelected
+		public override bool IsSelected
 		{
 			get { return _isSelected; }
 			set { _isSelected = value; NotifyOfPropertyChange( nameof( IsSelected ) ); }
 		}
 
 		private bool _isExpanded = true;
-		public bool IsExpanded
+		public override bool IsExpanded
 		{
 			get { return _isExpanded; }
 			set { _isExpanded = value; NotifyOfPropertyChange( nameof( IsExpanded ) ); }

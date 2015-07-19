@@ -136,7 +136,7 @@ namespace HellBrick.TestBrowser.Models
 
 		private TestMethodNode CreateMethodNode( LocationNode locationNode, string key, string methodName, bool humanizeTestName )
 		{
-			TestMethodNode methodNode = new TestMethodNode( _dispatcher, methodName ) { HumanizeName = humanizeTestName };
+			TestMethodNode methodNode = new TestMethodNode( _testBrowser, _dispatcher, methodName ) { HumanizeName = humanizeTestName };
 			InsertChildAndTryAutoExpand( locationNode, methodNode );
 			_methodLookup.Add( key, methodNode );
 			return methodNode;
