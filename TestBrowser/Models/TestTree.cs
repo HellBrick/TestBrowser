@@ -169,7 +169,7 @@ namespace HellBrick.TestBrowser.Models
 			}
 
 			var survivingLocation = parent as LocationNode;
-			if ( survivingLocation != null )
+			if ( survivingLocation != null && !( child is MergedNode ) )
 				OptimizeTreeBranchAfterRemove( survivingLocation );
 
 			//	If the parent is the root of the tree, the removal might trigger the root visibility.
@@ -182,22 +182,35 @@ namespace HellBrick.TestBrowser.Models
 		{
 			//	1. The insertion might have occurred in the middle of a merged node.
 			//	If this is the case, it has to be broken.
-			BreakMergeIfNeeded( locationNode );
+			LocationNode nodeToExamine = BreakMergeIfNeededAndReturnNodeToExamine( locationNode );
 
 			//	2. New testless nodes might have been added (or appear after the break-up).
 			//	If this is the case, they have to be merged.
 			MergeAncestorsIfNeeded( locationNode );
+
+			//	3. Try to re-merge the right part of the broken merge if needed.
+			if ( nodeToExamine != null )
+				MergeAncestorsIfNeeded( nodeToExamine );
 		}
 
-		private void BreakMergeIfNeeded( LocationNode locationNode )
+		private LocationNode BreakMergeIfNeededAndReturnNodeToExamine( LocationNode locationNode )
 		{
 			//	Break-up may be needed anywhere in the ancestor branch.
 			//	e.g. inserting into HellBrick.TestBrowser.Whatever breaks HellBrick.TestBrowser.Models.
 			foreach ( var node in locationNode.EnumerateAncestorsAndSelf().OfType<LocationNode>() )
 			{
 				if ( node.RequiresBreakUp )
+				{
+					//	When a merged node that has length >= 3 is broken, there's a chance to re-merge the nodes located to the right of the breaking point.
+					//	In order to achieve this, the last node of the merge should be examined afterwards.
+					var lastMergedNode = node.MergedNode.Nodes.Count >= 3 ? node.MergedNode.Nodes.OfType<LocationNode>().Last() : null;
+
 					BreakMerge( node.MergedNode );
+					return lastMergedNode;
+				}
 			}
+
+			return null;
 		}
 
 		private void BreakMerge( MergedNode mergedNode )
