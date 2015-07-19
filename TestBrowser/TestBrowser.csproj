@@ -210,6 +210,9 @@
     <Compile Include="Views\CommandBarView.xaml.cs">
       <DependentUpon>CommandBarView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\DetailsView.xaml.cs">
+      <DependentUpon>DetailsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\LocationNodeView.xaml.cs">
       <DependentUpon>LocationNodeView.xaml</DependentUpon>
     </Compile>
@@ -275,6 +278,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\CommandBarView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DetailsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -19,7 +19,6 @@
 				<ResourceDictionary Source="Style/SplitterStyle.xaml"></ResourceDictionary>
 			</ResourceDictionary.MergedDictionaries>
 			<c:BoolToVisibilityConverter x:Key="HideIfFalse" IfFalse="Hidden"></c:BoolToVisibilityConverter>
-			<c:BoolToVisibilityConverter x:Key="CollapseIfFalse"></c:BoolToVisibilityConverter>
 			<c:IsValueBiggerThanConverter x:Key="IsWide" Threshold="800"></c:IsValueBiggerThanConverter>
 
 			<Style x:Key="TestTreeViewStyle" TargetType="{x:Type v:TestTreeView}">
@@ -56,7 +55,7 @@
 				</Style.Triggers>
 			</Style>
 
-			<Style x:Key="DetailsViewStyle" TargetType="{x:Type v:TestDetailsView}">
+			<Style x:Key="DetailsViewStyle" TargetType="{x:Type FrameworkElement}">
 				<Setter Property="Grid.Row" Value="4"></Setter>
 				<Setter Property="Grid.ColumnSpan" Value="3"></Setter>
 				<Style.Triggers>
@@ -95,6 +94,6 @@
 		<v:CommandBarView DataContext="{Binding .}" Grid.Row="1" Grid.ColumnSpan="3"></v:CommandBarView>
 		<v:TestTreeView DataContext="{Binding TestTree}" Style="{StaticResource TestTreeViewStyle}"></v:TestTreeView>
 		<GridSplitter Style="{StaticResource SplitterStyle}"></GridSplitter>
-		<v:TestDetailsView DataContext="{Binding SelectedTest}" Visibility="{Binding HasResults, Converter={StaticResource CollapseIfFalse}}" Style="{StaticResource DetailsViewStyle}"></v:TestDetailsView>
+		<v:DetailsView Style="{StaticResource DetailsViewStyle}"></v:DetailsView>
 	</Grid>
 </UserControl>

@@ -11,22 +11,34 @@
 	d:DataContext="{d:DesignInstance Type={x:Type m:RunSummary}}">
 
 	<UserControl.Resources>
-		<c:BoolToVisibilityConverter x:Key="CollapseIfFalse"></c:BoolToVisibilityConverter>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="Style/TestDetailsViewStyle.xaml"></ResourceDictionary>
+			</ResourceDictionary.MergedDictionaries>
+
+			<c:BoolToVisibilityConverter x:Key="CollapseIfFalse"></c:BoolToVisibilityConverter>
+			<c:BoolToVisibilityConverter x:Key="CollapseIfTrue" IfTrue="Collapsed" IfFalse="Visible"></c:BoolToVisibilityConverter>
+		</ResourceDictionary>
 	</UserControl.Resources>
-	
-	<StackPanel Orientation="Horizontal">
-		<TextBlock Visibility="{Binding IsRunning, Converter={StaticResource CollapseIfFalse}}">
+
+	<DockPanel LastChildFill="True">
+		<TextBlock Style="{StaticResource MethodNameStyle}" DockPanel.Dock="Top" Visibility="{Binding IsRunning, Converter={StaticResource CollapseIfFalse}}">
 			<Run Text="Running"></Run>
 			<Run Text="{Binding TestCount, Mode=OneWay}"></Run>
 			<Run Text="tests: "></Run>
 		</TextBlock>
-		<TextBlock>
-			<Run Text="{Binding TestsPassed, Mode=OneWay}"></Run>
-			<Run Text="passed, "></Run>
+		<TextBlock Style="{StaticResource MethodNameStyle}" DockPanel.Dock="Top" Visibility="{Binding IsRunning, Converter={StaticResource CollapseIfTrue}}">
+			Test run summary
 		</TextBlock>
-		<TextBlock>
-			<Run Text="{Binding TestsFailed, Mode=OneWay}"></Run>
-			<Run Text="failed"></Run>
-		</TextBlock>		
-	</StackPanel>
+		<StackPanel Orientation="Horizontal" Style="{StaticResource BodyPanel}">
+			<TextBlock>
+				<Run Text="{Binding TestsPassed, Mode=OneWay}"></Run>
+				<Run Text="passed, "></Run>
+			</TextBlock>
+			<TextBlock>
+				<Run Text="{Binding TestsFailed, Mode=OneWay}"></Run>
+				<Run Text="failed"></Run>
+			</TextBlock>
+		</StackPanel>
+	</DockPanel>
 </UserControl>
