@@ -169,7 +169,7 @@ namespace HellBrick.TestBrowser.Models
 			}
 
 			var survivingLocation = parent as LocationNode;
-			if ( survivingLocation != null )
+			if ( survivingLocation != null && !( child is MergedNode ) )
 				OptimizeTreeBranchAfterRemove( survivingLocation );
 
 			//	If the parent is the root of the tree, the removal might trigger the root visibility.
