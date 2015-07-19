@@ -212,9 +212,6 @@
     <Compile Include="Views\LocationNodeView.xaml.cs">
       <DependentUpon>LocationNodeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MergedNodeView.xaml.cs">
-      <DependentUpon>MergedNodeView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\RootNodeView.xaml.cs">
       <DependentUpon>RootNodeView.xaml</DependentUpon>
     </Compile>
@@ -329,10 +326,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\LocationNodeView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\MergedNodeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
