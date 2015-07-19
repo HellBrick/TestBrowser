@@ -24,10 +24,10 @@ namespace HellBrick.TestBrowser.Models
 		public abstract ICollection<INode> Children { get; }
 		public abstract bool IsExpanded { get; set; }
 		public abstract bool IsSelected { get; set; }
-		public abstract bool IsVisible { get; }
 		public abstract string Key { get; }
 		public abstract string Name { get; }
 		public abstract INode Parent { get; set; }
+		public abstract INode Presenter { get; }
 		public abstract NodeType Type { get; }
 
 		public ICollection<IGestureCommand> Commands => EnumerateCommands().ToList();

@@ -117,7 +117,7 @@ namespace HellBrick.TestBrowser.Models
 		public override INode Parent { get; set; }
 
 		public override ICollection<INode> Children { get; } = new List<INode>();
-		public override bool IsVisible => true;
+		public override INode Presenter => this;
 
 		private bool _isSelected;
 		public override bool IsSelected

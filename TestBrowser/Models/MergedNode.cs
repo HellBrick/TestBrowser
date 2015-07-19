@@ -33,7 +33,7 @@ namespace HellBrick.TestBrowser.Models
 		}
 
 		public override ICollection<INode> Children => Nodes[ Nodes.Count - 1 ].Children;
-		public override bool IsVisible => true;
+		public override INode Presenter => this;
 
 		private bool _isSelected;
 		public override bool IsSelected
