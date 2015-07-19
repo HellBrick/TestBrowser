@@ -176,6 +176,7 @@
     <Compile Include="Core\TestRunRequestExtensions.cs" />
     <Compile Include="Core\TestServiceContext.cs" />
     <Compile Include="Common\SafeObservableCollection.cs" />
+    <Compile Include="Models\AllTestsNode.cs" />
     <Compile Include="Models\IHumanizable.cs" />
     <Compile Include="Models\INode.cs" />
     <Compile Include="Models\LocationNode.cs" />

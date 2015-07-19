@@ -11,55 +11,31 @@ using Microsoft.VisualStudio.TestWindow.Controller;
 
 namespace HellBrick.TestBrowser.Models
 {
-	public class TestTree : RunnableNode
+	public class TestTree : PropertyChangedBase
 	{
 		private readonly Dictionary<string, LocationNode> _locationLookup = new Dictionary<string, LocationNode>();
 		private readonly Dictionary<string, TestMethodNode> _methodLookup = new Dictionary<string, TestMethodNode>();
 		private readonly SolutionTestBrowserModel _testBrowser;
+		private readonly AllTestsNode _rootNode;
 		private readonly HashSet<NodeKey> _autoCollapsedNodes;
 		private readonly SafeDispatcher _dispatcher;
-		private readonly NodeCollection _children;
 
 		public TestTree( SolutionTestBrowserModel testBrowser, SafeDispatcher dispatcher, IEnumerable<NodeKey> autoCollapsedNodes )
-			: base ( testBrowser, dispatcher )
 		{
 			_testBrowser = testBrowser;
 			_dispatcher = dispatcher;
 			_autoCollapsedNodes = new HashSet<NodeKey>( autoCollapsedNodes );
-			_children = new NodeCollection( _dispatcher );
+			_rootNode = new AllTestsNode( testBrowser, dispatcher );
 			_rootCollectionWrapper = new NodeCollection( _dispatcher );
-			_rootCollectionWrapper.Add( this );
+			_rootCollectionWrapper.Add( _rootNode );
 		}
-
-		#region RunnableNode Members
-
-		public override NodeType Type => NodeType.Location;
-		public override string Name => "All tests";
-		public override string Key => Name;
-
-		public override INode Parent
-		{
-			get { return null; }
-			set { }
-		}
-
-		public override ICollection<INode> Children => _children;
-		public override bool IsVisible => true;
-		public override bool IsSelected { get; set; }
-
-		public override bool IsExpanded
-		{
-			get { return true; }
-			set { }
-		}
-
-		#endregion
 
 		private readonly Dictionary<Guid, TestModel> _testLookup = new Dictionary<Guid, TestModel>();
 		public IReadOnlyDictionary<Guid, TestModel> Tests => _testLookup;
 
 		private readonly NodeCollection _rootCollectionWrapper;
-		public NodeCollection VisualChildren => _children.Count( n => n.IsVisible ) < 2 ? _children : _rootCollectionWrapper;
+		public ICollection<INode> VisualChildren => _rootNode.Children.Count( n => n.IsVisible ) < 2 ? _rootNode.Children: _rootCollectionWrapper;
+		public AllTestsNode RootNode => _rootNode;
 
 		public void InsertTest( TestModel newTest )
 		{
@@ -104,7 +80,7 @@ namespace HellBrick.TestBrowser.Models
 		{
 			string[] locationFragments = location.Split( _separator );
 			StringBuilder currentLocationBuilder = new StringBuilder( location.Length );
-			INode currentParent = this;
+			INode currentParent = _rootNode;
 
 			for ( int i = 0; i < locationFragments.Length; i++ )
 			{
@@ -122,7 +98,7 @@ namespace HellBrick.TestBrowser.Models
 					InsertChildAndTryAutoExpand( currentParent, currentLocationNode );
 
 					//	If the parent is the root of the tree, the insertion might trigger the root visibility.
-					if ( currentParent == this )
+					if ( currentParent == _rootNode )
 						NotifyOfPropertyChange( nameof( VisualChildren ) );
 				}
 
