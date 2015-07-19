@@ -25,7 +25,11 @@
 	</DataTemplate>
 
 	<DataTemplate DataType="{x:Type m:MergedNode}">
-		<v:MergedNodeView></v:MergedNodeView>
+		<v:LocationNodeView></v:LocationNodeView>
+	</DataTemplate>
+
+	<DataTemplate DataType="{x:Type m:AllTestsNode}">
+		<v:LocationNodeView></v:LocationNodeView>
 	</DataTemplate>
 
 	<DataTemplate DataType="{x:Type m:TestMethodNode}">

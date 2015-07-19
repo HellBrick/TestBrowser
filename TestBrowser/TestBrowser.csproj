@@ -176,6 +176,7 @@
     <Compile Include="Core\TestRunRequestExtensions.cs" />
     <Compile Include="Core\TestServiceContext.cs" />
     <Compile Include="Common\SafeObservableCollection.cs" />
+    <Compile Include="Models\AllTestsNode.cs" />
     <Compile Include="Models\IHumanizable.cs" />
     <Compile Include="Models\INode.cs" />
     <Compile Include="Models\LocationNode.cs" />
@@ -211,9 +212,6 @@
     </Compile>
     <Compile Include="Views\LocationNodeView.xaml.cs">
       <DependentUpon>LocationNodeView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MergedNodeView.xaml.cs">
-      <DependentUpon>MergedNodeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RootNodeView.xaml.cs">
       <DependentUpon>RootNodeView.xaml</DependentUpon>
@@ -329,10 +327,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\LocationNodeView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\MergedNodeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

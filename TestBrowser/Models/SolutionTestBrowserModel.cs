@@ -51,7 +51,7 @@ namespace HellBrick.TestBrowser.Models
 		{
 			if ( e.PropertyName == nameof( SettingsModel.HumanizeTestNames ) )
 			{
-				foreach ( var humanizableNode in TestTree.EnumerateDescendants().OfType<IHumanizable>() )
+				foreach ( var humanizableNode in TestTree.RootNode.EnumerateDescendants().OfType<IHumanizable>() )
 				{
 					humanizableNode.HumanizeName = Settings.HumanizeTestNames;
 				}
@@ -295,7 +295,7 @@ namespace HellBrick.TestBrowser.Models
 				_serviceContext.RequestFactory.DebugTestsAsync( EnumerateSelectedTestIDs( selectedNode ) );
 		}
 
-		private INode FindSelectedNode() => TestTree.EnumerateDescendantsAndSelf().FirstOrDefault( n => n.IsSelected );
+		private INode FindSelectedNode() => TestTree.RootNode.EnumerateDescendantsAndSelf().FirstOrDefault( n => n.IsSelected );
 
 		private bool ShouldInvokeFullRun( INode selectedNode ) => selectedNode == null || selectedNode == TestTree;
 
