@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
 	<Metadata>
-		<Identity Id="70cb3239-bde6-4a23-9c90-8d355765613b" Version="2.0" Language="en-US" Publisher="HellBrick" />
+		<Identity Id="70cb3239-bde6-4a23-9c90-8d355765613b" Version="2.0.0" Language="en-US" Publisher="HellBrick" />
 		<DisplayName>TestBrowser</DisplayName>
 		<Description>An alternative to the Test Explorer with an improved UI.</Description>
 	</Metadata>
