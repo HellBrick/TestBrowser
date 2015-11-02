@@ -35,6 +35,7 @@ namespace HellBrick.TestBrowser
 	{
 		private TestServiceContext _serviceContext;
 		private TestBrowserOptions _options;
+		private IVsOutputWindowPane _outputPane;
 
 		public TestBrowserPackage()
 		{
@@ -84,17 +85,34 @@ namespace HellBrick.TestBrowser
 
 		protected override void Initialize()
 		{
-			base.Initialize();
-			InitializeServiceContext();
+			InitializeOutputPane();
+
 			try
 			{
+				base.Initialize();
+				InitializeServiceContext();
 				InitializeViewModels();
 				InitializeCommands();
 			}
 			catch ( Exception ex )
 			{
-				_serviceContext.Logger.Log( Microsoft.VisualStudio.TestWindow.Extensibility.MessageLevel.Error, ex.ToString() );
+				LogAndFocus( ex.ToString() );
 			}
+		}
+
+		private void InitializeOutputPane()
+		{
+			IVsOutputWindow outWindow = Package.GetGlobalService( typeof( SVsOutputWindow ) ) as IVsOutputWindow;
+			Guid customGuid = new Guid( "0A3C37D4-6F0F-4BFF-92DF-3479D74E10A3" );
+			string customTitle = "TestBrowser";
+			outWindow.CreatePane( ref customGuid, customTitle, 1, 1 );
+			outWindow.GetPane( ref customGuid, out _outputPane );
+		}
+
+		private void LogAndFocus( string message )
+		{
+			_outputPane.OutputString( message );
+			_outputPane.Activate();
 		}
 
 		private void InitializeServiceContext()
