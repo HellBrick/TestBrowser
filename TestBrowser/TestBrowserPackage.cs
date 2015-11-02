@@ -121,11 +121,7 @@ namespace HellBrick.TestBrowser
 			if ( service == null )
 				throw new InvalidOperationException( $"Can't get {nameof( SComponentModel )} service" );
 
-			var typeCatalog = new TypeCatalog( typeof( TestServiceContext ) );
-			var definition = typeCatalog.FirstOrDefault();
-			var part = definition.CreatePart();
-			service.DefaultCompositionService.SatisfyImportsOnce( part );
-			_serviceContext = part.GetExportedValue( part.ExportDefinitions.FirstOrDefault() ) as TestServiceContext;
+			_serviceContext = service.DefaultExportProvider.GetExportedValue<TestServiceContext>();
 		}
 
 		private void InitializeViewModels()
