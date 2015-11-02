@@ -21,6 +21,10 @@
 			<c:BoolToVisibilityConverter x:Key="HideIfFalse" IfFalse="Hidden"></c:BoolToVisibilityConverter>
 			<c:IsValueBiggerThanConverter x:Key="IsWide" Threshold="800"></c:IsValueBiggerThanConverter>
 
+			<Style x:Key="ProgressBarStyle" TargetType="{x:Type ProgressBar}">
+				<Setter Property="Height" Value="4"></Setter>
+			</Style>
+
 			<Style x:Key="TestTreeViewStyle" TargetType="{x:Type v:TestTreeView}">
 				<Setter Property="Grid.Row" Value="2"></Setter>
 				<Setter Property="Grid.ColumnSpan" Value="3"></Setter>
@@ -89,7 +93,8 @@
 			IsIndeterminate="{Binding IsDoingIndefiniteOperation}"
 			Maximum="{Binding MaxProgress}"
 			Value="{Binding CurrentProgress}"
-			Grid.Row="0" Grid.ColumnSpan="3">
+			Grid.Row="0" Grid.ColumnSpan="3"
+			Style="{StaticResource ProgressBarStyle}">
 		</ProgressBar>
 		<v:CommandBarView DataContext="{Binding .}" Grid.Row="1" Grid.ColumnSpan="3"></v:CommandBarView>
 		<v:TestTreeView DataContext="{Binding TestTree}" Style="{StaticResource TestTreeViewStyle}"></v:TestTreeView>
