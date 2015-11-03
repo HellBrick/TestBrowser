@@ -9,7 +9,6 @@ using System.Windows.Media;
 
 namespace HellBrick.TestBrowser.Common
 {
-	//[TypeConverter]
 	public class HSL : MarkupExtension
 	{
 		public HSL()
