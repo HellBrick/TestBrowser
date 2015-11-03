@@ -141,7 +141,7 @@ namespace HellBrick.TestBrowser.Models
 				_serviceContext.Dispatcher, () => GoToTest(), "Go to test",
 				new KeyGesture( System.Windows.Input.Key.F12 ),
 				new MouseGesture( MouseAction.LeftDoubleClick ) );
-      }
+		}
 
 		private void GoToTest()
 		{
@@ -165,7 +165,7 @@ namespace HellBrick.TestBrowser.Models
 
 		#endregion
 
-		private struct TestOpenTarget: IOpenTarget
+		private struct TestOpenTarget : IOpenTarget, IEquatable<TestOpenTarget>
 		{
 			private readonly TestData _testData;
 
@@ -181,6 +181,17 @@ namespace HellBrick.TestBrowser.Models
 			public string FilePath => _testData.FilePath;
 			public int LineNumber => _testData.LineNumber;
 			public string Name => _testData.FullyQualifiedName;
+
+			#endregion
+
+			#region IEquatable<TestOpenTarget>
+
+			public override int GetHashCode() => EqualityComparer<TestData>.Default.GetHashCode( _testData );
+			public bool Equals( TestOpenTarget other ) => EqualityComparer<TestData>.Default.Equals( _testData, other._testData );
+			public override bool Equals( object obj ) => obj is TestOpenTarget && Equals( (TestOpenTarget) obj );
+
+			public static bool operator ==( TestOpenTarget x, TestOpenTarget y ) => x.Equals( y );
+			public static bool operator !=( TestOpenTarget x, TestOpenTarget y ) => !x.Equals( y );
 
 			#endregion
 		}

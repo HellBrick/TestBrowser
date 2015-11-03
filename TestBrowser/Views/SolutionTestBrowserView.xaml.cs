@@ -18,7 +18,7 @@ namespace HellBrick.TestBrowser.Views
 	/// <summary>
 	/// Interaction logic for SolutionTestBrowserView.xaml
 	/// </summary>
-	public partial class SolutionTestBrowserView: UserControl
+	public partial class SolutionTestBrowserView : UserControl
 	{
 		public SolutionTestBrowserView()
 		{

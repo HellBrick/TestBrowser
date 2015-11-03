@@ -18,7 +18,7 @@ namespace HellBrick.TestBrowser.Views
 	/// <summary>
 	/// Interaction logic for TestTreeView.xaml
 	/// </summary>
-	public partial class TestTreeView: UserControl
+	public partial class TestTreeView : UserControl
 	{
 		public TestTreeView()
 		{

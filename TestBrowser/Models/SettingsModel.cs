@@ -8,7 +8,7 @@ using HellBrick.TestBrowser.Options;
 
 namespace HellBrick.TestBrowser.Models
 {
-	public class SettingsModel: PropertyChangedBase
+	public class SettingsModel : PropertyChangedBase
 	{
 		private readonly TestBrowserOptions _options;
 

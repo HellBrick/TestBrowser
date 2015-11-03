@@ -18,7 +18,7 @@ namespace HellBrick.TestBrowser.Views
 	/// <summary>
 	/// Interaction logic for CommandBarView.xaml
 	/// </summary>
-	public partial class CommandBarView: UserControl
+	public partial class CommandBarView : UserControl
 	{
 		private static readonly TimeSpan _popupReopenThreshold = TimeSpan.FromMilliseconds( 100 );
 		private DateTime? _popupClosedTimestamp;

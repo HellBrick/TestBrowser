@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestWindow.Controller;
 
 namespace HellBrick.TestBrowser.Common
 {
-	public class SafeCommand: Caliburn.Micro.PropertyChangedBase, ICommand
+	public class SafeCommand : Caliburn.Micro.PropertyChangedBase, ICommand
 	{
 		private readonly SafeDispatcher _dispatcher;
 		private readonly Action _execute;

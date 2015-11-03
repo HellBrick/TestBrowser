@@ -18,7 +18,7 @@ namespace HellBrick.TestBrowser.Views
 	/// <summary>
 	/// Interaction logic for LocationNodeView.xaml
 	/// </summary>
-	public partial class LocationNodeView: UserControl
+	public partial class LocationNodeView : UserControl
 	{
 		public LocationNodeView()
 		{

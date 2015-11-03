@@ -86,19 +86,5 @@ namespace HellBrick.TestBrowser.Models
 		}
 
 		#endregion
-
-		private struct MergeableInterval
-		{
-			public MergeableInterval( LocationNode firstNode, LocationNode lastNode, int intervalLength )
-			{
-				FirstNode = firstNode;
-				LastNode = lastNode;
-				Length = intervalLength;
-			}
-
-			public readonly LocationNode FirstNode;
-			public readonly LocationNode LastNode;
-			public readonly int Length;
-		}
 	}
 }

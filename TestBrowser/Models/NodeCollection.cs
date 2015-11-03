@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestWindow.Controller;
 
 namespace HellBrick.TestBrowser.Models
 {
-	public class NodeCollection: OrderedSafeObservableCollection<INode>
+	public class NodeCollection : OrderedSafeObservableCollection<INode>
 	{
 		private static readonly IComparer<INode> _comparer = new NodeComparer();
 
@@ -17,7 +17,7 @@ namespace HellBrick.TestBrowser.Models
 		{
 		}
 
-		private class NodeComparer: IComparer<INode>
+		private class NodeComparer : IComparer<INode>
 		{
 			#region IComparer<INode> Members
 

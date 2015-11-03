@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.TestWindow.Extensibility;
 
 namespace HellBrick.TestBrowser.Models
 {
-	public class RunSummary: PropertyChangedBase
+	public class RunSummary : PropertyChangedBase
 	{
 		private readonly TestRun _testRun;
 

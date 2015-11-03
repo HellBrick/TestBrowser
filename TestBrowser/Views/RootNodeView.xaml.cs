@@ -18,7 +18,7 @@ namespace HellBrick.TestBrowser.Views
 	/// <summary>
 	/// Interaction logic for RootNodeView.xaml
 	/// </summary>
-	public partial class RootNodeView: UserControl
+	public partial class RootNodeView : UserControl
 	{
 		public RootNodeView()
 		{

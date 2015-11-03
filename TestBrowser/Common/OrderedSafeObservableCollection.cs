@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestWindow.Controller;
 
 namespace HellBrick.TestBrowser.Common
 {
-	public class OrderedSafeObservableCollection<T>: SafeObservableCollection<T>
+	public class OrderedSafeObservableCollection<T> : SafeObservableCollection<T>
 	{
 		private readonly IComparer<T> _comparer;
 

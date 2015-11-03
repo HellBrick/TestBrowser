@@ -8,7 +8,7 @@ using System.Windows.Data;
 
 namespace HellBrick.TestBrowser.Common
 {
-	public class BoolToVisibilityConverter: IValueConverter
+	public class BoolToVisibilityConverter : IValueConverter
 	{
 		public BoolToVisibilityConverter()
 		{

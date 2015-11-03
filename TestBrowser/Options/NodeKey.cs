@@ -7,7 +7,7 @@ using HellBrick.TestBrowser.Models;
 
 namespace HellBrick.TestBrowser.Options
 {
-	public class NodeKey: IEquatable<NodeKey>
+	public class NodeKey : IEquatable<NodeKey>
 	{
 		public NodeKey( NodeType type, string name )
 		{

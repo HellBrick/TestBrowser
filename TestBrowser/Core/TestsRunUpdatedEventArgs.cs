@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HellBrick.TestBrowser.Core
 {
-	public class TestsRunUpdatedEventArgs: EventArgs
+	public class TestsRunUpdatedEventArgs : EventArgs
 	{
 		public TestsRunUpdatedEventArgs( IReadOnlyCollection<Guid> finishedTests, IReadOnlyCollection<Guid> currentlyRunningTests )
 		{

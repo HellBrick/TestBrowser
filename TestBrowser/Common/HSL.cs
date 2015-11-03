@@ -9,8 +9,7 @@ using System.Windows.Media;
 
 namespace HellBrick.TestBrowser.Common
 {
-	//[TypeConverter]
-	public class HSL: MarkupExtension
+	public class HSL : MarkupExtension
 	{
 		public HSL()
 		{
@@ -74,69 +73,64 @@ namespace HellBrick.TestBrowser.Common
 
 			switch ( (int) Math.Floor( hueSector ) )
 			{
-				case 0:	//	R -> G -> B
-					return new NormalizedColor()
-					{
-						Red = maxColor,
-						Green = middleColor,
-						Blue = minColor
-					};
+				case 0: //	R -> G -> B
+					return new NormalizedColor( red: maxColor, green: middleColor, blue: minColor );
 
-				case 1:	//	G -> R -> B
-					return new NormalizedColor()
-					{
-						Green = maxColor,
-						Red = middleColor,
-						Blue = minColor
-					};
+				case 1: //	G -> R -> B
+					return new NormalizedColor( green: maxColor, red: middleColor, blue: minColor );
 
-				case 2:	//	G -> B -> R
-					return new NormalizedColor()
-					{
-						Green = maxColor,
-						Blue = middleColor,
-						Red = minColor
-					};
+				case 2: //	G -> B -> R
+					return new NormalizedColor( green: maxColor, blue: middleColor, red: minColor );
 
-				case 3:	//	B -> G -> R
-					return new NormalizedColor()
-					{
-						Blue = maxColor,
-						Green = middleColor,
-						Red = minColor
-					};
+				case 3: //	B -> G -> R
+					return new NormalizedColor( blue: maxColor, green: middleColor, red: minColor );
 
-				case 4:	//	B -> R -> G
-					return new NormalizedColor()
-					{
-						Blue = maxColor,
-						Red = middleColor,
-						Green = minColor
-					};
+				case 4: //	B -> R -> G
+					return new NormalizedColor( blue: maxColor, red: middleColor, green: minColor );
 
-				case 5:	//	R -> B -> G
-					return new NormalizedColor()
-					{
-						Red = maxColor,
-						Blue = middleColor,
-						Green = minColor
-					};
+				case 5: //	R -> B -> G
+					return new NormalizedColor( red: maxColor, blue: middleColor, green: minColor );
 
 				default:
-					return new NormalizedColor()
-					{
-						Red = 0,
-						Blue = 0,
-						Green = 0
-					};
+					return new NormalizedColor();
 			}
 		}
 
-		private struct NormalizedColor
+		private struct NormalizedColor : IEquatable<NormalizedColor>
 		{
-			public double Red { get; set; }
-			public double Green { get; set; }
-			public double Blue { get; set; }
+			public NormalizedColor( double red, double green, double blue )
+			{
+				Red = red;
+				Green = green;
+				Blue = blue;
+			}
+
+			public double Red { get; }
+			public double Green { get; }
+			public double Blue { get; }
+
+			#region IEquatable<NormalizedColor>
+
+			public override int GetHashCode()
+			{
+				unchecked
+				{
+					const int prime = -1521134295;
+					int hash = 12345701;
+					hash = hash * prime + EqualityComparer<double>.Default.GetHashCode( Red );
+					hash = hash * prime + EqualityComparer<double>.Default.GetHashCode( Green );
+					hash = hash * prime + EqualityComparer<double>.Default.GetHashCode( Blue );
+					return hash;
+				}
+			}
+
+			public bool Equals( NormalizedColor other ) => Red == other.Red && Green == other.Green && Blue == other.Blue;
+			public override bool Equals( object obj ) => obj is NormalizedColor && Equals( (NormalizedColor) obj );
+
+			public static bool operator ==( NormalizedColor x, NormalizedColor y ) => x.Equals( y );
+			public static bool operator !=( NormalizedColor x, NormalizedColor y ) => !x.Equals( y );
+
+			#endregion
 		}
 	}
 }

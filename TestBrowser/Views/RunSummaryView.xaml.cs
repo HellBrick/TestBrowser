@@ -18,7 +18,7 @@ namespace HellBrick.TestBrowser.Views
 	/// <summary>
 	/// Interaction logic for RunSummaryView.xaml
 	/// </summary>
-	public partial class RunSummaryView: UserControl
+	public partial class RunSummaryView : UserControl
 	{
 		public RunSummaryView()
 		{

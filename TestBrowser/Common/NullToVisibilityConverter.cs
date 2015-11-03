@@ -8,7 +8,7 @@ using System.Windows.Data;
 
 namespace HellBrick.TestBrowser.Common
 {
-	public class NullToVisibilityConverter: IValueConverter
+	public class NullToVisibilityConverter : IValueConverter
 	{
 		public NullToVisibilityConverter()
 		{

@@ -13,6 +13,6 @@ namespace HellBrick.TestBrowser.Common
 		public static string GetGestureText<T>( this T gestureCollection ) where T : IEnumerable<InputGesture>
 		{
 			return gestureCollection.OfType<KeyGesture>().FirstOrDefault()?.GetDisplayStringForCulture( CultureInfo.InvariantCulture );
-      }
+		}
 	}
 }
