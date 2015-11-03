@@ -87,7 +87,7 @@ namespace HellBrick.TestBrowser.Core
 			}
 		}
 
-		internal struct TestRunRequestInternals
+		internal struct TestRunRequestInternals : IEquatable<TestRunRequestInternals>
 		{
 			private readonly TestRunRequest _instance;
 
@@ -112,6 +112,17 @@ namespace HellBrick.TestBrowser.Core
 					CodeGen.Event.GetRemoveMethod( nonPublic: true ).Invoke( _instance, new object[] { internalHandler } );
 				}
 			}
+
+			#region IEquatable<TestRunRequestInternals>
+
+			public override int GetHashCode() => EqualityComparer<TestRunRequest>.Default.GetHashCode( _instance );
+			public bool Equals( TestRunRequestInternals other ) => EqualityComparer<TestRunRequest>.Default.Equals( _instance, other._instance );
+			public override bool Equals( object obj ) => obj is TestRunRequestInternals && Equals( (TestRunRequestInternals) obj );
+
+			public static bool operator ==( TestRunRequestInternals x, TestRunRequestInternals y ) => x.Equals( y );
+			public static bool operator !=( TestRunRequestInternals x, TestRunRequestInternals y ) => !x.Equals( y );
+
+			#endregion
 		}
 	}
 }
