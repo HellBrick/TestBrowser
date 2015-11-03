@@ -40,9 +40,9 @@ namespace HellBrick.TestBrowser.Models
 
 		private async Task DiscoverTestsAsync()
 		{
-			await _serviceContext.WaitForBuildAsync();
+			await _serviceContext.WaitForBuildAsync().ConfigureAwait( false );
 			DiscoverAllOrRunOnInitializeOperation discoverOperation = new DiscoverAllOrRunOnInitializeOperation( _serviceContext.OperationData, false );
-			await _serviceContext.ExecuteOperationAsync( discoverOperation );
+			await _serviceContext.ExecuteOperationAsync( discoverOperation ).ConfigureAwait( false );
 		}
 
 		#region Global event handlers
