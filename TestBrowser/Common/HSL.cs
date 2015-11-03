@@ -75,68 +75,40 @@ namespace HellBrick.TestBrowser.Common
 			switch ( (int) Math.Floor( hueSector ) )
 			{
 				case 0: //	R -> G -> B
-					return new NormalizedColor()
-					{
-						Red = maxColor,
-						Green = middleColor,
-						Blue = minColor
-					};
+					return new NormalizedColor( red: maxColor, green: middleColor, blue: minColor );
 
 				case 1: //	G -> R -> B
-					return new NormalizedColor()
-					{
-						Green = maxColor,
-						Red = middleColor,
-						Blue = minColor
-					};
+					return new NormalizedColor( green: maxColor, red: middleColor, blue: minColor );
 
 				case 2: //	G -> B -> R
-					return new NormalizedColor()
-					{
-						Green = maxColor,
-						Blue = middleColor,
-						Red = minColor
-					};
+					return new NormalizedColor( green: maxColor, blue: middleColor, red: minColor );
 
 				case 3: //	B -> G -> R
-					return new NormalizedColor()
-					{
-						Blue = maxColor,
-						Green = middleColor,
-						Red = minColor
-					};
+					return new NormalizedColor( blue: maxColor, green: middleColor, red: minColor );
 
 				case 4: //	B -> R -> G
-					return new NormalizedColor()
-					{
-						Blue = maxColor,
-						Red = middleColor,
-						Green = minColor
-					};
+					return new NormalizedColor( blue: maxColor, red: middleColor, green: minColor );
 
 				case 5: //	R -> B -> G
-					return new NormalizedColor()
-					{
-						Red = maxColor,
-						Blue = middleColor,
-						Green = minColor
-					};
+					return new NormalizedColor( red: maxColor, blue: middleColor, green: minColor );
 
 				default:
-					return new NormalizedColor()
-					{
-						Red = 0,
-						Blue = 0,
-						Green = 0
-					};
+					return new NormalizedColor();
 			}
 		}
 
 		private struct NormalizedColor
 		{
-			public double Red { get; set; }
-			public double Green { get; set; }
-			public double Blue { get; set; }
+			public NormalizedColor( double red, double green, double blue )
+			{
+				Red = red;
+				Green = green;
+				Blue = blue;
+			}
+
+			public double Red { get; }
+			public double Green { get; }
+			public double Blue { get; }
 		}
 	}
 }
