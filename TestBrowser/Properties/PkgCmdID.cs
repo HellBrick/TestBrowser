@@ -4,7 +4,7 @@ using System;
 
 namespace HellBrick.TestBrowser
 {
-	static class PkgCmdIDList
+	internal static class PkgCmdIDList
 	{
 		public const uint TestBrowserOpenCommand = 0x101;
 	};

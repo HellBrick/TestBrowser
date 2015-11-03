@@ -4,7 +4,7 @@ using System;
 
 namespace HellBrick.TestBrowser
 {
-	static class GuidList
+	internal static class GuidList
 	{
 		public const string guidTestBrowserPkgString = "70cb3239-bde6-4a23-9c90-8d355765613b";
 		public const string guidTestBrowserCmdSetString = "b937e73a-73e4-4c3f-914e-8743d9a7fd5e";
