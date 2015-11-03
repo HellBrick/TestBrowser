@@ -126,7 +126,7 @@ namespace HellBrick.TestBrowser.Models
 
 				TestMethodNode methodNode = child as TestMethodNode;
 				if ( methodNode != null )
-					_methodLookup.Remove( MethodNodeKey( ( methodNode.Parent as LocationNode ), methodNode.Name ) );
+					_methodLookup.Remove( MethodNodeKey( ( methodNode.Parent as LocationNode ), methodNode.Key ) );
 
 				child.Parent = null;
 				parent.Children.Remove( child );
