@@ -65,7 +65,10 @@ namespace HellBrick.TestBrowser.Models
 					int charsToSkip = Location.Length + 1;
 
 					MethodName = testName.Substring( charsToSkip, openBracketIndex - charsToSkip );
-					TestCaseName = testName.Substring( openBracketIndex + 1, closeBracketIndex - openBracketIndex - 1 );
+
+					//	It's possible for the case name to be empty if someone used parameterless [TestCase] attribute for whatever reason.
+					//	If this is the case, we prefer to treat this as a simple test method without any cases, so the case name is set to null.
+					TestCaseName = testName.Substring( openBracketIndex + 1, closeBracketIndex - openBracketIndex - 1 ).NullIfEmpty();
 					return true;
 				}
 			}
