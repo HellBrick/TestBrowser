@@ -96,7 +96,7 @@ namespace HellBrick.TestBrowser.Common
 			}
 		}
 
-		private struct NormalizedColor
+		private struct NormalizedColor : IEquatable<NormalizedColor>
 		{
 			public NormalizedColor( double red, double green, double blue )
 			{
@@ -108,6 +108,29 @@ namespace HellBrick.TestBrowser.Common
 			public double Red { get; }
 			public double Green { get; }
 			public double Blue { get; }
+
+			#region IEquatable<NormalizedColor>
+
+			public override int GetHashCode()
+			{
+				unchecked
+				{
+					const int prime = -1521134295;
+					int hash = 12345701;
+					hash = hash * prime + EqualityComparer<double>.Default.GetHashCode( Red );
+					hash = hash * prime + EqualityComparer<double>.Default.GetHashCode( Green );
+					hash = hash * prime + EqualityComparer<double>.Default.GetHashCode( Blue );
+					return hash;
+				}
+			}
+
+			public bool Equals( NormalizedColor other ) => Red == other.Red && Green == other.Green && Blue == other.Blue;
+			public override bool Equals( object obj ) => obj is NormalizedColor && Equals( (NormalizedColor) obj );
+
+			public static bool operator ==( NormalizedColor x, NormalizedColor y ) => x.Equals( y );
+			public static bool operator !=( NormalizedColor x, NormalizedColor y ) => !x.Equals( y );
+
+			#endregion
 		}
 	}
 }
