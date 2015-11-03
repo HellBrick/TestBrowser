@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.TestWindow.Extensibility;
 
 namespace HellBrick.TestBrowser.Core
 {
-	public sealed class TestRun: IDisposable
+	public sealed class TestRun : IDisposable
 	{
 		private readonly TestRunRequest _runRequest;
 		private readonly TestServiceContext _serviceContext;
@@ -67,7 +67,7 @@ namespace HellBrick.TestBrowser.Core
 			return finishedTests;
 		}
 
-		private void StopMonitoring<T>( T finishedTests ) where T: IEnumerable<TestData>
+		private void StopMonitoring<T>( T finishedTests ) where T : IEnumerable<TestData>
 		{
 			foreach ( var test in finishedTests )
 				_testsToMonitor.Remove( test.FastId );

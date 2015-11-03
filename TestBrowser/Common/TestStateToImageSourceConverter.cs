@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.TestWindow.Extensibility;
 
 namespace HellBrick.TestBrowser.Common
 {
-	public class TestStateToImageSourceConverter: IValueConverter
+	public class TestStateToImageSourceConverter : IValueConverter
 	{
 		public ImageSource IfFailed { get; set; }
 		public ImageSource IfNotFound { get; set; }

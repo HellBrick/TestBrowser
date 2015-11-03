@@ -10,7 +10,7 @@ using System.Windows.Media;
 namespace HellBrick.TestBrowser.Common
 {
 	//[TypeConverter]
-	public class HSL: MarkupExtension
+	public class HSL : MarkupExtension
 	{
 		public HSL()
 		{
@@ -74,7 +74,7 @@ namespace HellBrick.TestBrowser.Common
 
 			switch ( (int) Math.Floor( hueSector ) )
 			{
-				case 0:	//	R -> G -> B
+				case 0: //	R -> G -> B
 					return new NormalizedColor()
 					{
 						Red = maxColor,
@@ -82,7 +82,7 @@ namespace HellBrick.TestBrowser.Common
 						Blue = minColor
 					};
 
-				case 1:	//	G -> R -> B
+				case 1: //	G -> R -> B
 					return new NormalizedColor()
 					{
 						Green = maxColor,
@@ -90,7 +90,7 @@ namespace HellBrick.TestBrowser.Common
 						Blue = minColor
 					};
 
-				case 2:	//	G -> B -> R
+				case 2: //	G -> B -> R
 					return new NormalizedColor()
 					{
 						Green = maxColor,
@@ -98,7 +98,7 @@ namespace HellBrick.TestBrowser.Common
 						Red = minColor
 					};
 
-				case 3:	//	B -> G -> R
+				case 3: //	B -> G -> R
 					return new NormalizedColor()
 					{
 						Blue = maxColor,
@@ -106,7 +106,7 @@ namespace HellBrick.TestBrowser.Common
 						Red = minColor
 					};
 
-				case 4:	//	B -> R -> G
+				case 4: //	B -> R -> G
 					return new NormalizedColor()
 					{
 						Blue = maxColor,
@@ -114,7 +114,7 @@ namespace HellBrick.TestBrowser.Common
 						Green = minColor
 					};
 
-				case 5:	//	R -> B -> G
+				case 5: //	R -> B -> G
 					return new NormalizedColor()
 					{
 						Red = maxColor,

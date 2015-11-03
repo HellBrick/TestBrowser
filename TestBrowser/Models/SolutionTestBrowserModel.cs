@@ -14,7 +14,7 @@ using Microsoft.VisualStudio.TestWindow.Extensibility;
 
 namespace HellBrick.TestBrowser.Models
 {
-	public sealed class SolutionTestBrowserModel: PropertyChangedBase, IDisposable
+	public sealed class SolutionTestBrowserModel : PropertyChangedBase, IDisposable
 	{
 		private readonly TestServiceContext _serviceContext;
 		private TestBrowserOptions _options;
@@ -28,7 +28,7 @@ namespace HellBrick.TestBrowser.Models
 
 			TestTree = new Models.TestTree( this, _serviceContext.Dispatcher, _options.CollapsedNodes );
 			InitializeCommands();
-			var discoverTask = DiscoverTestsAsync();	//	 no need to await it
+			var discoverTask = DiscoverTestsAsync();    //	 no need to await it
 		}
 
 		private void InitializeSettings( TestBrowserOptions options )

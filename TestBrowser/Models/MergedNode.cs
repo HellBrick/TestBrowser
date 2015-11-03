@@ -29,7 +29,7 @@ namespace HellBrick.TestBrowser.Models
 		public override INode Parent
 		{
 			get { return Nodes[ 0 ].Parent; }
-			set {}
+			set { }
 		}
 
 		public override ICollection<INode> Children => Nodes[ Nodes.Count - 1 ].Children;

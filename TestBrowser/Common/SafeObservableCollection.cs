@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestWindow.Controller;
 
 namespace HellBrick.TestBrowser.Common
 {
-	public class SafeObservableCollection<T>: ObservableCollection<T>
+	public class SafeObservableCollection<T> : ObservableCollection<T>
 	{
 		private readonly SafeDispatcher _dispatcher;
 

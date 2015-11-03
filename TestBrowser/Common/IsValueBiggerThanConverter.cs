@@ -7,7 +7,7 @@ using System.Windows.Data;
 
 namespace HellBrick.TestBrowser.Common
 {
-	public class IsValueBiggerThanConverter: IValueConverter
+	public class IsValueBiggerThanConverter : IValueConverter
 	{
 		public double Threshold { get; set; }
 

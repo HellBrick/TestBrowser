@@ -14,15 +14,15 @@ namespace HellBrick.TestBrowser.Common
 			DependencyProperty.RegisterAttached( "InputBindings", typeof( InputBindingCollection ), typeof( Input ),
 			new FrameworkPropertyMetadata(
 				new InputBindingCollection(),
-				propertyChangedCallback : ( sender, e ) =>
-				{
-					var element = sender as UIElement;
-					if ( element == null )
-						return;
+				propertyChangedCallback: ( sender, e ) =>
+			   {
+				   var element = sender as UIElement;
+				   if ( element == null )
+					   return;
 
-					element.InputBindings.Clear();
-					element.InputBindings.AddRange( e.NewValue as InputBindingCollection );
-				} ) );
+				   element.InputBindings.Clear();
+				   element.InputBindings.AddRange( e.NewValue as InputBindingCollection );
+			   } ) );
 
 		public static InputBindingCollection GetInputBindings( UIElement element )
 		{

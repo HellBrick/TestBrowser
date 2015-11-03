@@ -104,12 +104,12 @@ namespace HellBrick.TestBrowser.Core
 				{
 					Delegate internalHandler = CodeGen.InternalHandlerFactory( value );
 					CodeGen.DelegateMap[ value ] = internalHandler;
-					CodeGen.Event.GetAddMethod( nonPublic : true ).Invoke( _instance, new object[] { internalHandler } );
+					CodeGen.Event.GetAddMethod( nonPublic: true ).Invoke( _instance, new object[] { internalHandler } );
 				}
 				remove
 				{
 					Delegate internalHandler = CodeGen.DelegateMap[ value ];
-					CodeGen.Event.GetRemoveMethod( nonPublic : true ).Invoke( _instance, new object[] { internalHandler } );
+					CodeGen.Event.GetRemoveMethod( nonPublic: true ).Invoke( _instance, new object[] { internalHandler } );
 				}
 			}
 		}

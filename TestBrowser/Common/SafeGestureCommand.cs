@@ -16,7 +16,7 @@ namespace HellBrick.TestBrowser.Common
 		{
 			Gestures = gestures;
 			GestureText = Gestures.GetGestureText();
-      }
+		}
 
 		public InputGesture[] Gestures { get; }
 		public KeyGesture KeyGesture { get; }

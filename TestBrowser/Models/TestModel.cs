@@ -141,7 +141,7 @@ namespace HellBrick.TestBrowser.Models
 				_serviceContext.Dispatcher, () => GoToTest(), "Go to test",
 				new KeyGesture( System.Windows.Input.Key.F12 ),
 				new MouseGesture( MouseAction.LeftDoubleClick ) );
-      }
+		}
 
 		private void GoToTest()
 		{
@@ -165,7 +165,7 @@ namespace HellBrick.TestBrowser.Models
 
 		#endregion
 
-		private struct TestOpenTarget: IOpenTarget
+		private struct TestOpenTarget : IOpenTarget
 		{
 			private readonly TestData _testData;
 

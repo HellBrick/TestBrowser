@@ -34,7 +34,7 @@ namespace HellBrick.TestBrowser.Models
 		public IReadOnlyDictionary<Guid, TestModel> Tests => _testLookup;
 
 		private readonly NodeCollection _rootCollectionWrapper;
-		public ICollection<INode> VisualChildren => _rootNode.Children.Count < 2 ? _rootNode.Children: _rootCollectionWrapper;
+		public ICollection<INode> VisualChildren => _rootNode.Children.Count < 2 ? _rootNode.Children : _rootCollectionWrapper;
 		public AllTestsNode RootNode => _rootNode;
 
 		public void InsertTest( TestModel newTest )

@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestWindow.Controller;
 
 namespace HellBrick.TestBrowser.Common
 {
-	public class SafeObservableDictionary<TKey, TValue>: SafeObservableCollection<TValue>
+	public class SafeObservableDictionary<TKey, TValue> : SafeObservableCollection<TValue>
 	{
 		private readonly Func<TValue, TKey> _keyExtractor;
 		private readonly Dictionary<TKey, TValue> _lookup = new Dictionary<TKey, TValue>();
